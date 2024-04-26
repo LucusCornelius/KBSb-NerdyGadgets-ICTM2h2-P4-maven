@@ -10,7 +10,7 @@ public class Order {
     private boolean bezorgd;
 
     public Order(String straatnaam, int huisnummer, String postcode, boolean bezorgd){
-        orderLines = new ArrayList<OrderLine>();
+        orderLines = new ArrayList<>();
         setID();
         setStraatnaam(straatnaam);
         setHuisnummer(huisnummer);
@@ -57,5 +57,8 @@ public class Order {
     }
     public boolean getBezorgd(){
         return bezorgd;
+    }
+    public void addOrderline(OrderLine orderline){
+        orderLines.add(orderline);
     }
 }
