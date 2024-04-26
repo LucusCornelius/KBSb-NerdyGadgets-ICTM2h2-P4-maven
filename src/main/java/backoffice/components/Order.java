@@ -63,4 +63,17 @@ public class Order {
     public void addOrderline(OrderLine orderline){
         orderLines.add(orderline);
     }
+    @Override
+    public String toString() {
+        String s = (
+            "order-ID: " + ID + "\n" +
+            "adres: " + straatnaam + " " + huisnummer + " " + postcode + "\n"
+        );
+        if (orderLines.size() != 0) {
+            for(OrderLine orderLine: orderLines){
+                s = s + orderLine + "\n";
+            }
+        }
+        return s;
+    }
 }

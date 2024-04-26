@@ -53,4 +53,14 @@ public class OrderLine {
     public boolean getOpVoorraad(){
         return opVoorraad;
     }
+
+    @Override
+    public String toString() {
+        return (
+            "orderline-ID: " + ID + "\n" +
+            "sectie: " + sectie + "\n" +
+            "aantal: " + aantal + "\n" +
+            "beschrijving: " + beschrijving
+        );
+    }
 }
