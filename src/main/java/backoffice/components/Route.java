@@ -1,6 +1,7 @@
+package backoffice.components;
+
 import java.util.ArrayList;
 
-import org.springframework.core.annotation.Order;
 
 public class Route {
     private static ArrayList<Route> routes = new ArrayList<>();
@@ -13,6 +14,7 @@ public class Route {
                 r.add(route);
             }
         }
+        return r;
     }
 
     private int ID;
@@ -21,12 +23,13 @@ public class Route {
     private ArrayList<Order> orders;
     private String status;
 
-    public Route(Bus bus ,String regio){
+    public Route(Bus bus ,String regio, String status){
         orders = new ArrayList<>();
 
         setID();
         setBus(bus);
         setRegio(regio);
+        setStatus(status);
 
         routes.add(this);
     }

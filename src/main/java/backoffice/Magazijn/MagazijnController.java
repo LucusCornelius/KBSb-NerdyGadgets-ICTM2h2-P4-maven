@@ -1,6 +1,7 @@
-import java.util.ArrayList;
+package backoffice.Magazijn;
 
-import org.springframework.util.RouteMatcher.Route;
+import java.util.ArrayList;
+import backoffice.components.*;;
 
 public class MagazijnController {
     private ArrayList<Route> klaarVoorPicken;

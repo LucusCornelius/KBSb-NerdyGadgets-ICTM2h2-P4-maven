@@ -1,3 +1,5 @@
+package backoffice.components;
+
 public class OrderLine {
     private static int IDCounter;
     private int ID;

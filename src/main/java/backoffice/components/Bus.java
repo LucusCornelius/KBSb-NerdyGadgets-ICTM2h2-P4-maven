@@ -1,3 +1,5 @@
+package backoffice.components;
+
 public class Bus {
     private String kenteken;
 

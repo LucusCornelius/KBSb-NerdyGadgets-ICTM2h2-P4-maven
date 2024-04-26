@@ -1,3 +1,5 @@
+package backoffice.components;
+
 import java.util.ArrayList;
 
 public class Order {
@@ -5,8 +7,8 @@ public class Order {
     private int ID;
     private String straatnaam;
     private int huisnummer;
-    private String Postcode;
-    private Arraylist<OrderLine> orderLines;
+    private String postcode;
+    private ArrayList<OrderLine> orderLines;
     private boolean bezorgd;
 
     public Order(String straatnaam, int huisnummer, String postcode, boolean bezorgd){
@@ -18,7 +20,7 @@ public class Order {
         setBezorgd(bezorgd);
     }
 
-    public void setID(int iD) {
+    public void setID() {
         if (ID == 0) {
             IDCounter++;
             ID = IDCounter;
@@ -50,7 +52,7 @@ public class Order {
         }
     }
     public String getPostcode() {
-        return Postcode;
+        return postcode;
     }
     public void setBezorgd(boolean bezorgd) {
         this.bezorgd = bezorgd;
