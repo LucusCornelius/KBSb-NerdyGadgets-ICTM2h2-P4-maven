@@ -42,7 +42,12 @@ public class Order {
         return huisnummer;
     }
     public void setPostcode(String postcode) {
-        Postcode = postcode;
+        if(postcode.length() == 6) {
+            this.postcode = postcode;
+        } else {
+            this.postcode = "0001XX";
+            System.out.println("ongeldige postcode");
+        }
     }
     public String getPostcode() {
         return Postcode;
