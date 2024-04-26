@@ -58,7 +58,7 @@ class GFG {
     }
 
     // Driver code
-    public static void main(String[] args)
+    /* public static void main(String[] args)
     {
         int n = 7;
 
@@ -113,5 +113,5 @@ class GFG {
         System.out.println(ConsoleColorCodes.ANSI_PURPLE + "Route" + route + ConsoleColorCodes.ANSI_RESET);
 
 
-    }
+    } */
 }
