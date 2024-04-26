@@ -3,6 +3,7 @@ public class OrderLine {
     private int ID;
     private String sectie;
     private int aantal;
+    private boolean opVoorraad;
     private String beschrijving;
 
 
@@ -11,6 +12,7 @@ public class OrderLine {
         setSectie(sectie);
         setAantal(aantal);
         setBeschrijving(beschrijving);
+        setOpVoorraad(true);
     }
 
 
@@ -42,5 +44,11 @@ public class OrderLine {
     }
     public String getBeschrijving() {
         return beschrijving;
+    }
+    public void setOpVoorraad(boolean opVoorraad) {
+        this.opVoorraad = opVoorraad;
+    }
+    public boolean getOpVoorraad(){
+        return opVoorraad;
     }
 }
