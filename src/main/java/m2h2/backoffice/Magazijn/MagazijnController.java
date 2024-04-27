@@ -1,6 +1,7 @@
 package m2h2.backoffice.Magazijn;
 
-import java.util.ArrayList;
+import java.util.*;
+import javax.swing.*;
 
 import m2h2.backoffice.components.*;;
 
@@ -23,6 +24,22 @@ public class MagazijnController {
     public ArrayList<Route> getKlaarVoorversturen() {
         return klaarVoorversturen;
     }
+
+    public JScrollPane getTable(){
+        String[][] data = {
+            {"" , "r" , "v"},
+            {"" , "d" , ""},
+            {"a" , "" , "w"}
+        };
+        String[] columnNames = {"r" , "g" , "h"};
+
+        JTable table = new JTable(data, columnNames);
+        table.setBounds(0, 0 , 600, 400);
+
+        JScrollPane sp = new JScrollPane(table);
+        return sp;
+    }
+
 
     @Override
     public String toString() {

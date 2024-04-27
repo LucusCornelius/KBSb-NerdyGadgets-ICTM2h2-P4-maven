@@ -34,5 +34,7 @@ public class Main {
         MagazijnController m = new MagazijnController();
         System.out.println(m);
 
+        MagazijnFrame frame = new MagazijnFrame(m);
+
     }
 }
