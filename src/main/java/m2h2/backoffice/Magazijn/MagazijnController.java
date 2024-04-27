@@ -1,7 +1,8 @@
-package backoffice.Magazijn;
+package m2h2.backoffice.Magazijn;
 
 import java.util.ArrayList;
-import backoffice.components.*;;
+
+import m2h2.backoffice.components.*;;
 
 public class MagazijnController {
     private ArrayList<Route> klaarVoorPicken;
@@ -12,6 +13,15 @@ public class MagazijnController {
         klaarVoorPicken = Route.getRoutes("klaar voor picken");
         bezigMetPicken = Route.getRoutes("bezig met picken");
         klaarVoorversturen = Route.getRoutes("klaar voor versturen");
+    }
+    public ArrayList<Route> getKlaarVoorPicken() {
+        return klaarVoorPicken;
+    }
+    public ArrayList<Route> getBezigMetPicken() {
+        return bezigMetPicken;
+    }
+    public ArrayList<Route> getKlaarVoorversturen() {
+        return klaarVoorversturen;
     }
 
     @Override
