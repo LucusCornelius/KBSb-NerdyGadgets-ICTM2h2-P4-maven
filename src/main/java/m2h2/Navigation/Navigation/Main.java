@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Main extends javax.swing.JFrame{
+public class Main extends javax.swing.JFrame implements ActionListener{
 
     private javax.swing.JButton Route;
     private javax.swing.JLabel jLabel1;
@@ -21,7 +21,6 @@ public class Main extends javax.swing.JFrame{
     private javax.swing.JButton Koerier;
     private javax.swing.JButton Login;
     private javax.swing.JPanel sidebar;
-    private JPanel currentPanel;
 
     SideMenuPanel sp;
 
@@ -72,7 +71,7 @@ public class Main extends javax.swing.JFrame{
         Login.setMargin(new Insets(2, 2, 2, 14));
         Login.setMinimumSize(new Dimension(200, 35));
         Login.setPreferredSize(new Dimension(50, 574));
-
+        Login.addActionListener(this);
 
         Koerier.setFont(new Font("Microsoft PhagsPa", 0, 14));
         Koerier.setForeground(new Color(255, 255, 255));
@@ -88,10 +87,11 @@ public class Main extends javax.swing.JFrame{
         Koerier.setMargin(new Insets(2, 2, 2, 14));
         Koerier.setMinimumSize(new Dimension(200, 35));
         Koerier.setPreferredSize(new Dimension(50, 574));
+        Koerier.addActionListener(this);
 
         OrderPicker.setFont(new Font("Microsoft PhagsPa", 0, 14));
         OrderPicker.setForeground(new Color(255, 255, 255));
-        OrderPicker.setIcon(new ImageIcon("/Icon/picker-icon.png"));
+        OrderPicker.setIcon(new ImageIcon("src/main/java/m2h2/Navigation/Icon/picker-icon.png"));
         OrderPicker.setText("Magazijn");
         OrderPicker.setBorderPainted(false);
         OrderPicker.setContentAreaFilled(false);
@@ -103,6 +103,7 @@ public class Main extends javax.swing.JFrame{
         OrderPicker.setMargin(new Insets(2, 2, 2, 14));
         OrderPicker.setMinimumSize(new Dimension(200, 35));
         OrderPicker.setPreferredSize(new Dimension(50, 574));
+        OrderPicker.addActionListener(this);
 
         Route.setFont(new Font("Microsoft PhagsPa", 0, 14));
         Route.setForeground(new Color(255, 255, 255));
@@ -117,6 +118,7 @@ public class Main extends javax.swing.JFrame{
         Route.setMargin(new Insets(2, 2, 2, 14));
         Route.setMinimumSize(new Dimension(200, 80));
         Route.setPreferredSize(new Dimension(50, 574));
+        Route.addActionListener(this);
 
         Menu.setBackground(new Color(34, 40, 47));
         Menu.setFont(new Font("Microsoft PhagsPa", 0, 14));
@@ -176,7 +178,7 @@ public class Main extends javax.swing.JFrame{
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(Koerier, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Login, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE) // Voeg hier de Login-knop toe
+                                .addComponent(Login, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel13, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18))
@@ -185,14 +187,14 @@ public class Main extends javax.swing.JFrame{
 
 // Homescherm met kleur
         mainPanel.setBackground(new Color(255, 255, 255));
+        mainPanel.add(jLabel1, BorderLayout.NORTH);
         jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24)); // NOI18N
         jLabel1.setForeground(new Color(51, 51, 51));
-        jLabel1.setText("Home");
+        jLabel1.setText("Backoffice NerdyGadgets");
 
 //Hier kan je wat toevoegen voor in de homepage(staat nu weergegeven op route)
 
 // einde toevoegen voor de homepage
-
         GroupLayout mainPanelLayout = new GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -294,5 +296,49 @@ public class Main extends javax.swing.JFrame{
                 new Main().setVisible(true);
             }
         });
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == Route){
+
+            mainPanel.setBackground(new Color(255, 255, 255));
+            jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
+            jLabel1.setForeground(new Color(51, 51, 51));
+            jLabel1.setText("Route");
+
+            mainPanel.revalidate();
+            mainPanel.repaint();
+        }
+
+        if (e.getSource() == OrderPicker){
+            mainPanel.setBackground(new Color(255, 255, 255));
+            jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
+            jLabel1.setForeground(new Color(51, 51, 51));
+            jLabel1.setText("Magazijn");
+
+            mainPanel.revalidate();
+            mainPanel.repaint();
+        }
+
+        if (e.getSource() == Koerier){
+            mainPanel.setBackground(new Color(255, 255, 255));
+            jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
+            jLabel1.setForeground(new Color(51, 51, 51));
+            jLabel1.setText("Koerier");
+
+            mainPanel.revalidate();
+            mainPanel.repaint();
+        }
+
+        if (e.getSource() == Login){
+            mainPanel.setBackground(new Color(255, 255, 255));
+            jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
+            jLabel1.setForeground(new Color(51, 51, 51));
+            jLabel1.setText("Login");
+
+            mainPanel.revalidate();
+            mainPanel.repaint();
+        }
     }
 }

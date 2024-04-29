@@ -19,7 +19,7 @@ public class SideMenuPanel {
     private final int a = 0;
     private int minWidth = 60;
     private int maxWidth = 200;
-    private SidePanel side;
+    private JPanel side;
     private JPanel main;
     private boolean isEnabled;
     private int speed = 2;
@@ -84,7 +84,7 @@ public class SideMenuPanel {
 
     public void setSide(JPanel side) {
 
-        this.side = new SidePanel();
+        this.side = side;
 
     }
 
