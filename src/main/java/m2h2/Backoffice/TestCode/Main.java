@@ -1,10 +1,11 @@
-package m2h2.Backoffice.testCode;
 
+
+import m2h2.Backoffice.Components.*;
 
 
 public class Main {
     public static void main(String[] args) {
-        Bus b1 = new Bus("67-jh-kk");
+        Bus b1 = new m2h2.Backoffice.Components.Bus("67-jh-kk");
         Route r1 = new Route(b1 , "noord" , "klaar voor picken");
         Order o1 = new Order("kerkhofslaan", 7, "8479HH", false);
         OrderLine ol1 = new OrderLine("A" , 2 , "USB");
