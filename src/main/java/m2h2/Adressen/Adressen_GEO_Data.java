@@ -3,7 +3,8 @@ package m2h2.Adressen;
 
 import Console_Color_Codes.ConsoleColorCodes;
 import m2h2.Orders.Order;
-import m2h2.Regios.GefilterdeAdressen;
+import m2h2.Regios.Orders_Met_Coordinaten;
+import m2h2.Regios.Regios;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,37 +15,43 @@ public class Adressen_GEO_Data {
     private String url = "jdbc:sqlite:/Users/lucasvissers/IdeaProjects/KBSb-NerdyGadgets-ICTM2h2-P4-maven/src/main/java/m2h2/Nederland_Geografische_Data/bag-light.gpkg";
     private ArrayList<Order> orders;
 
+    private ArrayList<Orders_Met_Coordinaten> orders_met_coordinaten = new ArrayList<>();
+
     private int progressie = 1;
 
 
     public Adressen_GEO_Data(ArrayList<Order> orders) {
         this.orders = orders;
+        Filter_Coordinaten_Op_Adres();
     }
 
 
-    public void Filter_Coordinaten_Op_Adres(ArrayList<Order> orders) {
+    public void Filter_Coordinaten_Op_Adres() {
+
+        System.out.println("ORDERS" + orders);
 
         for (int i = 0; i < orders.size(); i++) {
 
-            String straatnaam = orders.get(i).getStraatnaam();
-
-            GefilterdeAdressen gefilterdeAdressen1 = new GefilterdeAdressen(orders.get(i).getOrderID(), orders.get(i).getNaam(), orders.get(i).getStraatnaam(), orders.get(i).getPostcode(), orders.get(i).getHuisnummer(), orders.get(i).getOrder());
+            Orders_Met_Coordinaten ordersMetCoordinaten = new Orders_Met_Coordinaten(orders.get(i).getOrderID(), orders.get(i).getNaam(), orders.get(i).getStraatnaam(), orders.get(i).getPostcode(), orders.get(i).getHuisnummer(), orders.get(i).getOrder());
 
 
             try (
                     //Database connectie
-                    Connection connection = DriverManager.getConnection(url); Statement statement = connection.createStatement()) {
+                    Connection connection = DriverManager.getConnection(url); Statement statement = connection.createStatement())
+            {
                 System.out.println("-----> Connectie gemaakt!\n");
                 System.out.println(ConsoleColorCodes.ANSI_YELLOW + "Het process wordt uitgevoerd" + ConsoleColorCodes.ANSI_RESET);
 
 
                 statement.setQueryTimeout(30);
 
-                String postcode = "8081LZ";
-                int huisnummer = 172;
-                String woonplaats = "Elburg";
+
+                String postcode = orders.get(i).getPostcode();
+                int huisnummer = orders.get(i).getHuisnummer();
+                String woonplaats = orders.get(i).getPlaatsnaam();
                 String huisletter = null;
                 String toevoeging = null;
+
 
                 String sql = "SELECT r.*, v.feature_id, v.openbare_ruimte_naam, v.huisnummer, v.woonplaats_naam, v.postcode, v.huisletter, v.toevoeging " + "FROM rtree_verblijfsobject_geom r " + "INNER JOIN ( " + "    SELECT feature_id, openbare_ruimte_naam, huisnummer, postcode, woonplaats_naam, huisletter, toevoeging " + "    FROM verblijfsobject " + "    WHERE postcode LIKE ? " + "    AND huisnummer = ? " + "    AND woonplaats_naam LIKE ? " + "    AND (huisletter = ? OR ? IS NULL) " + "    AND (toevoeging = ? OR ? IS NULL) " + ") v ON r.id = v.feature_id";
 
@@ -70,20 +77,29 @@ public class Adressen_GEO_Data {
                 System.out.println(rs.getString(6));
 
 
-//                SELECT r.*, v.feature_id, v.openbare_ruimte_naam,v.huisnummer, v.woonplaats_naam, v.postcode , v.huisletter, v.toevoeging FROM rtree_pand_geom r INNER JOIN ( SELECT feature_id, openbare_ruimte_naam, huisnummer, postcode, woonplaats_naam, huisletter, toevoeging FROM verblijfsobject WHERE postcode LIKE '7924PW' AND huisnummer = 28 AND woonplaats_naam LIKE 'Veeningen') v ON r.id = v.feature_id;
-//
-//
-//                SELECT * FROM ligplaats WHERE postcode = '7924PW';
-//
-//                SELECT * FROM rtree_pand_geom WHERE id = 9421364;
+
 
 
                 try {
-                    RDtoDegrees(rs.getString(1), Double.parseDouble(rs.getString(2)), Double.parseDouble(rs.getString(4)), gefilterdeAdressen1);
-//                    RDtoDegrees(rs.getString(1), 220077.78125, 518705.90625, gefilterdeAdressen1);
+                    RDtoDegrees(rs.getString(1), Double.parseDouble(rs.getString(2)), Double.parseDouble(rs.getString(4)), ordersMetCoordinaten);
+
+
+                    if((i+1 == orders.size())) {
+
+                        Regios regio = new Regios(orders_met_coordinaten);
+
+                        regio.writeToFile();
+
+                        System.out.println("Noord= " + regio.getRegio_Noord_Postcodes());
+                        System.out.println("West= " + regio.getRegio_West_Postcodes());
+                        System.out.println("Zuid-West= " + regio.getRegio_Zuid_West_Postcodes());
+                        System.out.println("Zuid-Oost= " + regio.getRegio_Zuid_Oost_Postcodes());
+                        System.out.println("Oost= " + regio.getRegio_Oost_Postcodes());
+
+                    }
 
                 } catch (Exception e) {
-                    System.out.println("Er is een fout opgetreden" + e);
+                    System.out.println("Er is een fout bij Adressen_GEO_Data opgetreden" + e);
                 }
 
                 rs.close();
@@ -99,9 +115,8 @@ public class Adressen_GEO_Data {
 
     }
 
-    ArrayList<Double> gemiddeldeList = new ArrayList<>();
 
-    private void RDtoDegrees(String id, double O, double N, GefilterdeAdressen adressen) {
+    private void RDtoDegrees(String id, double O, double N, Orders_Met_Coordinaten ordersMetCoordinaten) {
         double X = O;
         double Y = N;
 
@@ -130,72 +145,18 @@ public class Adressen_GEO_Data {
         String LatitudeMinutenString = Double.toString(LatitudeMinuten);
         String LongitudeMinutenString = Double.toString(LongitudeMinuten);
 
-        adressen.setCoordinaten("Coördinaten: " + LatitudeGradenString + "° " + LatitudeMinutenString + ", " + LongitudeGradenString + "° " + LongitudeMinutenString);
+
         System.out.println("Coördinaten: " + LatitudeGradenString + "° " + LatitudeMinutenString + ", " + LongitudeGradenString + "° " + LongitudeMinutenString);
-        System.out.println(adressen);
-
-        gemiddeldeList.add(LatitudeGraden_double);
-        gemiddeldeList.add(LatitudeMinuten);
-        gemiddeldeList.add(LongitudeGraden_double);
-        gemiddeldeList.add(LongitudeMinuten);
+        ordersMetCoordinaten.setCoordinaten(LatitudeGradenString + "° " + LatitudeMinutenString + ", " + LongitudeGradenString + "° " + LongitudeMinutenString);
+        orders_met_coordinaten.add(ordersMetCoordinaten);
+        System.out.println("Orders 2" + orders_met_coordinaten);
 
 
-        writeToFile(id, LatitudeGradenString, LatitudeMinutenString, LongitudeGradenString, LongitudeMinutenString);
+//        writeToFile(id, LatitudeGradenString, LatitudeMinutenString, LongitudeGradenString, LongitudeMinutenString);
 
     }
 
-//    public void calculateMidpoint() {
-//        double totalLatitude = 0;
-//        double totalLongitude = 0;
-//        int count = 0;
-//
-//        // Iterate through gemiddeldeList by 4 elements at a time (latitudeGraden, latitudeMinuten, longitudeGraden, longitudeMinuten)
-//        for (int i = 0; i < gemiddeldeList.size(); i += 4) {
-//            double latitudeGraden = gemiddeldeList.get(i);
-//            double latitudeMinuten = gemiddeldeList.get(i + 1);
-//            double longitudeGraden = gemiddeldeList.get(i + 2);
-//            double longitudeMinuten = gemiddeldeList.get(i + 3);
-//
-//            // Convert degrees and minutes to decimal degrees
-//            double latitudeDecimal = latitudeGraden + latitudeMinuten / 60.0;
-//            double longitudeDecimal = longitudeGraden + longitudeMinuten / 60.0;
-//
-//            // Accumulate total latitude and longitude
-//            totalLatitude += latitudeDecimal;
-//            totalLongitude += longitudeDecimal;
-//            count++;
-//        }
-//
-//        // Calculate the average latitude and longitude
-//        double averageLatitude = totalLatitude / count;
-//        double averageLongitude = totalLongitude / count;
-//
-//        // Convert average latitude and longitude back to degrees and minutes
-//        int averageLatitudeGraden = (int) averageLatitude;
-//        double averageLatitudeMinuten = (averageLatitude - averageLatitudeGraden) * 60;
-//        int averageLongitudeGraden = (int) averageLongitude;
-//        double averageLongitudeMinuten = (averageLongitude - averageLongitudeGraden) * 60;
-//
-//        // Print the midpoint coordinates
-//        System.out.println("Coördinaten: " + averageLatitudeGraden + "° " + averageLatitudeMinuten + "', " + averageLongitudeGraden + "° " + averageLongitudeMinuten + "'");
-//    }
 
-
-    private void writeToFile(String id, String LatitudeGraden, String LatitudeMinuten, String LongitudeGraden, String LongitudeMinuten) {
-        try {
-            FileWriter myWriter = new FileWriter("/Users/lucasvissers/IdeaProjects/KBSb-NerdyGadgets-ICTM2h2-P4-maven/src/main/java/m2h2/sqlite_queries_outputs/Coordinaten_orders.txt", true);
-//            myWriter.write( "N" + LatitudeGraden + "'" + LatitudeMinuten + "\n");
-            myWriter.write(" W" + LongitudeGraden + "'" + LongitudeMinuten + "\n");
-
-//            myWriter.write(LatitudeGraden + "° " + LatitudeMinuten + ", " + LongitudeGraden + "° " + LongitudeMinuten + "\n");
-            myWriter.close();
-            System.out.println("ID: " + progressie + "-----> ✔");
-            progressie++;
-        } catch (IOException e) {
-            System.out.println("### -----> Er is een fout opgetreden bij ID: " + progressie);
-            e.printStackTrace();
-        }
-    }
 
     public void addOrder(Order order) {
         orders.add(order);

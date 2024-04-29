@@ -1,0 +1,3 @@
+GefilterdeAdressen: {orderID=2 naam=' Rick', straatnaam='Nieuwstraat', postcode='1381BB', huisnummer=41, order='iphone 12', Coordinaten='52° 18.40231857599349, 5° 2.5695938838098797'}
+GefilterdeAdressen: {orderID=3 naam=' Emma', straatnaam='Amstel', postcode='1011PN', huisnummer=1, order='sneakers', Coordinaten='52° 22.05859324138885, 4° 54.01006362121201'}
+GefilterdeAdressen: {orderID=4 naam=' Sophie', straatnaam='Kerkstraat', postcode='1017GW', huisnummer=257, order='rugzak', Coordinaten='52° 21.77329893671768, 4° 53.57728759092717'}

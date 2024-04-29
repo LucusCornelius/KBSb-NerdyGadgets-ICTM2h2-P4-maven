@@ -10,14 +10,18 @@ public class Order {
     private String straatnaam;
 
     private String postcode;
+
+    private String plaatsnaam;
+
     private int huisnummer;
 
     private String order;
 
-    public Order(int orderID, String naam, String straatnaam, String postcode, int huisnummer, String order) {
+    public Order(int orderID, String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer, String order) {
         this.orderID = orderID;
         this.naam = naam;
         this.straatnaam = straatnaam;
+        this.plaatsnaam = plaatsnaam;
 
         if(postcode.length() == 6) {
             this.postcode = postcode;
@@ -56,6 +60,10 @@ public class Order {
         return orderID;
     }
 
+    public String getPlaatsnaam() {
+        return plaatsnaam;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
@@ -65,6 +73,7 @@ public class Order {
                 ", postcode='" + postcode + '\'' +
                 ", huisnummer=" + huisnummer +
                 ", order='" + order + '\'' +
+                ", plaatsnaam='" + plaatsnaam + '\'' +
                 '}';
     }
 }
