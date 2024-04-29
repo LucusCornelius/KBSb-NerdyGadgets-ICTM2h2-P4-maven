@@ -60,7 +60,7 @@ public class Main extends javax.swing.JFrame{
 
         Login.setFont(new Font("Microsoft PhagsPa", 0, 14));
         Login.setForeground(new Color(255, 255, 255));
-        Login.setIcon(new ImageIcon(getClass().getClassLoader().getResource("/Icon/Login.png"))); //je krijgt een nullpointer error door dit
+        Login.setIcon(new ImageIcon("src/main/java/m2h2/Navigation/Icon/Login.png"));
         Login.setText("Login");
         Login.setBorderPainted(false);
         Login.setContentAreaFilled(false);
@@ -73,9 +73,10 @@ public class Main extends javax.swing.JFrame{
         Login.setMinimumSize(new Dimension(200, 35));
         Login.setPreferredSize(new Dimension(50, 574));
 
+
         Koerier.setFont(new Font("Microsoft PhagsPa", 0, 14));
         Koerier.setForeground(new Color(255, 255, 255));
-        Koerier.setIcon(new ImageIcon(getClass().getResource("/Icon/Koerier.png")));
+        Koerier.setIcon(new ImageIcon("src/main/java/m2h2/Navigation/Icon/Koerier.png"));
         Koerier.setText("Koerier");
         Koerier.setBorderPainted(false);
         Koerier.setContentAreaFilled(false);
@@ -90,7 +91,7 @@ public class Main extends javax.swing.JFrame{
 
         OrderPicker.setFont(new Font("Microsoft PhagsPa", 0, 14));
         OrderPicker.setForeground(new Color(255, 255, 255));
-        OrderPicker.setIcon(new ImageIcon(getClass().getResource("/Icon/picker-icon.png")));
+        OrderPicker.setIcon(new ImageIcon("/Icon/picker-icon.png"));
         OrderPicker.setText("Magazijn");
         OrderPicker.setBorderPainted(false);
         OrderPicker.setContentAreaFilled(false);
@@ -105,7 +106,7 @@ public class Main extends javax.swing.JFrame{
 
         Route.setFont(new Font("Microsoft PhagsPa", 0, 14));
         Route.setForeground(new Color(255, 255, 255));
-        Route.setIcon(new ImageIcon(getClass().getResource("/Icon/route-icon.png")));
+        Route.setIcon(new ImageIcon("src/main/java/m2h2/Navigation/Icon/route-icon.png"));
         Route.setText("Route");
         Route.setBorderPainted(false);
         Route.setContentAreaFilled(false);
@@ -119,7 +120,7 @@ public class Main extends javax.swing.JFrame{
 
         Menu.setBackground(new Color(34, 40, 47));
         Menu.setFont(new Font("Microsoft PhagsPa", 0, 14));
-        Menu.setIcon(new ImageIcon(getClass().getResource("/Icon/Hamburger-icon.png")));
+        Menu.setIcon(new ImageIcon("src/main/java/m2h2/Navigation/Icon/Hamburger-icon.png"));
         Menu.setBorderPainted(false);
         Menu.setContentAreaFilled(false);
         Menu.setFocusPainted(false);
