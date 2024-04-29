@@ -1,6 +1,7 @@
-
+package m2h2.Backoffice.TestCode;
 
 import m2h2.Backoffice.Components.*;
+import m2h2.Backoffice.Magazijn.*;
 
 
 public class Main {
