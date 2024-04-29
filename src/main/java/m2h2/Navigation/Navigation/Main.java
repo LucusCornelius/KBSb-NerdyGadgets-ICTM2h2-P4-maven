@@ -4,10 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import m2h2.Navigation.Icon.*;
 
 public class Main extends javax.swing.JFrame{
 
@@ -57,40 +53,14 @@ public class Main extends javax.swing.JFrame{
         jLabel6 = new JLabel();
         jLabel7 = new JLabel();
 
-
-//naar verschillende paginas gaan. Namen moeten nog wel overeenkomen
-//        OrderPicker.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                showPanel(new OrderPicker());
-//            }
-//        });
-
-//        Koerier.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent evt) {
-//                showPanel(new KoerierPanel());
-//            }
-//        });
-//
-//        Route.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent evt) {
-//                showPanel(new RoutePanel());
-//            }
-//        });
-//
-//        Login.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent evt) {
-//                showPanel(LoginPanel());
-//            }
-//        });
-
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         sidebar.setBackground(new Color(0, 64, 138));
         sidebar.setPreferredSize(new Dimension(90, 32));
 
-        Login.setFont(new Font("Microsoft PhagsPa", 0, 14)); // NOI18N
+        Login.setFont(new Font("Microsoft PhagsPa", 0, 14));
         Login.setForeground(new Color(255, 255, 255));
-        Login.setIcon(new ImageIcon(getClass().getResource("/Icon/Login.png")));
+        Login.setIcon(new ImageIcon(getClass().getClassLoader().getResource("/Icon/Login.png"))); //je krijgt een nullpointer error door dit
         Login.setText("Login");
         Login.setBorderPainted(false);
         Login.setContentAreaFilled(false);
@@ -103,9 +73,9 @@ public class Main extends javax.swing.JFrame{
         Login.setMinimumSize(new Dimension(200, 35));
         Login.setPreferredSize(new Dimension(50, 574));
 
-        Koerier.setFont(new Font("Microsoft PhagsPa", 0, 14)); // NOI18N
+        Koerier.setFont(new Font("Microsoft PhagsPa", 0, 14));
         Koerier.setForeground(new Color(255, 255, 255));
-        Koerier.setIcon(new ImageIcon(getClass().getResource("/Icon/Koerier.png"))); // NOI18N
+        Koerier.setIcon(new ImageIcon(getClass().getResource("/Icon/Koerier.png")));
         Koerier.setText("Koerier");
         Koerier.setBorderPainted(false);
         Koerier.setContentAreaFilled(false);
@@ -118,9 +88,9 @@ public class Main extends javax.swing.JFrame{
         Koerier.setMinimumSize(new Dimension(200, 35));
         Koerier.setPreferredSize(new Dimension(50, 574));
 
-        OrderPicker.setFont(new Font("Microsoft PhagsPa", 0, 14)); // NOI18N
+        OrderPicker.setFont(new Font("Microsoft PhagsPa", 0, 14));
         OrderPicker.setForeground(new Color(255, 255, 255));
-        OrderPicker.setIcon(new ImageIcon(getClass().getResource("/Icon/picker-icon.png"))); // NOI18N
+        OrderPicker.setIcon(new ImageIcon(getClass().getResource("/Icon/picker-icon.png")));
         OrderPicker.setText("Magazijn");
         OrderPicker.setBorderPainted(false);
         OrderPicker.setContentAreaFilled(false);
@@ -133,9 +103,9 @@ public class Main extends javax.swing.JFrame{
         OrderPicker.setMinimumSize(new Dimension(200, 35));
         OrderPicker.setPreferredSize(new Dimension(50, 574));
 
-        Route.setFont(new Font("Microsoft PhagsPa", 0, 14)); // NOI18N
+        Route.setFont(new Font("Microsoft PhagsPa", 0, 14));
         Route.setForeground(new Color(255, 255, 255));
-        Route.setIcon(new ImageIcon(getClass().getResource("/Icon/route-icon.png"))); // NOI18N
+        Route.setIcon(new ImageIcon(getClass().getResource("/Icon/route-icon.png")));
         Route.setText("Route");
         Route.setBorderPainted(false);
         Route.setContentAreaFilled(false);
@@ -148,7 +118,7 @@ public class Main extends javax.swing.JFrame{
         Route.setPreferredSize(new Dimension(50, 574));
 
         Menu.setBackground(new Color(34, 40, 47));
-        Menu.setFont(new Font("Microsoft PhagsPa", 0, 14)); // NOI18N
+        Menu.setFont(new Font("Microsoft PhagsPa", 0, 14));
         Menu.setIcon(new ImageIcon(getClass().getResource("/Icon/Hamburger-icon.png")));
         Menu.setBorderPainted(false);
         Menu.setContentAreaFilled(false);
@@ -167,7 +137,7 @@ public class Main extends javax.swing.JFrame{
         });
 
 //onder aan de navigation
-        jLabel13.setFont(new Font("Microsoft PhagsPa", 0, 10)); // NOI18N
+        jLabel13.setFont(new Font("Microsoft PhagsPa", 0, 10));
         jLabel13.setForeground(new Color(255, 255, 255));
         jLabel13.setText("<html>Backoffice NerdyGadgets</html>");
         jLabel13.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -300,15 +270,6 @@ public class Main extends javax.swing.JFrame{
     private void menActionPerformed() {
         sp.onSideMenu();
     }
-
-    //aanroepen currecntpanel om te veranderen
-//    private void showPanel(JPanel panel) {
-//        getContentPane().remove(currentPanel);
-//        getContentPane().add(panel);
-//        currentPanel = panel;
-//        revalidate();
-//        repaint();
-//    }
 
     public static void main(String args[]) {
         try {
