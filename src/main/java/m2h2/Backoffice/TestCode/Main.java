@@ -14,10 +14,6 @@ public class Main {
         OrderLine ol2 = new OrderLine("b" , 2 , "shirt");
         o1.addOrderline(ol2);
         r1.addOrder(o1);
-        Order o2 = new Order("kfslaan", 9, "8474HH", false);
-        OrderLine ol3 = new OrderLine("B" , 1 , "USB");
-        o2.addOrderline(ol3);
-        r1.addOrder(o2);
 
         Bus b3 = new m2h2.Backoffice.Components.Bus("67-jh-fk");
         Route r3 = new Route(b3 , "noord" , "klaar voor picken");
@@ -27,10 +23,10 @@ public class Main {
         OrderLine ol5 = new OrderLine("b" , 2 , "shirt");
         o3.addOrderline(ol5);
         r3.addOrder(o3);
-        Order o4 = new Order("kfslaan", 9, "8474HH", false);
+        Order o4 = new Order("kfslaan", 9, "7643HH", false);
         OrderLine ol6 = new OrderLine("B" , 1 , "USB");
         o4.addOrderline(ol6);
-        r3.addOrder(o2);
+        r3.addOrder(o4);
 
 
         Bus b2 = new Bus("68-45-kk");

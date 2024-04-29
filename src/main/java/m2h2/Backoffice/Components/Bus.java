@@ -15,4 +15,8 @@ public class Bus {
     public String getKenteken() {
         return kenteken;
     }
+    @Override
+    public String toString() {
+        return kenteken;
+    }
 }

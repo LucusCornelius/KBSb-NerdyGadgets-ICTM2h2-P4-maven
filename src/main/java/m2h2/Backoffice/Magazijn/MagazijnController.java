@@ -13,11 +13,9 @@ public class MagazijnController {
     private ArrayList<Route> bezigMetPicken;
     private ArrayList<Route> klaarVoorversturen;
 
-
     private String kvp = "klaar voor picken";
     private String bmp = "bezig met picken";
     private String kvv = "klaar voor versturen";
-
 
     public MagazijnController(){
         klaarVoorPicken = Route.getRoutes("klaar voor picken");
@@ -53,8 +51,8 @@ public class MagazijnController {
                 Object[] dataline = {
                     klaarVoorPicken.get(i).getID(), 
                     klaarVoorPicken.get(i).getBus(), 
-                    "aantal", 
-                    "Postcodes",
+                    klaarVoorPicken.get(i).getSize(), 
+                    klaarVoorPicken.get(i).getPostcodeRange(),
                     tableButton 
                 };
                 data[i] = dataline;
@@ -67,8 +65,8 @@ public class MagazijnController {
                 Object[] dataline = {
                     bezigMetPicken.get(i).getID(), 
                     bezigMetPicken.get(i).getBus(), 
-                    "aantal", 
-                    "Postcodes",
+                    bezigMetPicken.get(i).getSize(), 
+                    bezigMetPicken.get(i).getPostcodeRange(),
                     bmp 
                 };
                 data[i] = dataline;
@@ -82,9 +80,9 @@ public class MagazijnController {
                 Object[] dataline = {
                     klaarVoorversturen.get(i).getID(), 
                     klaarVoorversturen.get(i).getBus(), 
-                    "aantal", 
-                    "Postcodes",
-                    tableButton 
+                    klaarVoorversturen.get(i).getSize(), 
+                    klaarVoorversturen.get(i).getPostcodeRange(),
+                    kvv 
                 };
                 data[i] = dataline;
             }
@@ -93,7 +91,6 @@ public class MagazijnController {
         System.out.println("### geen correcte status - getTableData MagazijnController ###");
         return null;
     }
-
 
     @Override
     public String toString() {

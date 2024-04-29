@@ -66,6 +66,25 @@ public class Route {
     public void addOrder(Order order){
         orders.add(order);
     }
+    public int getSize(){
+        return orders.size();
+    }
+    public String getPostcodeRange(){
+        String pr = "";
+        int min = 9999;
+        int max = 0;
+        for(Order order:orders){
+            if (order.getPostcodeNummers() != -1) {
+                if (order.getPostcodeNummers() < min) {
+                    min = order.getPostcodeNummers();
+                }
+                if (order.getPostcodeNummers() > max) {
+                    max = order.getPostcodeNummers();
+                }
+            }
+        }
+        return min + " - " + max;
+    }
 
     @Override
     public String toString() {
