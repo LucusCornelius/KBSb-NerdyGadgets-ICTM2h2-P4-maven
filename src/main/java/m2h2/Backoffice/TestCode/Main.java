@@ -19,6 +19,19 @@ public class Main {
         o2.addOrderline(ol3);
         r1.addOrder(o2);
 
+        Bus b3 = new m2h2.Backoffice.Components.Bus("67-jh-fk");
+        Route r3 = new Route(b3 , "noord" , "klaar voor picken");
+        Order o3 = new Order("kerkhofslaan", 7, "8479HH", false);
+        OrderLine ol4 = new OrderLine("A" , 2 , "USB");
+        o3.addOrderline(ol4);
+        OrderLine ol5 = new OrderLine("b" , 2 , "shirt");
+        o3.addOrderline(ol5);
+        r3.addOrder(o3);
+        Order o4 = new Order("kfslaan", 9, "8474HH", false);
+        OrderLine ol6 = new OrderLine("B" , 1 , "USB");
+        o4.addOrderline(ol6);
+        r3.addOrder(o2);
+
 
         Bus b2 = new Bus("68-45-kk");
         Route r2 = new Route(b2 , "Oost" , "bezig met picken");

@@ -16,7 +16,7 @@ public class MagazijnFrame extends JFrame{
         this.setSize(size);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JScrollPane sp = mController.getTable();
+        JScrollPane sp = mController.getTable(mController, "klaar voor picken");
         this.add(sp);
         
         this.setVisible(true);
