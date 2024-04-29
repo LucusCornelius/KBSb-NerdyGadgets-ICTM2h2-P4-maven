@@ -1,9 +1,9 @@
-package m2h2.backoffice.Magazijn;
+package m2h2.Backoffice.Magazijn;
 
 import java.util.*;
 import javax.swing.*;
 
-import m2h2.backoffice.components.*;;
+import m2h2.Backoffice.Components.*;
 
 public class MagazijnController {
     private ArrayList<Route> klaarVoorPicken;
@@ -26,12 +26,11 @@ public class MagazijnController {
     }
 
     public JScrollPane getTable(){
-        String[][] data = {
-            {"" , "r" , "v"},
-            {"" , "d" , ""},
-            {"a" , "" , "w"}
-        };
-        String[] columnNames = {"r" , "g" , "h"};
+        String[][] data = {};
+
+        
+
+        String[] columnNames = {"ID-Route" , "Bus" , "Aantal orders" , "Postcodes" , "Status"};
 
         JTable table = new JTable(data, columnNames);
         table.setBounds(0, 0 , 600, 400);

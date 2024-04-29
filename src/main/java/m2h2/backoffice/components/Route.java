@@ -1,4 +1,4 @@
-package m2h2.backoffice.components;
+package m2h2.Backoffice.Components;
 
 import java.util.ArrayList;
 
