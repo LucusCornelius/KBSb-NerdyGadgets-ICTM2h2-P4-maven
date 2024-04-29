@@ -1,7 +1,5 @@
-package m2h2.Backoffice.TestCode;
+package m2h2.Backoffice.testCode;
 
-import m2h2.Backoffice.Magazijn.*;
-import m2h2.Backoffice.Components.*;
 
 public class Main {
     public static void main(String[] args) {

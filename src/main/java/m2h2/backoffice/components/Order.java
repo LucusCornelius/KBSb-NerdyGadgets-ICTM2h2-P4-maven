@@ -1,6 +1,7 @@
-package m2h2.Backoffice.Components;
+package m2h2.Backoffice.components;
 
 import java.util.ArrayList;
+
 
 public class Order {
     private static int IDCounter;
