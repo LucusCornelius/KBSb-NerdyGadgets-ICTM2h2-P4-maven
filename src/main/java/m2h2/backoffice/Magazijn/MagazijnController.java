@@ -1,5 +1,6 @@
 package m2h2.Backoffice.Magazijn;
 
+import m2h2.Backoffice.Components.*;
 
 import java.util.*;
 import javax.swing.*;

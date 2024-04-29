@@ -1,6 +1,7 @@
 package m2h2.Backoffice.testCode;
 
 
+
 public class Main {
     public static void main(String[] args) {
         Bus b1 = new Bus("67-jh-kk");
@@ -14,7 +15,8 @@ public class Main {
         Order o2 = new Order("kfslaan", 9, "8474HH", false);
         OrderLine ol3 = new OrderLine("B" , 1 , "USB");
         o2.addOrderline(ol3);
-        r1.addOrder(o2);;
+        r1.addOrder(o2);
+
 
         Bus b2 = new Bus("68-45-kk");
         Route r2 = new Route(b2 , "Oost" , "bezig met picken");

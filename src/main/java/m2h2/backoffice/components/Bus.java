@@ -1,4 +1,6 @@
-package m2h2.Backoffice.components;
+package m2h2.Backoffice.Components;
+
+
 
 public class Bus {
     private String kenteken;
