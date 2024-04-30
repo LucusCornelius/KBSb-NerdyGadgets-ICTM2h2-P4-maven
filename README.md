@@ -3,5 +3,5 @@
 
 ### 2. Dataset download links.
 * Item 1
-   * [link1](https://service.pdok.nl/lv/bag/atom/bag.xml)[bestand va 7.02GB]
+   * [link1](https://service.pdok.nl/lv/bag/atom/bag.xml)[bestand van 7.02GB]
    * [link2](https://service.pdok.nl/lv/bag/atom/bag.xml)
