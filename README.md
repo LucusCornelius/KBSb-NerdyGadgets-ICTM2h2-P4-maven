@@ -5,3 +5,5 @@
 * Item 1
    * [link1](https://service.pdok.nl/lv/bag/atom/bag.xml)[bestand van 7.02GB]
    * [link2](https://service.pdok.nl/lv/bag/atom/bag.xml)
+
+Maak een mapje aan genaamd "Nederland_Geografische_Data" in de "m2h2" map van het project. Stop hier deze bestanden in.
