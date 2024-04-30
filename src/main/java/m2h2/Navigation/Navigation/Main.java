@@ -68,7 +68,7 @@ public class Main extends javax.swing.JFrame implements ActionListener{
         Login.setHorizontalAlignment(SwingConstants.LEADING);
         Login.setHorizontalTextPosition(SwingConstants.RIGHT);
         Login.setIconTextGap(20);
-        Login.setMargin(new Insets(2, 2, 2, 14));
+        Login.setMargin(new Insets(2, 0, 2, 14));
         Login.setMinimumSize(new Dimension(200, 35));
         Login.setPreferredSize(new Dimension(50, 574));
         Login.addActionListener(this);
@@ -84,7 +84,7 @@ public class Main extends javax.swing.JFrame implements ActionListener{
         Koerier.setHorizontalAlignment(SwingConstants.LEADING);
         Koerier.setHorizontalTextPosition(SwingConstants.RIGHT);
         Koerier.setIconTextGap(20);
-        Koerier.setMargin(new Insets(2, 2, 2, 14));
+        Koerier.setMargin(new Insets(2, 0, 2, 14));
         Koerier.setMinimumSize(new Dimension(200, 35));
         Koerier.setPreferredSize(new Dimension(50, 574));
         Koerier.addActionListener(this);
@@ -100,7 +100,7 @@ public class Main extends javax.swing.JFrame implements ActionListener{
         OrderPicker.setHorizontalAlignment(SwingConstants.LEADING);
         OrderPicker.setHorizontalTextPosition(SwingConstants.RIGHT);
         OrderPicker.setIconTextGap(20);
-        OrderPicker.setMargin(new Insets(2, 2, 2, 14));
+        OrderPicker.setMargin(new Insets(2, 0, 2, 14));
         OrderPicker.setMinimumSize(new Dimension(200, 35));
         OrderPicker.setPreferredSize(new Dimension(50, 574));
         OrderPicker.addActionListener(this);
@@ -115,7 +115,7 @@ public class Main extends javax.swing.JFrame implements ActionListener{
         Route.setHorizontalAlignment(SwingConstants.LEADING);
         Route.setHorizontalTextPosition(SwingConstants.RIGHT);
         Route.setIconTextGap(20);
-        Route.setMargin(new Insets(2, 2, 2, 14));
+        Route.setMargin(new Insets(2, 0, 2, 14));
         Route.setMinimumSize(new Dimension(200, 80));
         Route.setPreferredSize(new Dimension(50, 574));
         Route.addActionListener(this);
@@ -130,7 +130,7 @@ public class Main extends javax.swing.JFrame implements ActionListener{
         Menu.setHorizontalAlignment(SwingConstants.LEADING);
         Menu.setHorizontalTextPosition(SwingConstants.RIGHT);
         Menu.setIconTextGap(20);
-        Menu.setMargin(new Insets(2, 2, 2, 14));
+        Menu.setMargin(new Insets(2, 0, 2, 14));
         Menu.setMinimumSize(new Dimension(200, 80));
         Menu.setPreferredSize(new Dimension(100, 574));
         Menu.addActionListener(new ActionListener() {
