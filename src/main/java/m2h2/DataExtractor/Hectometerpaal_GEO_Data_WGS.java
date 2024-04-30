@@ -13,7 +13,7 @@ public class Hectometerpaal_GEO_Data_WGS {
 
     public static void main(String[] args) {
         // Geopackage URL
-        String url = "jdbc:sqlite:/Users/lucasvissers/IdeaProjects/KBSb-NerdyGadgets-ICTM2h2-P4-maven/src/main/java/m2h2/Nederland_Geografische_Data/nwb_wegen.gpkg";
+        String url = "jdbc:sqlite:src/main/java/m2h2/Nederland_Geografische_Data/nwb_wegen.gpkg";
 
         try (
             //Database connectie

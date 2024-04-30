@@ -69,12 +69,6 @@ public class Adressen_GEO_Data {
                 // Execute your prepared statement
                 ResultSet rs = preparedStatement.executeQuery();
 
-                System.out.println(rs.getString(1));
-                System.out.println(rs.getString(2));
-                System.out.println(rs.getString(3));
-                System.out.println(rs.getString(4));
-                System.out.println(rs.getString(5));
-                System.out.println(rs.getString(6));
 
 
 
@@ -149,7 +143,7 @@ public class Adressen_GEO_Data {
         System.out.println("Coördinaten: " + LatitudeGradenString + "° " + LatitudeMinutenString + ", " + LongitudeGradenString + "° " + LongitudeMinutenString);
         ordersMetCoordinaten.setCoordinaten(LatitudeGradenString + "° " + LatitudeMinutenString + ", " + LongitudeGradenString + "° " + LongitudeMinutenString);
         orders_met_coordinaten.add(ordersMetCoordinaten);
-        System.out.println("Orders 2" + orders_met_coordinaten);
+        System.out.println("\nProcessed orders" + orders_met_coordinaten);
 
 
 //        writeToFile(id, LatitudeGradenString, LatitudeMinutenString, LongitudeGradenString, LongitudeMinutenString);
