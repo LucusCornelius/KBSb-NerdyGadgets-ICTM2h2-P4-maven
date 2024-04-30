@@ -1,4 +1,4 @@
-package m2h2.backoffice.TestCode;
+package m2h2.Backoffice.TestCode;
 
 import m2h2.backoffice.components.*;
 import m2h2.backoffice.Magazijn.*;
