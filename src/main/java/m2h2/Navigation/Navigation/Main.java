@@ -1,9 +1,12 @@
 package m2h2.Navigation.Navigation;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import m2h2.Backoffice.Magazijn.MagazijnController;
 
 public class Main extends javax.swing.JFrame implements ActionListener{
 
@@ -21,6 +24,7 @@ public class Main extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JButton Koerier;
     private javax.swing.JButton Login;
     private javax.swing.JPanel sidebar;
+    private JScrollPane jScrollPane;
 
     SideMenuPanel sp;
 
@@ -51,6 +55,7 @@ public class Main extends javax.swing.JFrame implements ActionListener{
         jLabel3 = new JLabel();
         jLabel6 = new JLabel();
         jLabel7 = new JLabel();
+        jScrollPane = new JScrollPane();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -191,6 +196,7 @@ public class Main extends javax.swing.JFrame implements ActionListener{
         jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24)); // NOI18N
         jLabel1.setForeground(new Color(51, 51, 51));
         jLabel1.setText("Backoffice NerdyGadgets");
+        mainPanel.add(jScrollPane, BorderLayout.CENTER);
 
 //Hier kan je wat toevoegen voor in de homepage(staat nu weergegeven op route)
 
@@ -316,6 +322,8 @@ public class Main extends javax.swing.JFrame implements ActionListener{
             jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
             jLabel1.setForeground(new Color(51, 51, 51));
             jLabel1.setText("Magazijn");
+
+            MagazijnController m = new MagazijnController();
 
             mainPanel.revalidate();
             mainPanel.repaint();
