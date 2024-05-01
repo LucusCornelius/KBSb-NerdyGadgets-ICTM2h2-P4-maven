@@ -1,4 +1,4 @@
-package backoffice.Koerier;
+package m2h2.Backoffice.Koerier;
 
 import javax.swing.*;
 import java.awt.*;

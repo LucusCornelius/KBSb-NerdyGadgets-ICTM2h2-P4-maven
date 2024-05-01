@@ -1,4 +1,4 @@
-package backoffice.components;
+package m2h2.Backoffice.Components;
 
 public class OrderLine {
     private static int IDCounter;

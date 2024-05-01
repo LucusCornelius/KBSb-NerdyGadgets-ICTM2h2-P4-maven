@@ -1,6 +1,6 @@
-package backoffice.components;
+package m2h2.Backoffice.Components;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Order {
     private static int IDCounter;
@@ -53,6 +53,15 @@ public class Order {
     }
     public String getPostcode() {
         return postcode;
+    }
+    public int getPostcodeNummers(){
+        String nummerString = postcode.substring(0, 4);
+        try {
+            return Integer.parseInt(nummerString);
+        } catch (NumberFormatException e) {
+            System.out.println("### verkeerde postcodeformat! - getPostcodeNummers Order ###");
+            return -1;
+        }
     }
     public void setBezorgd(boolean bezorgd) {
         this.bezorgd = bezorgd;

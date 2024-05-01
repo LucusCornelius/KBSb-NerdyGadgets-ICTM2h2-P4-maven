@@ -1,4 +1,4 @@
-package backoffice.Magazijn;
+package m2h2.Backoffice.Magazijn;
 
 public class MagazijnRouteController {
 
