@@ -1,5 +1,7 @@
 package m2h2.Backoffice.Components;
 
+
+
 public class Bus {
     private String kenteken;
 
@@ -11,6 +13,10 @@ public class Bus {
         this.kenteken = kenteken;
     }
     public String getKenteken() {
+        return kenteken;
+    }
+    @Override
+    public String toString() {
         return kenteken;
     }
 }

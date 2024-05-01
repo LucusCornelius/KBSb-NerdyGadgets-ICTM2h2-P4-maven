@@ -66,24 +66,9 @@ public class Route {
     public void addOrder(Order order){
         orders.add(order);
     }
-
-    @Override
-    public String toString() {
-        String s = (
-            "route-ID: " + ID + "\n" +
-            "Bus: " + bus + "\n" +
-            "regio: " + regio + "\n"
-            );
-        if (orders.size() == 0) {
-            s = s + "geen orders";
-        } else {
-            for(Order order: orders){
-                s = s + order + "\n";
-            }
-        }
-        return s;
+    public int getSize(){
+        return orders.size();
     }
-
     public String getPostcodeRange(){
         String pr = "";
         int min = 9999;
@@ -101,7 +86,20 @@ public class Route {
         return min + " - " + max;
     }
 
-    public int getSize(){
-        return orders.size();
+    @Override
+    public String toString() {
+        String s = (
+            "route-ID: " + ID + "\n" +
+            "Bus: " + bus + "\n" +
+            "regio: " + regio + "\n"
+            );
+        if (orders.size() == 0) {
+            s = s + "geen orders";
+        } else {
+            for(Order order: orders){
+                s = s + order + "\n";
+            }
+        }
+        return s;
     }
 }
