@@ -37,6 +37,7 @@ public class Route {
     private String status;
     private Koerier koerier;
 
+    //Routes met koerier (voltooide routes)
     public Route(Bus bus, String regio, String status, Koerier koerier) {
         orders = new ArrayList<>();
 
@@ -49,7 +50,7 @@ public class Route {
         routes.add(this);
     }
 
-    //Route aanmaken zonder koerier
+    //Route aanmaken zonder koerier (onvoltooide routes)
     public Route(Bus bus, String regio, String status) {
         orders = new ArrayList<>();
 
@@ -117,8 +118,16 @@ public class Route {
                 "route-ID: " + ID + "\n" +
                         "Bus: " + bus + "\n" +
                         "regio: " + regio + "\n" +
-                        "koerier: " + koerier + "\n"
+                        "Koerier: Geen \n"
         );
+        if (koerier != null) {
+            s = (
+                    "route-ID: " + ID + "\n" +
+                            "Bus: " + bus + "\n" +
+                            "regio: " + regio + "\n" +
+                            "koerier: " + koerier + "\n"
+            );
+        }
         if (orders.size() == 0) {
             s = s + "geen orders";
         } else {

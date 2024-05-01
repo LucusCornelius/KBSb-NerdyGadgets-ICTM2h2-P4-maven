@@ -12,13 +12,20 @@ public class OverzichtController {
     private ArrayList<Route> nVoltooideRoutes;
 
     public OverzichtController() {
+        voltooideRoutes = new ArrayList<>();
+        nVoltooideRoutes = new ArrayList<>();
         ArrayList<Route> routes = new ArrayList<>();
         routes = Route.getRoutes();
         for (Route route : routes) {
-            if (route.getKoerier() != null){
-                voltooideRoutes.add(route);
-            } else {
-                nVoltooideRoutes.add(route);
+            try {
+                if (route.getKoerier() != null) {
+                    voltooideRoutes.add(route);
+                } else {
+                    nVoltooideRoutes.add(route);
+                }
+            } catch (NullPointerException e){
+                String error = e.getMessage();
+                System.out.println(error);
             }
         }
     }

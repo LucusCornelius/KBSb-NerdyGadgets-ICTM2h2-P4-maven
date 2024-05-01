@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         Koerier k1 = new Koerier("Jeef");
         Bus b1 = new Bus("67-jh-kk");
-        Route r1 = new Route(b1 , "noord" , "klaar voor picken", k1);
+        Route r1 = new Route(b1 , "noord" , "klaar voor picken");
         Order o1 = new Order("kerkhofslaan", 7, "8479HH", false);
         OrderLine ol1 = new OrderLine("A" , 2 , "USB");
         o1.addOrderline(ol1);
