@@ -1,4 +1,4 @@
-package m2h2.backoffice.components;
+package m2h2.Backoffice.Components;
 
 import java.util.ArrayList;
 
@@ -82,5 +82,26 @@ public class Route {
             }
         }
         return s;
+    }
+
+    public String getPostcodeRange(){
+        String pr = "";
+        int min = 9999;
+        int max = 0;
+        for(Order order:orders){
+            if (order.getPostcodeNummers() != -1) {
+                if (order.getPostcodeNummers() < min) {
+                    min = order.getPostcodeNummers();
+                }
+                if (order.getPostcodeNummers() > max) {
+                    max = order.getPostcodeNummers();
+                }
+            }
+        }
+        return min + " - " + max;
+    }
+
+    public int getSize(){
+        return orders.size();
     }
 }

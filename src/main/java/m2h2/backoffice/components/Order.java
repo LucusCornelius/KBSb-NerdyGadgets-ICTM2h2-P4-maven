@@ -1,4 +1,4 @@
-package m2h2.backoffice.components;
+package m2h2.Backoffice.Components;
 
 import java.util.ArrayList;
 
@@ -28,6 +28,17 @@ public class Order {
             System.out.println("## ID al gezet! ##");
         }
     }
+
+    public int getPostcodeNummers(){
+        String nummerString = postcode.substring(0, 4);
+        try {
+            return Integer.parseInt(nummerString);
+        } catch (NumberFormatException e) {
+            System.out.println("### verkeerde postcodeformat! - getPostcodeNummers Order ###");
+            return -1;
+        }
+    }
+
     public int getID() {
         return ID;
     }

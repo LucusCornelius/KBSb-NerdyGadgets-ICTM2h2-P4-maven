@@ -1,4 +1,4 @@
-package m2h2.backoffice.Magazijn;
+package m2h2.Backoffice.Magazijn;
 
 import javax.swing.*;
 import java.awt.*;
