@@ -20,5 +20,6 @@ public class MagazijnFrame extends JFrame{
         this.add(sp);
         
         this.setVisible(true);
+
     }
 }

@@ -47,7 +47,7 @@ public class MagazijnController {
         if (status.equals(kvp)) {
             Object[][] data = new Object[klaarVoorPicken.size()][5];
             for (int i = 0; i < klaarVoorPicken.size(); i++){
-                JButton tableButton = new JButton("button");
+                JButton tableButton = new JButton("Aannemen");
                 Object[] dataline = {
                     klaarVoorPicken.get(i).getID(), 
                     klaarVoorPicken.get(i).getBus(), 
@@ -76,7 +76,7 @@ public class MagazijnController {
         if (status.equals(kvv)) {
             Object[][] data = new Object[klaarVoorversturen.size()][5];
             for (int i = 0; i < klaarVoorversturen.size(); i++){
-                JButton tableButton = new JButton("button");
+                JButton tableButton = new JButton("Versturen");
                 Object[] dataline = {
                     klaarVoorversturen.get(i).getID(), 
                     klaarVoorversturen.get(i).getBus(), 

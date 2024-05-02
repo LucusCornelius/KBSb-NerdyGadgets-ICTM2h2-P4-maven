@@ -5,7 +5,7 @@ import m2h2.Backoffice.Magazijn.*;
 
 
 public class Main {
-    /*
+
     public static void main(String[] args) {
         Bus b1 = new m2h2.Backoffice.Components.Bus("67-jh-kk");
         Route r1 = new Route(b1 , "noord" , "klaar voor picken");
@@ -49,6 +49,4 @@ public class Main {
         MagazijnFrame frame = new MagazijnFrame(m);
 
     }
-
-     */
 }

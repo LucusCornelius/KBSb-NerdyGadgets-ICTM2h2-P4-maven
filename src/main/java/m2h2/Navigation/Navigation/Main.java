@@ -1,6 +1,7 @@
 package m2h2.Navigation.Navigation;
 
 import m2h2.Backoffice.Magazijn.MagazijnController;
+import m2h2.Backoffice.Magazijn.MagazijnFrame;
 
 import javax.swing.*;
 import java.awt.*;
