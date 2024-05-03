@@ -1,14 +1,21 @@
 package m2h2.Backoffice.Magazijn;
 
 import m2h2.Backoffice.Components.*;
+import m2h2.Backoffice.Components.Tables.JTableButtonMouseListener;
 import m2h2.Backoffice.Components.Tables.JTableButtonRenderer;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
 
 public class MagazijnController {
+    private JPanel mainPanel;
+
     private ArrayList<Route> klaarVoorPicken;
     private ArrayList<Route> bezigMetPicken;
     private ArrayList<Route> klaarVoorversturen;
@@ -17,7 +24,13 @@ public class MagazijnController {
     private String bmp = "bezig met picken";
     private String kvv = "klaar voor versturen";
 
-    public MagazijnController(){
+    private JLabel magazijnLabel = new JLabel("Magazijn");
+    private JLabel kvpLabel = new JLabel("klaar voor picken");
+    private JLabel bmpLabel = new JLabel("bezig met picken");
+    private JLabel kvvLabel = new JLabel("klaar voor versturen");
+
+    public MagazijnController(JPanel mainPanel){
+        this.mainPanel = mainPanel;
         klaarVoorPicken = Route.getRoutes("klaar voor picken");
         bezigMetPicken = Route.getRoutes("bezig met picken");
         klaarVoorversturen = Route.getRoutes("klaar voor versturen");
@@ -38,8 +51,12 @@ public class MagazijnController {
         tableRenderer = table.getDefaultRenderer(JButton.class);
         table.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tableRenderer));
         table.setBounds(0, 0 , 600, 400);
+        table.setRowHeight(table.getRowHeight()+10);
+
+        table.addMouseListener(new JTableButtonMouseListener(table));
 
         JScrollPane sp = new JScrollPane(table);
+        sp.setBounds(0,0,600,200);
         return sp;
     }
 
@@ -47,7 +64,23 @@ public class MagazijnController {
         if (status.equals(kvp)) {
             Object[][] data = new Object[klaarVoorPicken.size()][5];
             for (int i = 0; i < klaarVoorPicken.size(); i++){
-                JButton tableButton = new JButton("button");
+                JButton tableButton = new JButton("bekijk route");
+
+                tableButton.setActionCommand(i+"");
+                tableButton.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("klik!");
+                        int id;
+                        try{
+                            id = Integer.parseInt(e.getActionCommand());
+                        } catch (NumberFormatException ex){
+                            System.out.println("### hele gekke dingen - buttonAction getTableDate MagazijnController ###");
+                            id = -1;
+                        }
+                        MagazijnRouteController mRouteController = new MagazijnRouteController(klaarVoorPicken.get(id).getID(), mainPanel);
+                    }
+                });
+
                 Object[] dataline = {
                     klaarVoorPicken.get(i).getID(), 
                     klaarVoorPicken.get(i).getBus(), 
@@ -76,7 +109,6 @@ public class MagazijnController {
         if (status.equals(kvv)) {
             Object[][] data = new Object[klaarVoorversturen.size()][5];
             for (int i = 0; i < klaarVoorversturen.size(); i++){
-                JButton tableButton = new JButton("button");
                 Object[] dataline = {
                     klaarVoorversturen.get(i).getID(), 
                     klaarVoorversturen.get(i).getBus(), 
@@ -90,6 +122,23 @@ public class MagazijnController {
         } 
         System.out.println("### geen correcte status - getTableData MagazijnController ###");
         return null;
+    }
+
+    public void setMagazijnPanel(){
+        mainPanel.setLayout(new GridLayout(7,1));
+        mainPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE,10));
+
+        mainPanel.add(magazijnLabel);
+
+        mainPanel.add(kvpLabel);
+        mainPanel.add(getTable(this, kvp));
+
+        mainPanel.add(bmpLabel);
+        mainPanel.add(getTable(this, bmp));
+
+        mainPanel.add(kvvLabel);
+        mainPanel.add(getTable(this, kvv));
+
     }
 
     @Override
@@ -114,4 +163,5 @@ public class MagazijnController {
         }
         return s;
     }
+
 }

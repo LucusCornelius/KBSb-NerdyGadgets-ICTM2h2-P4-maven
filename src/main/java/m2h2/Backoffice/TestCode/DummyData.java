@@ -1,11 +1,14 @@
 package m2h2.Backoffice.TestCode;
 
-import m2h2.Backoffice.Components.*;
-import m2h2.Backoffice.Magazijn.*;
+import m2h2.Backoffice.Components.Bus;
+import m2h2.Backoffice.Components.Order;
+import m2h2.Backoffice.Components.OrderLine;
+import m2h2.Backoffice.Components.Route;
+
+public class DummyData {
 
 
-public class Main {
-    public static void main(String[] args) {
+    public void setDummyData(){
         Bus b1 = new m2h2.Backoffice.Components.Bus("67-jh-kk");
         Route r1 = new Route(b1 , "noord" , "klaar voor picken");
         Order o1 = new Order("kerkhofslaan", 7, "8479HH", false);
@@ -41,11 +44,5 @@ public class Main {
         OrderLine ol23 = new OrderLine("B" , 1 , "USB");
         o22.addOrderline(ol23);
         r2.addOrder(o22);
-        
-        MagazijnController m = new MagazijnController();
-        System.out.println(m);
-
-        MagazijnFrame frame = new MagazijnFrame(m);
-
     }
 }

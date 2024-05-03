@@ -51,6 +51,25 @@ public class Order {
             System.out.println("ongeldige postcode");
         }
     }
+    public String getBeschrijving(){
+        if (orderLines.size() == 1) {
+            return orderLines.get(0).getBeschrijving();
+        }
+        //meerdere toevoegen
+        return "meerdere";
+    }
+    public String getSectie(){
+        return orderLines.get(0).getSectie();
+    }
+    public Integer getProuctId(){
+        return (Integer) orderLines.get(0).getID();
+    }
+    public Integer getProductAantal(){
+        return (Integer) orderLines.get(0).getAantal();
+    }
+    public ArrayList<OrderLine> getOrderLines(){
+        return orderLines;
+    }
     public String getPostcode() {
         return postcode;
     }

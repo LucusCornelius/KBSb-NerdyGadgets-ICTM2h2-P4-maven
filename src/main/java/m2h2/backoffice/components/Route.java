@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Route {
     private static ArrayList<Route> routes = new ArrayList<>();
-    private static int IDCounter;
+    private static Integer IDCounter = (Integer) 1;
 
     public static ArrayList<Route> getRoutes(String status){
         ArrayList<Route> r = new ArrayList<>();
@@ -16,8 +16,16 @@ public class Route {
         }
         return r;
     }
+    public static Route getRoute(Integer id){
+        for(Route route: routes){
+            if (route.getID().equals(id)) {
+                return route;
+            }
+        }
+        return null;
+    }
 
-    private int ID;
+    private Integer ID;
     private Bus bus;
     private String regio;
     private ArrayList<Order> orders;
@@ -34,14 +42,14 @@ public class Route {
         routes.add(this);
     }
     public void setID() {
-        if (ID == 0) {
+        if (ID == null) {
             IDCounter++;
             ID = IDCounter;
         } else {
             System.out.println("## ID al gezet! ##");
         }
     }
-    public int getID() {
+    public Integer getID() {
         return ID;
     }
     public void setBus(Bus bus) {
@@ -66,9 +74,14 @@ public class Route {
     public void addOrder(Order order){
         orders.add(order);
     }
-    public int getSize(){
-        return orders.size();
+    public Integer getSize(){
+        return (Integer) orders.size();
     }
+
+    public ArrayList<Order> getOrders() {
+        return orders;
+    }
+
     public String getPostcodeRange(){
         String pr = "";
         int min = 9999;
@@ -93,7 +106,7 @@ public class Route {
             "Bus: " + bus + "\n" +
             "regio: " + regio + "\n"
             );
-        if (orders.size() == 0) {
+        if (orders.isEmpty()) {
             s = s + "geen orders";
         } else {
             for(Order order: orders){

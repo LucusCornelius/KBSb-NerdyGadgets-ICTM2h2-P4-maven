@@ -1,15 +1,14 @@
 package m2h2.Backoffice.Magazijn;
 
-import javax.swing.*;
-import javax.swing.table.*;
+import javax.swing.table.AbstractTableModel;
 
-public class MagazijnTableModel extends AbstractTableModel {
-    private String[] columnNames = {"ID-Route" , "Bus" , "Aantal orders" , "Postcodes" , "Status"};
+public class MagazijnRouteTableModel extends AbstractTableModel {
+    private String[] columnNames = {"ID-Order" , "Niet op Voorraad" , "Product-ID" , "Aantal" , "Sectie" , "Product beschrijving"};
     private Object[][] data;
 
-    public MagazijnTableModel(MagazijnController mController, String status){
+    public MagazijnRouteTableModel(MagazijnRouteController mRouteController){
         super();
-        data = mController.getTableData(status);
+        data = mRouteController.getTableData();
     }
 
     public int getColumnCount() {
@@ -29,5 +28,5 @@ public class MagazijnTableModel extends AbstractTableModel {
     }
     public Class getColumnClass(int column) {
         return getValueAt(0, column).getClass();
-     }
+    }
 }
