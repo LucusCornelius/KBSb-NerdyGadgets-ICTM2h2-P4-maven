@@ -1,9 +1,13 @@
 package m2h2.Navigation.Navigation;
 
+import m2h2.Backoffice.Koerier.KoerierController;
+import m2h2.Backoffice.Koerier.TestScherm.DummyData;
 import m2h2.Backoffice.Magazijn.MagazijnController;
 import m2h2.Backoffice.Magazijn.MagazijnFrame;
 
 import javax.swing.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +32,8 @@ public class Main extends javax.swing.JFrame implements ActionListener{
     SideMenuPanel sp;
 
     public Main() {
+        DummyData DD = new DummyData();
+        DD.setDummyData();
         initComponents();
         sp = new SideMenuPanel(this);
         sp.setMain(mainPanel);
@@ -198,50 +204,7 @@ public class Main extends javax.swing.JFrame implements ActionListener{
 //Hier kan je wat toevoegen voor in de homepage(staat nu weergegeven op route)
 
 // einde toevoegen voor de homepage
-        GroupLayout mainPanelLayout = new GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-                mainPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addGroup(mainPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addGap(227, 227, 227)
-                                .addGroup(mainPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(mainPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                .addGroup(mainPanelLayout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addGap(48, 48, 48))
-                                .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addGroup(mainPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                .addGroup(mainPanelLayout.createSequentialGroup()
-                                    .addGap(23, 23, 23)
-                                .addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 409, GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel3))
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addGroup(mainPanelLayout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                .addContainerGap())))
-        );
-        mainPanelLayout.setVerticalGroup(
-                mainPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(mainPanelLayout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addGroup(mainPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel7))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(mainPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addGap(32, 32, 32)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(71, Short.MAX_VALUE))
-        );
+
 
         GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -325,12 +288,20 @@ public class Main extends javax.swing.JFrame implements ActionListener{
         }
 
         if (e.getSource() == Koerier){
-            mainPanel.setBackground(new Color(255, 255, 255));
+            mainPanel.removeAll();
             jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
             jLabel1.setForeground(new Color(51, 51, 51));
             jLabel1.setText("Koerier");
 
-            MagazijnController Mg = new MagazijnController();
+            KoerierController kController = new KoerierController();
+            JScrollPane sp = kController.getTable(kController, "Bekijk mijn order(s)");
+
+            mainPanel.setLayout(new BorderLayout());
+            mainPanel.add(jLabel1, BorderLayout.NORTH);
+            mainPanel.add(sp, BorderLayout.CENTER);
+            mainPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE,20));
+
+
 
             mainPanel.revalidate();
             mainPanel.repaint();
