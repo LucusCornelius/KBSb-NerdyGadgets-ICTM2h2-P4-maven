@@ -2,6 +2,7 @@ package m2h2.backoffice.testCode;
 
 import m2h2.backoffice.Magazijn.*;
 import m2h2.backoffice.Overzicht.OverzichtController;
+import m2h2.backoffice.Overzicht.OverzichtFrame;
 import m2h2.backoffice.components.*;
 
 public class Main {
@@ -39,6 +40,9 @@ public class Main {
 //        MagazijnFrame frame = new MagazijnFrame(m);
 
         OverzichtController oc = new OverzichtController();
-        System.out.println(oc);
+//        System.out.println(oc);
+        System.out.println(oc.getVoltooideRoutes());
+
+        OverzichtFrame frame = new OverzichtFrame(oc);
     }
 }
