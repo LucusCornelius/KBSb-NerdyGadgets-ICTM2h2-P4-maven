@@ -1,3 +1,0 @@
-GefilterdeAdressen: {orderID=1 naam=' Lucas', straatnaam='Bloemberg', postcode='7924PW', huisnummer=28, order='t-shirt', Coordinaten='52° 39.11996446394511, 6° 20.94049793810985'}
-GefilterdeAdressen: {orderID=1 naam=' Lucas', straatnaam='Bloemberg', postcode='7924PW', huisnummer=28, order='t-shirt', Coordinaten='52° 39.11996446394511, 6° 20.94049793810985'}
-GefilterdeAdressen: {orderID=1 naam=' Lucas', straatnaam='Bloemberg', postcode='7924PW', huisnummer=28, order='t-shirt', Coordinaten='52° 39.11996446394511, 6° 20.94049793810985'}

@@ -1,6 +1,0 @@
-GefilterdeAdressen: {orderID=4 naam=' Jeff', straatnaam='Europastraat', postcode='6014CD', huisnummer=6, order='auto', Coordinaten='51° 10.747371385185573, 5° 50.02421195241779'}
-GefilterdeAdressen: {orderID=4 naam=' Justin', straatnaam='Markt', postcode='6088BP', huisnummer=16, order='auto', Coordinaten='51° 15.794869624121759, 5° 55.343739631860025'}
-GefilterdeAdressen: {orderID=4 naam=' Jeff', straatnaam='Europastraat', postcode='6014CD', huisnummer=6, order='auto', Coordinaten='51° 10.747371385185573, 5° 50.02421195241779'}
-GefilterdeAdressen: {orderID=4 naam=' Justin', straatnaam='Markt', postcode='6088BP', huisnummer=16, order='auto', Coordinaten='51° 15.794869624121759, 5° 55.343739631860025'}
-GefilterdeAdressen: {orderID=4 naam=' Jeff', straatnaam='Europastraat', postcode='6014CD', huisnummer=6, order='auto', Coordinaten='51° 10.747371385185573, 5° 50.02421195241779'}
-GefilterdeAdressen: {orderID=4 naam=' Justin', straatnaam='Markt', postcode='6088BP', huisnummer=16, order='auto', Coordinaten='51° 15.794869624121759, 5° 55.343739631860025'}

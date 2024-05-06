@@ -16,8 +16,14 @@ public class Orders_Met_Coordinaten {
 
     private String order;
 
+    private String LatitudeGraden;
+    private String LongitudeGraden;
+    private String LatitudeMinuten;
+    private String LongitudeMinuten;
 
-    private String Coordinaten;
+    private double Coordinaten_RijksDriehoek_X, Coordinaten_RijksDriehoek_Y;
+
+    private double Coordinaten_DecimalDegrees_X, Coordinaten_DecimalDegrees_Y;
 
 
     public Orders_Met_Coordinaten (int orderID, String naam, String straatnaam, String postcode, int huisnummer, String order) {
@@ -29,9 +35,30 @@ public class Orders_Met_Coordinaten {
         this.order = order;
     }
 
-    public void setCoordinaten(String coordinaten) {
-        Coordinaten = coordinaten;
+    public void setCoordinaten_DMS(
+            String LatitudeGraden,
+            String LatitudeMinuten,
+            String LongitudeGraden,
+            String LongitudeMinuten)
+    {
+        this.LatitudeGraden = LatitudeGraden;
+        this.LatitudeMinuten = LatitudeMinuten;
+        this.LongitudeGraden = LongitudeGraden;
+        this.LongitudeMinuten = LongitudeMinuten;
     }
+
+
+    public void setCoordinaten_RijksDriehoek(double x, double y) {
+        Coordinaten_RijksDriehoek_X = x;
+        Coordinaten_RijksDriehoek_Y = y;
+    }
+
+    public void setCoordinaten_DecimalDegrees(double x, double y) {
+        Coordinaten_DecimalDegrees_X = x;
+        Coordinaten_DecimalDegrees_Y = y;
+    }
+
+
 
     public int getOrderID() {
         return orderID;
@@ -61,19 +88,40 @@ public class Orders_Met_Coordinaten {
         return order;
     }
 
-    public String getCoordinaten() {
-        return Coordinaten;
+    public String getCoordinaten_DMS() {
+        return LatitudeGraden + "° " + LatitudeMinuten + ", " + LongitudeGraden + "° " + LongitudeMinuten;
     }
 
-   public String getWriteToFile() {
-        return "GefilterdeAdressen: {" +
+    public String getCoordinaten_OSMR() {
+        return LatitudeGraden + "°" + LatitudeMinuten + "," + LongitudeGraden + "°" + LongitudeMinuten + "/";
+    }
+
+
+    public double getCoordinaten_RijksDriehoek_X() {
+        return Coordinaten_RijksDriehoek_X;
+    }
+
+    public double getCoordinaten_RijksDriehoek_Y() {
+        return Coordinaten_RijksDriehoek_Y;
+    }
+
+    public double getCoordinaten_DecimalDegrees_X() {
+        return Coordinaten_DecimalDegrees_X;
+    }
+
+
+
+    public String getWriteToFile() {
+        return "{" +
                 "orderID=" + orderID +
                 " naam=' " + naam + '\'' +
                 ", straatnaam='" + straatnaam + '\'' +
                 ", postcode='" + postcode + '\'' +
                 ", huisnummer=" + huisnummer +
                 ", order='" + order + '\'' +
-                ", Coordinaten='" + Coordinaten + '\'' +
+                ", Coordinaten_DMS='" + getCoordinaten_DMS() + '\'' +
+                ", Coordinaten_DECIMAL_RIJKSDRIEHOEK='" + "X= " + Coordinaten_RijksDriehoek_X + " ||| " + "Y= " + Coordinaten_RijksDriehoek_Y + '\'' +
+                ", Coordinaten_DECIMAL='" + "X= " + Coordinaten_DecimalDegrees_X + " ||| " + "Y= " + Coordinaten_DecimalDegrees_Y + '\'' +
                 '}';
    }
 
@@ -86,7 +134,9 @@ public class Orders_Met_Coordinaten {
                 ", postcode='" + postcode + '\'' +
                 ", huisnummer=" + huisnummer +
                 ", order='" + order + '\'' +
-                ", Coordinaten='" + Coordinaten + '\'' +
+                ", Coordinaten_DMS='" + getCoordinaten_DMS() + '\'' +
+                ", Coordinaten_DECIMAL_RIJKSDRIEHOEK='" + "X= " + Coordinaten_RijksDriehoek_X + " ||| " + "Y= " + Coordinaten_RijksDriehoek_Y + '\'' +
+                ", Coordinaten_DECIMAL='" + "X= " + Coordinaten_DecimalDegrees_X + " ||| " + "Y= " + Coordinaten_DecimalDegrees_Y + '\'' +
                 '}';
     }
 }

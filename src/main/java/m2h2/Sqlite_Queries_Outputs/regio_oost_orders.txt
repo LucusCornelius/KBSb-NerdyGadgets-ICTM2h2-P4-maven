@@ -1,3 +1,0 @@
-GefilterdeAdressen: {orderID=4 naam=' Piet', straatnaam='Schuilenburgsingel', postcode='7604BT', huisnummer=5, order='boot', Coordinaten='52° 21.620940834896913, 6° 37.801474545724716'}
-GefilterdeAdressen: {orderID=4 naam=' Piet', straatnaam='Schuilenburgsingel', postcode='7604BT', huisnummer=5, order='boot', Coordinaten='52° 21.620940834896913, 6° 37.801474545724716'}
-GefilterdeAdressen: {orderID=4 naam=' Piet', straatnaam='Schuilenburgsingel', postcode='7604BT', huisnummer=5, order='boot', Coordinaten='52° 21.620940834896913, 6° 37.801474545724716'}

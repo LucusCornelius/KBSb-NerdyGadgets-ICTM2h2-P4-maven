@@ -1,6 +1,8 @@
 package m2h2.Regios;
 
 
+import m2h2.Algoritme.GFG;
+
 import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -50,7 +52,7 @@ public class Regios {
          }
 
       } catch (Exception e) {
-
+          System.out.println(e);
       }
    }
 
@@ -78,10 +80,12 @@ public class Regios {
     public void writeToFile() {
         for (int i = 0; i < getRegio_Noord_Postcodes().size(); i++) {
             writeToFileFunctions(getRegio_Noord_Postcodes().get(i).getWriteToFile(), (this.writePath + "regio_noord_orders.txt"), clearFiles);
+
         }
 
         for (int i = 0; i < getRegio_West_Postcodes().size(); i++) {
             writeToFileFunctions(getRegio_West_Postcodes().get(i).getWriteToFile(), (this.writePath + "regio_west_orders.txt"), clearFiles);
+
         }
 
         for (int i = 0; i < getRegio_Zuid_West_Postcodes().size(); i++) {

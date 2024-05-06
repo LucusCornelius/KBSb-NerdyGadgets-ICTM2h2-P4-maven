@@ -2,6 +2,7 @@ package m2h2.Adressen;
 
 
 import Console_Color_Codes.ConsoleColorCodes;
+import m2h2.Algoritme.GFG;
 import m2h2.Orders.Order;
 import m2h2.Regios.Orders_Met_Coordinaten;
 import m2h2.Regios.Regios;
@@ -75,10 +76,17 @@ public class Adressen_GEO_Data {
 
 
                 try {
+                    System.out.println("RIJKSDRIEHOEKSCOORDINATEN: " + Double.parseDouble(rs.getString(2)) + " ||| " + Double.parseDouble(rs.getString(4)));
+                    ordersMetCoordinaten.setCoordinaten_RijksDriehoek(Double.parseDouble(rs.getString(2)), Double.parseDouble(rs.getString(4)));
+
+
+
                     RDtoDegrees(rs.getString(1), Double.parseDouble(rs.getString(2)), Double.parseDouble(rs.getString(4)), ordersMetCoordinaten);
 
 
                     if((i+1 == orders.size())) {
+
+                        System.out.println("HIER");
 
                         Regios regio = new Regios(orders_met_coordinaten);
 
@@ -89,6 +97,9 @@ public class Adressen_GEO_Data {
                         System.out.println("Zuid-West= " + regio.getRegio_Zuid_West_Postcodes());
                         System.out.println("Zuid-Oost= " + regio.getRegio_Zuid_Oost_Postcodes());
                         System.out.println("Oost= " + regio.getRegio_Oost_Postcodes());
+
+                        GFG.createPoints(regio.getRegio_West_Postcodes());
+
 
                     }
 
@@ -123,15 +134,19 @@ public class Adressen_GEO_Data {
         double Latitude = 52.15517 + (SomN / 3600);
         double Longitude = 5.387206 + (SomE / 3600);
 
+
+
         int LatitudeGraden = (int) Latitude;
         int LongitudeGraden = (int) Longitude;
 
-        double LatitudeGraden_double = LatitudeGraden;
-        double LongitudeGraden_double = Longitude;
-
-
         double LatitudeMinuten = (Latitude - LatitudeGraden) * 60;
         double LongitudeMinuten = (Longitude - LongitudeGraden) * 60;
+
+        double latitudeDecimalDegrees = LatitudeGraden + LatitudeMinuten / 60;
+        double longitudeDecimalDegrees = LongitudeGraden + LongitudeMinuten / 60;
+
+        System.out.println(latitudeDecimalDegrees + longitudeDecimalDegrees);
+        ordersMetCoordinaten.setCoordinaten_DecimalDegrees(latitudeDecimalDegrees, longitudeDecimalDegrees);
 
         String LatitudeGradenString = Integer.toString(LatitudeGraden);
         String LongitudeGradenString = Integer.toString(LongitudeGraden);
@@ -141,7 +156,7 @@ public class Adressen_GEO_Data {
 
 
         System.out.println("Coördinaten: " + LatitudeGradenString + "° " + LatitudeMinutenString + ", " + LongitudeGradenString + "° " + LongitudeMinutenString);
-        ordersMetCoordinaten.setCoordinaten(LatitudeGradenString + "° " + LatitudeMinutenString + ", " + LongitudeGradenString + "° " + LongitudeMinutenString);
+        ordersMetCoordinaten.setCoordinaten_DMS(LatitudeGradenString,  LatitudeMinutenString, LongitudeGradenString, LongitudeMinutenString);
         orders_met_coordinaten.add(ordersMetCoordinaten);
         System.out.println("\nProcessed orders" + orders_met_coordinaten);
 
