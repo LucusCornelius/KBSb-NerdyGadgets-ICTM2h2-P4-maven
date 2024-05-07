@@ -10,6 +10,7 @@ public class Order {
     private String postcode;
     private ArrayList<OrderLine> orderLines;
     private boolean bezorgd;
+    private boolean opVoorraad;
 
     public Order(String straatnaam, int huisnummer, String postcode, boolean bezorgd){
         orderLines = new ArrayList<>();
@@ -57,6 +58,9 @@ public class Order {
         }
         //meerdere toevoegen
         return "meerdere";
+    }
+    public boolean getOpVoorraad(){
+        return opVoorraad;
     }
     public String getSectie(){
         return orderLines.get(0).getSectie();

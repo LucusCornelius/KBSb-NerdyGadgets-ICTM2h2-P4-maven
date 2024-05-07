@@ -31,9 +31,7 @@ public class MagazijnController {
 
     public MagazijnController(JPanel mainPanel){
         this.mainPanel = mainPanel;
-        klaarVoorPicken = Route.getRoutes("klaar voor picken");
-        bezigMetPicken = Route.getRoutes("bezig met picken");
-        klaarVoorversturen = Route.getRoutes("klaar voor versturen");
+        updateStatus();
     }
     public ArrayList<Route> getKlaarVoorPicken() {
         return klaarVoorPicken;
@@ -43,6 +41,11 @@ public class MagazijnController {
     }
     public ArrayList<Route> getKlaarVoorversturen() {
         return klaarVoorversturen;
+    }
+    public void updateStatus(){
+        klaarVoorPicken = Route.getRoutes("klaar voor picken");
+        bezigMetPicken = Route.getRoutes("bezig met picken");
+        klaarVoorversturen = Route.getRoutes("klaar voor versturen");
     }
 
     public JScrollPane getTable(MagazijnController mController, String status){
@@ -62,7 +65,7 @@ public class MagazijnController {
 
     public Object[][] getTableData(String status){
         if (status.equals(kvp)) {
-            Object[][] data = new Object[klaarVoorPicken.size()][5];
+            Object[][] data = new Object[Route.getRoutes().size()][5];
             for (int i = 0; i < klaarVoorPicken.size(); i++){
                 JButton tableButton = new JButton("bekijk route");
 
@@ -78,6 +81,7 @@ public class MagazijnController {
                             id = -1;
                         }
                         MagazijnRouteController mRouteController = new MagazijnRouteController(klaarVoorPicken.get(id).getID(), mainPanel);
+                        klaarVoorPicken.get(id).setStatus(bmp);
                     }
                 });
 
@@ -95,12 +99,27 @@ public class MagazijnController {
         if (status.equals(bmp)) {
             Object[][] data = new Object[bezigMetPicken.size()][5];
             for (int i = 0; i < bezigMetPicken.size(); i++){
+                JButton tableButton = new JButton("bekijk route");
+                tableButton.setActionCommand(i+"");
+                tableButton.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("klik!");
+                        int id;
+                        try{
+                            id = Integer.parseInt(e.getActionCommand());
+                        } catch (NumberFormatException ex){
+                            System.out.println("### hele gekke dingen - buttonAction getTableDate MagazijnController ###");
+                            id = -1;
+                        }
+                        MagazijnRouteController mRouteController = new MagazijnRouteController(bezigMetPicken.get(id).getID(), mainPanel);
+                    }
+                });
                 Object[] dataline = {
                     bezigMetPicken.get(i).getID(), 
                     bezigMetPicken.get(i).getBus(), 
                     bezigMetPicken.get(i).getSize(), 
                     bezigMetPicken.get(i).getPostcodeRange(),
-                    bmp 
+                    tableButton
                 };
                 data[i] = dataline;
             }
@@ -121,10 +140,14 @@ public class MagazijnController {
             return data;         
         } 
         System.out.println("### geen correcte status - getTableData MagazijnController ###");
-        return null;
+        Object[][] data = new Object[1][5];
+        Object[] dataline = {"-" , "-" , "-" , "-" , "-"};
+        data[1] = dataline;
+        return data;
     }
 
     public void setMagazijnPanel(){
+        updateStatus();
         mainPanel.setLayout(new GridLayout(7,1));
         mainPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE,10));
 

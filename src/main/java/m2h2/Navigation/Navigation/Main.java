@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import m2h2.Backoffice.Magazijn.MagazijnController;
+import m2h2.Backoffice.Overzicht.OverzichtController;
 import m2h2.Backoffice.TestCode.DummyData;
 
 public class Main extends javax.swing.JFrame implements ActionListener{
@@ -264,11 +265,17 @@ public class Main extends javax.swing.JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == Route){
-
+            mainPanel.removeAll();
             mainPanel.setBackground(new Color(255, 255, 255));
             jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
             jLabel1.setForeground(new Color(51, 51, 51));
             jLabel1.setText("Route");
+            mainPanel.add(jLabel1);
+
+            OverzichtController oController = new OverzichtController();
+            JScrollPane scrollPane = oController.getOverzichtTable();
+            mainPanel.add(scrollPane);
+
 
             mainPanel.revalidate();
             mainPanel.repaint();

@@ -7,12 +7,14 @@ import m2h2.Backoffice.Components.Tables.JTableButtonRenderer;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class MagazijnRouteController {
     private JPanel mainPanel;
+    private JLabel magazijnLabel;
     private Route route;
     private ArrayList<Order> orders;
     private Integer id;
@@ -29,7 +31,9 @@ public class MagazijnRouteController {
 
     public void setMagazijnRoutePanel(){
         mainPanel.removeAll();
+        mainPanel.setLayout(new GridLayout(5,1));
 
+        mainPanel.add(magazijnLabel = new JLabel("Magazijn"));
         JScrollPane sp = getTable();
         mainPanel.add(sp);
 
@@ -42,8 +46,10 @@ public class MagazijnRouteController {
         JTable table = new JTable(new MagazijnRouteTableModel(this));
         tableRenderer = table.getDefaultRenderer(JButton.class);
         table.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tableRenderer));
+        tableRenderer = table.getDefaultRenderer(boolean.class);
+        table.setDefaultRenderer(JCheckBox.class, new JTableButtonRenderer(tableRenderer));
         table.setBounds(0, 0 , 600, 400);
-        table.setRowHeight(table.getRowHeight()+10);
+        table.setRowHeight(table.getRowHeight() + 15);
 
         table.addMouseListener(new JTableButtonMouseListener(table));
 
@@ -56,9 +62,10 @@ public class MagazijnRouteController {
         Object[][] data = new Object[orders.size()][6];
         for (int i = 0; i < orders.size(); i++){
             if (orders.get(i).getOrderLines().size() == 1){
+                JCheckBox opVoorraadBox = new JCheckBox("",orders.get(i).getOpVoorraad());
                 Object[] dataline = {
                         orders.get(i).getID(),
-                        "checkbox",
+                        opVoorraadBox,
                         orders.get(i).getProuctId(),
                         orders.get(i).getProductAantal(),
                         orders.get(i).getSectie(),
