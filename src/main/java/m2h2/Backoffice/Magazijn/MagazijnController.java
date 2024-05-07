@@ -12,7 +12,6 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
-
 public class MagazijnController {
     private JPanel mainPanel;
 

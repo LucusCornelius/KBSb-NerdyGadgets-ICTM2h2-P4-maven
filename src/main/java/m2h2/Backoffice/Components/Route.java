@@ -2,7 +2,6 @@ package m2h2.Backoffice.Components;
 
 import java.util.ArrayList;
 
-
 public class Route {
     private static ArrayList<Route> routes = new ArrayList<>();
     private static Integer IDCounter = (Integer) 1;

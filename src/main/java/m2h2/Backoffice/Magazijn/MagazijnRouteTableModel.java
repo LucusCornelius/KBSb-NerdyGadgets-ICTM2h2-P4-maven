@@ -11,6 +11,7 @@ public class MagazijnRouteTableModel extends AbstractTableModel {
         data = mRouteController.getTableData();
     }
 
+
     public int getColumnCount() {
         return columnNames.length;
     }
