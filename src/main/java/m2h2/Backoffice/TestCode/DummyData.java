@@ -1,11 +1,15 @@
-package backoffice.testCode;
+package m2h2.Backoffice.TestCode;
 
-import backoffice.components.*;
-import backoffice.Magazijn.*;
+import m2h2.Backoffice.Components.Bus;
+import m2h2.Backoffice.Components.Order;
+import m2h2.Backoffice.Components.OrderLine;
+import m2h2.Backoffice.Components.Route;
 
-public class Main {
-    public static void main(String[] args) {
-        Bus b1 = new Bus("67-jh-kk");
+public class DummyData {
+
+
+    public void setDummyData(){
+        Bus b1 = new m2h2.Backoffice.Components.Bus("67-jh-kk");
         Route r1 = new Route(b1 , "noord" , "klaar voor picken");
         Order o1 = new Order("kerkhofslaan", 7, "8479HH", false);
         OrderLine ol1 = new OrderLine("A" , 2 , "USB");
@@ -13,10 +17,20 @@ public class Main {
         OrderLine ol2 = new OrderLine("b" , 2 , "shirt");
         o1.addOrderline(ol2);
         r1.addOrder(o1);
-        Order o2 = new Order("kfslaan", 9, "8474HH", false);
-        OrderLine ol3 = new OrderLine("B" , 1 , "USB");
-        o2.addOrderline(ol3);
-        r1.addOrder(o2);;
+
+        Bus b3 = new m2h2.Backoffice.Components.Bus("67-jh-fk");
+        Route r3 = new Route(b3 , "noord" , "klaar voor picken");
+        Order o3 = new Order("kerkhofslaan", 7, "8479HH", false);
+        OrderLine ol4 = new OrderLine("A" , 2 , "USB");
+        o3.addOrderline(ol4);
+        OrderLine ol5 = new OrderLine("b" , 2 , "shirt");
+        o3.addOrderline(ol5);
+        r3.addOrder(o3);
+        Order o4 = new Order("kfslaan", 9, "7643HH", false);
+        OrderLine ol6 = new OrderLine("B" , 1 , "USB");
+        o4.addOrderline(ol6);
+        r3.addOrder(o4);
+
 
         Bus b2 = new Bus("68-45-kk");
         Route r2 = new Route(b2 , "Oost" , "bezig met picken");
@@ -30,9 +44,5 @@ public class Main {
         OrderLine ol23 = new OrderLine("B" , 1 , "USB");
         o22.addOrderline(ol23);
         r2.addOrder(o22);
-        
-        MagazijnController m = new MagazijnController();
-        System.out.println(m);
-
     }
 }

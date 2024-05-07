@@ -1,6 +1,6 @@
-package backoffice.components;
+package m2h2.Backoffice.Components;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Order {
     private static int IDCounter;
@@ -10,6 +10,7 @@ public class Order {
     private String postcode;
     private ArrayList<OrderLine> orderLines;
     private boolean bezorgd;
+    private boolean opVoorraad;
 
     public Order(String straatnaam, int huisnummer, String postcode, boolean bezorgd){
         orderLines = new ArrayList<>();
@@ -51,8 +52,39 @@ public class Order {
             System.out.println("ongeldige postcode");
         }
     }
+    public String getBeschrijving(){
+        if (orderLines.size() == 1) {
+            return orderLines.get(0).getBeschrijving();
+        }
+        //meerdere toevoegen
+        return "meerdere";
+    }
+    public boolean getOpVoorraad(){
+        return opVoorraad;
+    }
+    public String getSectie(){
+        return orderLines.get(0).getSectie();
+    }
+    public Integer getProuctId(){
+        return (Integer) orderLines.get(0).getID();
+    }
+    public Integer getProductAantal(){
+        return (Integer) orderLines.get(0).getAantal();
+    }
+    public ArrayList<OrderLine> getOrderLines(){
+        return orderLines;
+    }
     public String getPostcode() {
         return postcode;
+    }
+    public int getPostcodeNummers(){
+        String nummerString = postcode.substring(0, 4);
+        try {
+            return Integer.parseInt(nummerString);
+        } catch (NumberFormatException e) {
+            System.out.println("### verkeerde postcodeformat! - getPostcodeNummers Order ###");
+            return -1;
+        }
     }
     public void setBezorgd(boolean bezorgd) {
         this.bezorgd = bezorgd;
