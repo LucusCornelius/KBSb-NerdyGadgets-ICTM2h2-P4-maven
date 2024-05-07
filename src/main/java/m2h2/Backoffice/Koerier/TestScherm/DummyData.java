@@ -41,5 +41,18 @@ public class DummyData {
         OrderLine ol23 = new OrderLine("B" , 1 , "USB");
         o22.addOrderline(ol23);
         r2.addOrder(o22);
+
+        Bus b5 = new Bus("68-45-kk");
+        Route r8 = new Route(b5 , "Oost" , "Bekijk mijn order(s)");
+        Order o25 = new Order("kerkhofslaan", 7, "8479HH", false);
+        OrderLine ol25 = new OrderLine("A" , 2 , "USB");
+        o21.addOrderline(ol25);
+        OrderLine ol26 = new OrderLine("b" , 2 , "shirt");
+        o21.addOrderline(ol26);
+        r8.addOrder(o25);
+        Order o27 = new Order("kfslaan", 9, "8474HH", false);
+        OrderLine ol27 = new OrderLine("B" , 1 , "USB");
+        o22.addOrderline(ol27);
+        r8.addOrder(o25);
     }
 }
