@@ -19,7 +19,7 @@ public class OverzichtController {
     private ArrayList<Route> nVoltooideRoutes;
     private JPanel mainPanel;
 
-    public OverzichtController() {
+    public OverzichtController(JPanel mainPanel) {
         this.mainPanel = mainPanel;
         voltooideRoutes = new ArrayList<>();
         nVoltooideRoutes = new ArrayList<>();
@@ -113,8 +113,8 @@ public class OverzichtController {
                         System.out.println("### hele gekke dingen - buttonAction getTableDate MagazijnController ###");
                         id = -1;
                     }
-                    MagazijnRouteController mRouteController = new MagazijnRouteController(voltooideRoutes.get(id).getID(), mainPanel);
-                    voltooideRoutes.get(id);
+                    MagazijnRouteController mRouteController = new MagazijnRouteController(nVoltooideRoutes.get(id).getID(), mainPanel);
+                    nVoltooideRoutes.get(id);
                 }
             });
 

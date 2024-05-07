@@ -273,7 +273,7 @@ public class Main extends javax.swing.JFrame implements ActionListener{
             mainPanel.add(jLabel1);
             mainPanel.setLayout(new GridLayout(7,1));
 
-            OverzichtController oController = new OverzichtController();
+            OverzichtController oController = new OverzichtController(mainPanel);
             JScrollPane scrollPane = oController.getVoltooideRoutesOverzicht();
             JScrollPane ovScrollpane = oController.getOnvoltooideRoutesOverzicht();
             mainPanel.add(ovScrollpane);
