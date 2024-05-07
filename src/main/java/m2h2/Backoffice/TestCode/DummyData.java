@@ -1,16 +1,14 @@
 package m2h2.Backoffice.TestCode;
 
-import m2h2.Backoffice.Components.Bus;
-import m2h2.Backoffice.Components.Order;
-import m2h2.Backoffice.Components.OrderLine;
-import m2h2.Backoffice.Components.Route;
+import m2h2.Backoffice.Components.*;
 
 public class DummyData {
 
 
     public void setDummyData(){
+        Koerier k1 = new Koerier("Willem");
         Bus b1 = new m2h2.Backoffice.Components.Bus("67-jh-kk");
-        Route r1 = new Route(b1 , "noord" , "klaar voor picken");
+        Route r1 = new Route(b1 , "west" , "klaar voor picken", k1);
         Order o1 = new Order("kerkhofslaan", 7, "8479HH", false);
         OrderLine ol1 = new OrderLine("A" , 2 , "USB");
         o1.addOrderline(ol1);

@@ -271,9 +271,12 @@ public class Main extends javax.swing.JFrame implements ActionListener{
             jLabel1.setForeground(new Color(51, 51, 51));
             jLabel1.setText("Route");
             mainPanel.add(jLabel1);
+            mainPanel.setLayout(new GridLayout(7,1));
 
-            OverzichtController oController = new OverzichtController();
-            JScrollPane scrollPane = oController.getOverzichtTable();
+            OverzichtController oController = new OverzichtController(mainPanel);
+            JScrollPane scrollPane = oController.getVoltooideRoutesOverzicht();
+            JScrollPane ovScrollpane = oController.getOnvoltooideRoutesOverzicht();
+            mainPanel.add(ovScrollpane);
             mainPanel.add(scrollPane);
 
 
