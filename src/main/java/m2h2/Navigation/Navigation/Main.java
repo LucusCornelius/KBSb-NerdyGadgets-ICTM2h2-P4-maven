@@ -301,8 +301,6 @@ public class Main extends javax.swing.JFrame implements ActionListener{
             mainPanel.add(sp, BorderLayout.CENTER);
             mainPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE,20));
 
-
-
             mainPanel.revalidate();
             mainPanel.repaint();
         }

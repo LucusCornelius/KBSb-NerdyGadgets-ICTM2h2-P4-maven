@@ -2,14 +2,12 @@ package m2h2.Backoffice.Koerier;
 
 import m2h2.Backoffice.Components.Route;
 import m2h2.Backoffice.Components.Tables.JTableButtonRenderer;
-import m2h2.Backoffice.Magazijn.MagazijnController;
-import m2h2.Backoffice.Magazijn.MagazijnTableModel;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class KoerierController {
