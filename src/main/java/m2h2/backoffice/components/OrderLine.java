@@ -8,7 +8,6 @@ public class OrderLine {
     private boolean opVoorraad;
     private String beschrijving;
 
-
     public OrderLine(String sectie, int aantal, String beschrijving){
         setID();
         setSectie(sectie);
@@ -16,7 +15,6 @@ public class OrderLine {
         setBeschrijving(beschrijving);
         setOpVoorraad(true);
     }
-
 
     public void setID() {
         if (ID == 0) {

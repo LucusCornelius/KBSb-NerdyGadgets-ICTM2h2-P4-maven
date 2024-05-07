@@ -46,8 +46,8 @@ public class MagazijnRouteController {
         JTable table = new JTable(new MagazijnRouteTableModel(this));
         tableRenderer = table.getDefaultRenderer(JButton.class);
         table.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tableRenderer));
-        tableRenderer = table.getDefaultRenderer(boolean.class);
-        table.setDefaultRenderer(JCheckBox.class, new JTableButtonRenderer(tableRenderer));
+        //tableRenderer = table.getDefaultRenderer(boolean.class);
+        //table.setDefaultRenderer(boolean.class, new JTableButtonRenderer(tableRenderer));
         table.setBounds(0, 0 , 600, 400);
         table.setRowHeight(table.getRowHeight() + 15);
 
@@ -62,10 +62,10 @@ public class MagazijnRouteController {
         Object[][] data = new Object[orders.size()][6];
         for (int i = 0; i < orders.size(); i++){
             if (orders.get(i).getOrderLines().size() == 1){
-                JCheckBox opVoorraadBox = new JCheckBox("",orders.get(i).getOpVoorraad());
+                //JCheckBox opVoorraadBox = new JCheckBox("",orders.get(i).getOpVoorraad());
                 Object[] dataline = {
                         orders.get(i).getID(),
-                        opVoorraadBox,
+                        orders.get(i).getOpVoorraad(),
                         orders.get(i).getProuctId(),
                         orders.get(i).getProductAantal(),
                         orders.get(i).getSectie(),
