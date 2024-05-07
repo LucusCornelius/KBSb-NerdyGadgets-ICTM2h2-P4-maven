@@ -93,7 +93,7 @@ public class Orders_Met_Coordinaten {
     }
 
     public String getCoordinaten_OSMR() {
-        return LatitudeGraden + "°" + LatitudeMinuten + "," + LongitudeGraden + "°" + LongitudeMinuten + "/";
+        return Coordinaten_DecimalDegrees_Y + "," + Coordinaten_DecimalDegrees_X + ";";
     }
 
 

@@ -6,12 +6,12 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.WriterException;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import m2h2.Regios.Orders_Met_Coordinaten;
+import m2h2.RouteBuilder.RouteBuilder;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-import static m2h2.QR_Codes.QR_Generator.createQR;
 
 public class GFG {
 
@@ -58,11 +58,30 @@ public class GFG {
 
                 try {
 
-                    StringBuilder route_URL = new StringBuilder("http://localhost:5000/route/v1/driving/5.113111,52.09092");
+
+                    //ergens in amsterdam: 4.898435157003786, 52.34329645288008
+
+                            //utrecht: 5.113111,52.09092
+                    StringBuilder route_URL = new StringBuilder("http://127.0.0.1:5000/route/v1/driving/4.898435157003786,52.34329645288008;");
 
 
                     for (int j = 0; j < route.size(); j++) {
-                        route_URL.append(orders.get(i).getCoordinaten_DMS_GOOGLE_MAPS());
+                        route_URL.append(orders.get(i).getCoordinaten_OSMR());
+
+                        if(j == route.size() -1 ) {
+
+                            String url = route_URL.toString();
+
+                            int lastIndex = url.lastIndexOf(";");
+
+                            if (lastIndex != -1) {
+
+                                url = url.substring(0, lastIndex) + url.substring(lastIndex + 1);
+
+                                route_URL = new StringBuilder(url);
+                            }
+                            route_URL.append("?alternatives=false&steps=true&annotations=false&geometries=geojson&overview=full");
+                        }
                     }
 
                     String path = "route.png";
@@ -78,10 +97,11 @@ public class GFG {
                             ErrorCorrectionLevel.L);
 
 
-                    System.out.println(route_URL.toString());
-                    createQR(route_URL.toString(), path, charset, hashMap, 400, 400);
+
+                    RouteBuilder.setRoutes_West(route_URL.toString());
+                    System.out.println(route_URL);
                     System.out.println("QR Code Generated ");
-                } catch (WriterException | IOException e) {
+                } catch (Exception e) {
                     System.out.println(e);
                 }
             }
