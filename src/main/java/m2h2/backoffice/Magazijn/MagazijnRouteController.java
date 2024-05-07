@@ -16,13 +16,13 @@ public class MagazijnRouteController {
     private Route route;
     private ArrayList<Order> orders;
     private Integer id;
+
     public MagazijnRouteController(Integer routeID, JPanel mainPanel) {
         this.route = Route.getRoute(routeID);
         orders = route.getOrders();
         this.mainPanel = mainPanel;
 
         setMagazijnRoutePanel();
-
 
         System.out.println("ik werk! " + routeID);
     }
@@ -56,7 +56,6 @@ public class MagazijnRouteController {
         Object[][] data = new Object[orders.size()][6];
         for (int i = 0; i < orders.size(); i++){
             if (orders.get(i).getOrderLines().size() == 1){
-                System.out.println("hallo");
                 Object[] dataline = {
                         orders.get(i).getID(),
                         "checkbox",
@@ -79,6 +78,5 @@ public class MagazijnRouteController {
             }
         }
         return data;
-
     }
 }
