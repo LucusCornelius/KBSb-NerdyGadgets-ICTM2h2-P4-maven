@@ -71,8 +71,11 @@ public class Route {
         routes.add(this);
     }
 
-    public Koerier getKoerier() {
-        return koerier;
+    public String getKoerier() {
+        if (this.koerier == null) {
+            return "-";
+        }
+        return koerier.getName();
     }
 
     public void setKoerier(Koerier koerier) {
