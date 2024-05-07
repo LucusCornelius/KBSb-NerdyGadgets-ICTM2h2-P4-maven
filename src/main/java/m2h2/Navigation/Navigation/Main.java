@@ -289,15 +289,21 @@ public class Main extends javax.swing.JFrame implements ActionListener{
 
         if (e.getSource() == Koerier){
             mainPanel.removeAll();
+
             jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
             jLabel1.setForeground(new Color(51, 51, 51));
             jLabel1.setText("Koerier");
 
+            JLabel jLabel4 = new JLabel("Bekijk mijn route(s)");
+            jLabel4.setFont(new Font("Segoe UI Semibold",1,14));
+            jLabel4.setForeground(new Color(51,51,51));
+
             KoerierController kController = new KoerierController();
             JScrollPane sp = kController.getTable(kController, "Bekijk mijn order(s)");
 
-            mainPanel.setLayout(new BorderLayout());
+            mainPanel.setLayout(new GridLayout(3,1));
             mainPanel.add(jLabel1, BorderLayout.NORTH);
+            mainPanel.add(jLabel4, BorderLayout.NORTH);
             mainPanel.add(sp, BorderLayout.CENTER);
             mainPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE,20));
 

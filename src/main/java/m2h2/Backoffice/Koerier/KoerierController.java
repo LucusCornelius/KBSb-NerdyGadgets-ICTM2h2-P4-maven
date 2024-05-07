@@ -5,6 +5,7 @@ import m2h2.Backoffice.Components.Tables.JTableButtonRenderer;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.MouseListener;
@@ -28,11 +29,11 @@ public class KoerierController {
         JTable table = new JTable(new KoerierTableModel(kController, status));
         tableRenderer = table.getDefaultRenderer(JButton.class);
         table.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tableRenderer));
-        table.setBounds(0, 0 , 600, 200);
-        table.setRowHeight(table.getRowHeight() + 15);
+        table.setBounds(0, 0 , 600, 300);
+        table.setRowHeight(table.getRowHeight() + 10);
 
         JScrollPane sp = new JScrollPane(table);
-        sp.setBounds(0,0, 600,200);
+        sp.setBounds(0,0, 600,300);
         return sp;
     }
 
