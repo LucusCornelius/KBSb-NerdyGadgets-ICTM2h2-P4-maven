@@ -30,10 +30,13 @@ public class MagazijnRouteTableModel extends AbstractTableModel {
         return data[row][col];
     }
     public Class getColumnClass(int column) {
-        return getValueAt(0,column).getClass();
+        try {
+            return getValueAt(0,column).getClass();
+        } catch (NullPointerException e){
+            return String.class;
+        }
     }
     public Class getCellClass(int row, int col) {
         return getValueAt(row,col).getClass();
     }
-
 }

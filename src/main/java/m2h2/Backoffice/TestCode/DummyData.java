@@ -47,7 +47,7 @@ public class DummyData {
 
         //koerier DummyData
         Bus b5 = new Bus("68-45-kk");
-        Route r8 = new Route(b5 , "Oost" , "Bekijk mijn order(s)");
+        Route r8 = new Route(b5 , "Oost" , "Aannemen order");
         Order o25 = new Order("kerkhofslaan", 7, "8479HH", false);
         OrderLine ol25 = new OrderLine("A" , 2 , "USB");
         o21.addOrderline(ol25);
@@ -60,7 +60,7 @@ public class DummyData {
         r8.addOrder(o25);
 
         Bus b6 = new Bus("34-67-mm");
-        Route r9 = new Route(b6, "West", "Bekijk mijn order(s)");
+        Route r9 = new Route(b6, "West", "Aannemen order");
         Order o28 = new Order("Stationstraat", 10, "8466KK", false);
         OrderLine ol28 = new OrderLine("C", 3, "Headphones");
         o28.addOrderline(ol28);
@@ -73,7 +73,7 @@ public class DummyData {
         r9.addOrder(o29);
 
         Bus b7 = new Bus("12-34-pp");
-        Route r10 = new Route(b7, "Noord", "Bekijk mijn order(s)");
+        Route r10 = new Route(b7, "Noord", "Aannemen order");
         Order o30 = new Order("Dorpsstraat", 5, "8465JJ", false);
         OrderLine ol31 = new OrderLine("F", 1, "Monitor");
         o30.addOrderline(ol31);
@@ -82,5 +82,8 @@ public class DummyData {
         OrderLine ol32 = new OrderLine("G", 4, "Laptop");
         o31.addOrderline(ol32);
         r10.addOrder(o31);
+
+        //Delivery
+
     }
 }

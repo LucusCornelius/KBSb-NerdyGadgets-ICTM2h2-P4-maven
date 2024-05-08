@@ -299,8 +299,8 @@ public class Main extends javax.swing.JFrame implements ActionListener{
             jLabel4.setFont(new Font("Segoe UI Semibold",1,14));
             jLabel4.setForeground(new Color(51,51,51));
 
-            KoerierController kController = new KoerierController();
-            JScrollPane sp = kController.getTable(kController, "Bekijk mijn order(s)");
+            KoerierController kController = new KoerierController(mainPanel);
+            JScrollPane sp = kController.getTable(kController, "Aannemen order");
 
             mainPanel.setLayout(new GridLayout(3,1));
             mainPanel.add(jLabel1, BorderLayout.NORTH);
