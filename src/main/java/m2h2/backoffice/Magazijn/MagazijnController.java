@@ -7,6 +7,7 @@ import m2h2.Backoffice.Components.Tables.JTableButtonRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
@@ -18,14 +19,14 @@ public class MagazijnController {
     private ArrayList<Route> bezigMetPicken;
     private ArrayList<Route> klaarVoorversturen;
 
-    private final String kvp = "klaar voor picken";
-    private final String bmp = "bezig met picken";
-    private final String kvv = "klaar voor versturen";
+    private String kvp = "klaar voor picken";
+    private String bmp = "bezig met picken";
+    private String kvv = "klaar voor versturen";
 
-    private final JLabel magazijnLabel = new JLabel("Magazijn");
-    private final JLabel kvpLabel = new JLabel("klaar voor picken");
-    private final JLabel bmpLabel = new JLabel("bezig met picken");
-    private final JLabel kvvLabel = new JLabel("klaar voor versturen");
+    private JLabel magazijnLabel = new JLabel("Magazijn");
+    private JLabel kvpLabel = new JLabel("klaar voor picken");
+    private JLabel bmpLabel = new JLabel("bezig met picken");
+    private JLabel kvvLabel = new JLabel("klaar voor versturen");
 
     public MagazijnController(JPanel mainPanel){
         this.mainPanel = mainPanel;
