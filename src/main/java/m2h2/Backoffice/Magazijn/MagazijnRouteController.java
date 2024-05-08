@@ -1,9 +1,7 @@
 package m2h2.Backoffice.Magazijn;
 
-import m2h2.Backoffice.Components.Order;
-import m2h2.Backoffice.Components.Route;
-import m2h2.Backoffice.Components.Tables.JTableButtonMouseListener;
-import m2h2.Backoffice.Components.Tables.JTableButtonRenderer;
+import m2h2.Backoffice.Components.*;
+import m2h2.Backoffice.Components.Tables.*;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
@@ -42,12 +40,20 @@ public class MagazijnRouteController {
     }
 
     public JScrollPane getTable(){
+        JTable table = new JTable(new MagazijnRouteTableModel(this)){
+
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
+
+                JComponent component = (JComponent) super.prepareRenderer(renderer, row, col);
+                return component;
+            }
+        };
+
         TableCellRenderer tableRenderer;
-        JTable table = new JTable(new MagazijnRouteTableModel(this));
         tableRenderer = table.getDefaultRenderer(JButton.class);
         table.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tableRenderer));
-        //tableRenderer = table.getDefaultRenderer(boolean.class);
-        //table.setDefaultRenderer(boolean.class, new JTableButtonRenderer(tableRenderer));
+
         table.setBounds(0, 0 , 600, 400);
         table.setRowHeight(table.getRowHeight() + 15);
 
@@ -59,31 +65,31 @@ public class MagazijnRouteController {
     }
 
     public Object[][] getTableData(){
-        Object[][] data = new Object[orders.size()][6];
+        Object[][] data = new Object[getOrdersTableSize()][6];
+        int rowIndex = 0;
         for (int i = 0; i < orders.size(); i++){
             if (orders.get(i).getOrderLines().size() == 1){
-                //JCheckBox opVoorraadBox = new JCheckBox("",orders.get(i).getOpVoorraad());
-                Object[] dataline = {
-                        orders.get(i).getID(),
-                        orders.get(i).getOpVoorraad(),
-                        orders.get(i).getProuctId(),
-                        orders.get(i).getProductAantal(),
-                        orders.get(i).getSectie(),
-                        orders.get(i).getBeschrijving()
-                };
-                data[i] = dataline;
+                data[rowIndex] = orders.get(i).getDataline();
+                System.out.println(data);
+                rowIndex++;
             } else {
-                Object[] dataline = {
-                      orders.get(i).getID(),
-                        "" ,
-                        "" ,
-                        "" ,
-                        "" ,
-                        orders.get(i).getBeschrijving()
-                };
-                data[i] = dataline;
+                for (int j = 0; j < orders.get(i).getOrderLines().size(); j++) {
+                    data[rowIndex] = orders.get(i).getDataline(j);
+                    rowIndex++;
+                }
+                System.out.println("extra datalines");
+                System.out.println(data);
             }
         }
         return data;
+    }
+    private int getOrdersTableSize(){
+        int size = orders.size();
+        for (Order order : orders){
+            if (order.getOrderLines().size() > 1){
+                size = size + order.getOrderLines().size() - 1;
+            }
+        }
+        return size;
     }
 }
