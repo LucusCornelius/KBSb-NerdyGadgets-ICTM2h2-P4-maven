@@ -1,6 +1,8 @@
 package m2h2.Backoffice.Magazijn;
 
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellRenderer;
+import java.awt.*;
 
 public class MagazijnRouteTableModel extends AbstractTableModel {
     private String[] columnNames = {"ID-Order" , "Niet op Voorraad" , "Product-ID" , "Aantal" , "Sectie" , "Product beschrijving"};
@@ -28,6 +30,10 @@ public class MagazijnRouteTableModel extends AbstractTableModel {
         return data[row][col];
     }
     public Class getColumnClass(int column) {
-        return getValueAt(0, column).getClass();
+        return getValueAt(0,column).getClass();
     }
+    public Class getCellClass(int row, int col) {
+        return getValueAt(row,col).getClass();
+    }
+
 }

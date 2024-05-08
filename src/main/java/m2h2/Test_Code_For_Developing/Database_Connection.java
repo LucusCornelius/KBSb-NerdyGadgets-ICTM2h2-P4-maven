@@ -1,7 +1,6 @@
-package Test_Code_For_Developing;
+package m2h2.Test_Code_For_Developing;
 
-
-import Console_Color_Codes.ConsoleColorCodes;
+import m2h2.Console_Color_Codes.ConsoleColorCodes;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

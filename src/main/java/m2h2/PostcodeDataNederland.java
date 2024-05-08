@@ -1,4 +1,4 @@
-import Console_Color_Codes.ConsoleColorCodes;
+package m2h2;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -63,12 +63,7 @@ public class PostcodeDataNederland {
                     System.out.println("An error occurred.");
                     e.printStackTrace();
                 }
-
-
-
             }
-
-
 
             System.out.println("Connectie geslaagd");
         } catch (SQLException e) {

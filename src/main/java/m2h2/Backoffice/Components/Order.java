@@ -59,7 +59,16 @@ public class Order {
         //meerdere toevoegen
         return "meerdere";
     }
-    public boolean getOpVoorraad(){
+    public Object[] getDataline(){
+        return getDataline(0);
+    }
+    public Object[] getDataline(int index){
+        OrderLine product = orderLines.get(index);
+        Object[] dataline = {ID, opVoorraad, product.getID(), product.getAantal(), product.getSectie(), product.getBeschrijving()};
+        return dataline;
+    }
+    /*
+    public Boolean getOpVoorraad(){
         return opVoorraad;
     }
     public String getSectie(){
@@ -71,12 +80,15 @@ public class Order {
     public Integer getProductAantal(){
         return (Integer) orderLines.get(0).getAantal();
     }
+    */
     public ArrayList<OrderLine> getOrderLines(){
         return orderLines;
     }
+    /*
     public String getPostcode() {
         return postcode;
     }
+    */
     public int getPostcodeNummers(){
         String nummerString = postcode.substring(0, 4);
         try {
@@ -98,8 +110,8 @@ public class Order {
     @Override
     public String toString() {
         String s = (
-            "order-ID: " + ID + "\n" +
-            "adres: " + straatnaam + " " + huisnummer + " " + postcode + "\n"
+                "order-ID: " + ID + "\n" +
+                        "adres: " + straatnaam + " " + huisnummer + " " + postcode + "\n"
         );
         if (orderLines.size() != 0) {
             for(OrderLine orderLine: orderLines){

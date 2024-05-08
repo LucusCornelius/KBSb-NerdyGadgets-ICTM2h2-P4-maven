@@ -34,5 +34,5 @@ public class MagazijnTableModel extends AbstractTableModel {
             System.out.println("### null pointer exception - getcolumnclass magazijntablemodel ###");
             return String.class;
         }
-     }
+    }
 }

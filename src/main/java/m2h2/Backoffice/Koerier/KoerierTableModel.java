@@ -29,6 +29,7 @@ public class KoerierTableModel extends AbstractTableModel {
     public Object getValueAt(int row, int col) {
         return data[row][col];
     }
+
     public Class getColumnClass(int column) {
         return getValueAt(0, column).getClass();
     }

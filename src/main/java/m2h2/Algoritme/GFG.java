@@ -1,6 +1,4 @@
-package Algoritme;
-
-import Console_Color_Codes.ConsoleColorCodes;
+package m2h2.Algoritme;
 
 import java.util.*;
 

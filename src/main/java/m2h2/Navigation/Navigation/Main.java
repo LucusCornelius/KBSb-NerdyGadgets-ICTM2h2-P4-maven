@@ -1,30 +1,21 @@
 package m2h2.Navigation.Navigation;
 
 import m2h2.Backoffice.Koerier.KoerierController;
-import m2h2.Backoffice.Koerier.TestScherm.DummyData;
+import m2h2.Backoffice.TestCode.DummyData;
 import m2h2.Backoffice.Magazijn.MagazijnController;
-import m2h2.Backoffice.Magazijn.MagazijnFrame;
 
 import javax.swing.*;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import m2h2.Backoffice.Magazijn.MagazijnController;
 import m2h2.Backoffice.Overzicht.OverzichtController;
-import m2h2.Backoffice.TestCode.DummyData;
 
 public class Main extends javax.swing.JFrame implements ActionListener{
 
     private javax.swing.JButton Route;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JButton Menu;
@@ -37,6 +28,8 @@ public class Main extends javax.swing.JFrame implements ActionListener{
     SideMenuPanel sp;
 
     public Main() {
+        DummyData Ddata = new DummyData();
+        Ddata.setDummyData();
         initComponents();
         sp = new SideMenuPanel(this);
         sp.setMain(mainPanel);
@@ -59,10 +52,6 @@ public class Main extends javax.swing.JFrame implements ActionListener{
         jLabel13 = new JLabel();
         mainPanel = new JPanel();
         jLabel1 = new JLabel();
-        jLabel2 = new JLabel();
-        jLabel3 = new JLabel();
-        jLabel6 = new JLabel();
-        jLabel7 = new JLabel();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -244,8 +233,6 @@ public class Main extends javax.swing.JFrame implements ActionListener{
     }
 
     public static void main(String args[]) {
-        DummyData dummy = new DummyData();
-        dummy.setDummyData();
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
