@@ -64,13 +64,17 @@ public class Order {
     }
     public Object[] getDataline(int index){
         OrderLine product = orderLines.get(index);
-        Object[] dataline = {ID, opVoorraad, product.getID(), product.getAantal(), product.getSectie(), product.getBeschrijving()};
+        Object[] dataline = {ID, getOpVoorraad(), product.getID(), product.getAantal(), product.getSectie(), product.getBeschrijving()};
         return dataline;
     }
-    /*
+
     public Boolean getOpVoorraad(){
-        return opVoorraad;
+        if (opVoorraad){
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
+    /*
     public String getSectie(){
         return orderLines.get(0).getSectie();
     }

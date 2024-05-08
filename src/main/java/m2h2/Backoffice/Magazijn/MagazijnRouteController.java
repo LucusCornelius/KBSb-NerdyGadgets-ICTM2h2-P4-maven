@@ -16,6 +16,7 @@ public class MagazijnRouteController {
     private Route route;
     private ArrayList<Order> orders;
     private Integer id;
+    private boolean bgColor;
 
     public MagazijnRouteController(Integer routeID, JPanel mainPanel) {
         this.route = Route.getRoute(routeID);
@@ -41,11 +42,19 @@ public class MagazijnRouteController {
 
     public JScrollPane getTable(){
         JTable table = new JTable(new MagazijnRouteTableModel(this)){
-
             @Override
             public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
-
                 JComponent component = (JComponent) super.prepareRenderer(renderer, row, col);
+                if (getValueAt(row, 0) != null) {
+                    //achtergrond van de route inzicht opbasis van of het ID even/ oneven. dit moet nog aangepast worden
+                    if ((Integer) getValueAt(row, 0) % 2 == 0) {
+                        component.setBackground(Color.WHITE);
+                        component.setForeground(Color.BLACK);
+                    } else {
+                        component.setBackground(Color.LIGHT_GRAY);
+                        component.setForeground(Color.BLACK);
+                    }
+                }
                 return component;
             }
         };
@@ -70,15 +79,12 @@ public class MagazijnRouteController {
         for (int i = 0; i < orders.size(); i++){
             if (orders.get(i).getOrderLines().size() == 1){
                 data[rowIndex] = orders.get(i).getDataline();
-                System.out.println(data);
                 rowIndex++;
             } else {
                 for (int j = 0; j < orders.get(i).getOrderLines().size(); j++) {
                     data[rowIndex] = orders.get(i).getDataline(j);
                     rowIndex++;
                 }
-                System.out.println("extra datalines");
-                System.out.println(data);
             }
         }
         return data;
