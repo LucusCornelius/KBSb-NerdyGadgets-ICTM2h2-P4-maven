@@ -12,6 +12,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import m2h2.Backoffice.Magazijn.MagazijnController;
+import m2h2.Backoffice.Overzicht.OverzichtController;
+import m2h2.Backoffice.TestCode.DummyData;
+
 public class Main extends javax.swing.JFrame implements ActionListener{
 
     private javax.swing.JButton Route;
@@ -28,12 +32,11 @@ public class Main extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JButton Koerier;
     private javax.swing.JButton Login;
     private javax.swing.JPanel sidebar;
+    private JScrollPane jScrollPane;
 
     SideMenuPanel sp;
 
     public Main() {
-        DummyData DD = new DummyData();
-        DD.setDummyData();
         initComponents();
         sp = new SideMenuPanel(this);
         sp.setMain(mainPanel);
@@ -241,6 +244,8 @@ public class Main extends javax.swing.JFrame implements ActionListener{
     }
 
     public static void main(String args[]) {
+        DummyData dummy = new DummyData();
+        dummy.setDummyData();
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -267,21 +272,30 @@ public class Main extends javax.swing.JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == Route){
-
+            mainPanel.removeAll();
             mainPanel.setBackground(new Color(255, 255, 255));
             jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
             jLabel1.setForeground(new Color(51, 51, 51));
             jLabel1.setText("Route");
+            mainPanel.add(jLabel1);
+            mainPanel.setLayout(new GridLayout(7,1));
+
+            OverzichtController oController = new OverzichtController(mainPanel);
+            JScrollPane scrollPane = oController.getVoltooideRoutesOverzicht();
+            JScrollPane ovScrollpane = oController.getOnvoltooideRoutesOverzicht();
+            mainPanel.add(ovScrollpane);
+            mainPanel.add(scrollPane);
+
 
             mainPanel.revalidate();
             mainPanel.repaint();
         }
 
         if (e.getSource() == OrderPicker){
+            mainPanel.removeAll();
             mainPanel.setBackground(new Color(255, 255, 255));
-            jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
-            jLabel1.setForeground(new Color(51, 51, 51));
-            jLabel1.setText("Magazijn");
+            MagazijnController m = new MagazijnController(mainPanel);
+            m.setMagazijnPanel();
 
             mainPanel.revalidate();
             mainPanel.repaint();

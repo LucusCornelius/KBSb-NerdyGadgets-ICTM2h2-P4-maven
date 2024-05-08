@@ -10,6 +10,7 @@ public class Order {
     private String postcode;
     private ArrayList<OrderLine> orderLines;
     private boolean bezorgd;
+    private boolean opVoorraad;
 
     public Order(String straatnaam, int huisnummer, String postcode, boolean bezorgd){
         orderLines = new ArrayList<>();
@@ -50,6 +51,28 @@ public class Order {
             this.postcode = "0001XX";
             System.out.println("ongeldige postcode");
         }
+    }
+    public String getBeschrijving(){
+        if (orderLines.size() == 1) {
+            return orderLines.get(0).getBeschrijving();
+        }
+        //meerdere toevoegen
+        return "meerdere";
+    }
+    public boolean getOpVoorraad(){
+        return opVoorraad;
+    }
+    public String getSectie(){
+        return orderLines.get(0).getSectie();
+    }
+    public Integer getProuctId(){
+        return (Integer) orderLines.get(0).getID();
+    }
+    public Integer getProductAantal(){
+        return (Integer) orderLines.get(0).getAantal();
+    }
+    public ArrayList<OrderLine> getOrderLines(){
+        return orderLines;
     }
     public String getPostcode() {
         return postcode;

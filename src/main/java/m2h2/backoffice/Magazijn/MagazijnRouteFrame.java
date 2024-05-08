@@ -1,4 +1,4 @@
-package m2h2.Backoffice.Magazijn;
+package backoffice.Magazijn;
 
 public class MagazijnRouteFrame {
 
