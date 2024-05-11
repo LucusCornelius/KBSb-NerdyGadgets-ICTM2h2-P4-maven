@@ -1,0 +1,1 @@
+java.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null Order{, orderID=4naam='lucas', straatnaam='Eerste Van Swindenstraat', postcode='1093XD', huisnummer=44, order='usb', plaatsnaam='Amsterdam'}

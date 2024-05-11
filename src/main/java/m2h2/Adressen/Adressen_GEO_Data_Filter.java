@@ -3,16 +3,16 @@ package m2h2.Adressen;
 
 import Console_Color_Codes.ConsoleColorCodes;
 import m2h2.Algoritme.GFG;
+import m2h2.FileWriter.FileWriter;
 import m2h2.Orders.Order;
 import m2h2.Regios.Orders_Met_Coordinaten;
 import m2h2.Regios.Regios;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Random;
 
-public class Adressen_GEO_Data {
+public class Adressen_GEO_Data_Filter {
     private String url = "jdbc:sqlite:/Users/lucasvissers/IdeaProjects/KBSb-NerdyGadgets-ICTM2h2-P4-maven/src/main/java/m2h2/Nederland_Geografische_Data/bag-light.gpkg";
     private ArrayList<Order> orders;
 
@@ -20,8 +20,10 @@ public class Adressen_GEO_Data {
 
     private int progressie = 1;
 
+    private int error_counter = 0;
 
-    public Adressen_GEO_Data(ArrayList<Order> orders) {
+
+    public Adressen_GEO_Data_Filter(ArrayList<Order> orders) {
         this.orders = orders;
         Filter_Coordinaten_Op_Adres();
     }
@@ -29,7 +31,30 @@ public class Adressen_GEO_Data {
 
     public void Filter_Coordinaten_Op_Adres() {
 
-        System.out.println("ORDERS" + orders);
+//        System.out.println("ORDERS" + orders);
+
+        String[] colorStrings = {ConsoleColorCodes.ANSI_GREEN.toString(), ConsoleColorCodes.ANSI_RED.toString(), ConsoleColorCodes.ANSI_BLUE.toString()};
+        int colorIndex = 0; // Initialize the color index
+
+        for (int i = 0; i < orders.size(); i++) {
+            String color = colorStrings[colorIndex]; // Get the color based on the current color index
+
+            // Print the processed orders with the current color
+            System.out.println(color + "Processed orders: " + orders.get(i) + ConsoleColorCodes.ANSI_RESET);
+
+            // Increment the color index, resetting to 0 after reaching the end of the palette
+            colorIndex = (colorIndex + 1) % colorStrings.length;
+
+            // Check if three prints have been made, if so, reset the color index to 0
+            if ((i + 1) % 3 == 0) {
+                colorIndex = 0;
+            }
+        }
+
+
+
+        System.out.println(ConsoleColorCodes.ANSI_YELLOW + "Het process wordt uitgevoerd" + ConsoleColorCodes.ANSI_RESET);
+
 
         for (int i = 0; i < orders.size(); i++) {
 
@@ -37,14 +62,17 @@ public class Adressen_GEO_Data {
 
 
             try (
-                    //Database connectie
                     Connection connection = DriverManager.getConnection(url); Statement statement = connection.createStatement())
             {
-                System.out.println("-----> Connectie gemaakt!\n");
-                System.out.println(ConsoleColorCodes.ANSI_YELLOW + "Het process wordt uitgevoerd" + ConsoleColorCodes.ANSI_RESET);
+
+
+                int progress = (i + 1) * 100 / orders.size();
+                System.out.print("\r[" + "=".repeat(progress) + " ".repeat(100 - progress) + "] " + progress + "%");
+
 
 
                 statement.setQueryTimeout(30);
+
 
 
                 String postcode = orders.get(i).getPostcode();
@@ -76,7 +104,6 @@ public class Adressen_GEO_Data {
 
 
                 try {
-                    System.out.println("RIJKSDRIEHOEKSCOORDINATEN: " + Double.parseDouble(rs.getString(2)) + " ||| " + Double.parseDouble(rs.getString(4)));
                     ordersMetCoordinaten.setCoordinaten_RijksDriehoek(Double.parseDouble(rs.getString(2)), Double.parseDouble(rs.getString(4)));
 
 
@@ -86,25 +113,36 @@ public class Adressen_GEO_Data {
 
                     if((i+1 == orders.size())) {
 
-                        System.out.println("HIER");
+                        System.out.println(ConsoleColorCodes.ANSI_PURPLE + "\nProcessed orders" + orders_met_coordinaten + ConsoleColorCodes.ANSI_RESET);
+
 
                         Regios regio = new Regios(orders_met_coordinaten);
 
-                        regio.writeToFile();
 
-                        System.out.println("Noord= " + regio.getRegio_Noord_Postcodes());
-                        System.out.println("West= " + regio.getRegio_West_Postcodes());
-                        System.out.println("Zuid-West= " + regio.getRegio_Zuid_West_Postcodes());
-                        System.out.println("Zuid-Oost= " + regio.getRegio_Zuid_Oost_Postcodes());
-                        System.out.println("Oost= " + regio.getRegio_Oost_Postcodes());
+                        FileWriter.WriteToFile(regio.getRegio_Noord_Postcodes().toString(), "src/main/java/m2h2/DataFiles/Postcodes/Postcodes_Noord.txt", true);
+                        FileWriter.WriteToFile(regio.getRegio_West_Postcodes().toString(), "src/main/java/m2h2/DataFiles/Postcodes/Postcodes_West.txt", true);
+                        FileWriter.WriteToFile(regio.getRegio_Zuid_West_Postcodes().toString(), "src/main/java/m2h2/DataFiles/Postcodes/Postcodes_Zuid-West.txt", true);
+                        FileWriter.WriteToFile(regio.getRegio_Zuid_Oost_Postcodes().toString(), "src/main/java/m2h2/DataFiles/Postcodes/Postcodes_Zuid-Oost.txt", true);
+                        FileWriter.WriteToFile(regio.getRegio_Oost_Postcodes().toString(), "src/main/java/m2h2/DataFiles/Postcodes/Postcodes_Oost.txt", true);
 
-                        GFG.createPoints(regio.getRegio_West_Postcodes());
 
+                        GFG.createPoints(regio.getRegio_West_Postcodes(), "W");
+                        GFG.createPoints(regio.getRegio_Zuid_West_Postcodes(), "ZW");
+                        GFG.createPoints(regio.getRegio_Oost_Postcodes(), "O");
+                        GFG.createPoints(regio.getRegio_Zuid_Oost_Postcodes(), "ZO");
+                        GFG.createPoints(regio.getRegio_Noord_Postcodes(), "N");
+
+
+                        if(error_counter > 0) {
+                            System.out.println("\n" + ConsoleColorCodes.ANSI_RED + "Er hebben " + error_counter + " fouten plaatsgevonden bij het ophalen van de coördinaten van adressen. Voor meer informatie zie de logfile in DataFiles/GEO_Data_Fetch_Errors.txt");
+                        }
 
                     }
 
                 } catch (Exception e) {
-                    System.out.println("Er is een fout bij Adressen_GEO_Data opgetreden" + e);
+                    error_counter++;
+                    String data = e + " " + orders.get(i) + "\n";
+                    FileWriter.WriteToFile(data, "src/main/java/m2h2/DataFiles/Errors/GEO_Data_Fetch_Errors.txt", true);
                 }
 
                 rs.close();
@@ -145,7 +183,6 @@ public class Adressen_GEO_Data {
         double latitudeDecimalDegrees = LatitudeGraden + LatitudeMinuten / 60;
         double longitudeDecimalDegrees = LongitudeGraden + LongitudeMinuten / 60;
 
-        System.out.println(latitudeDecimalDegrees + longitudeDecimalDegrees);
         ordersMetCoordinaten.setCoordinaten_DecimalDegrees(latitudeDecimalDegrees, longitudeDecimalDegrees);
 
         String LatitudeGradenString = Integer.toString(LatitudeGraden);
@@ -155,13 +192,9 @@ public class Adressen_GEO_Data {
         String LongitudeMinutenString = Double.toString(LongitudeMinuten);
 
 
-        System.out.println("Coördinaten: " + LatitudeGradenString + "° " + LatitudeMinutenString + ", " + LongitudeGradenString + "° " + LongitudeMinutenString);
         ordersMetCoordinaten.setCoordinaten_DMS(LatitudeGradenString,  LatitudeMinutenString, LongitudeGradenString, LongitudeMinutenString);
         orders_met_coordinaten.add(ordersMetCoordinaten);
-        System.out.println("\nProcessed orders" + orders_met_coordinaten);
 
-
-//        writeToFile(id, LatitudeGradenString, LatitudeMinutenString, LongitudeGradenString, LongitudeMinutenString);
 
     }
 

@@ -77,42 +77,14 @@ public class Regios {
         return regio_Zuid_West_Postcodes;
     }
 
-    public void writeToFile() {
-        for (int i = 0; i < getRegio_Noord_Postcodes().size(); i++) {
-            writeToFileFunctions(getRegio_Noord_Postcodes().get(i).getWriteToFile(), (this.writePath + "regio_noord_orders.txt"), clearFiles);
-
-        }
-
-        for (int i = 0; i < getRegio_West_Postcodes().size(); i++) {
-            writeToFileFunctions(getRegio_West_Postcodes().get(i).getWriteToFile(), (this.writePath + "regio_west_orders.txt"), clearFiles);
-
-        }
-
-        for (int i = 0; i < getRegio_Zuid_West_Postcodes().size(); i++) {
-            writeToFileFunctions(getRegio_Zuid_West_Postcodes().get(i).getWriteToFile(), (this.writePath + "regio_zuid_west_orders.txt"), clearFiles);
-        }
-
-        for (int i = 0; i < getRegio_Zuid_Oost_Postcodes().size(); i++) {
-            writeToFileFunctions(getRegio_Zuid_Oost_Postcodes().get(i).getWriteToFile(), (this.writePath + "regio_zuid_oost_orders.txt"), clearFiles);
-        }
-
-        for (int i = 0; i < getRegio_Oost_Postcodes().size(); i++) {
-                writeToFileFunctions(getRegio_Oost_Postcodes().get(i).getWriteToFile(), (this.writePath + "regio_oost_orders.txt"), clearFiles);
-            }
-
-
-
-}
 
     private void writeToFileFunctions(String orderInfo, String writePath, boolean clearFiles) {
 
-        System.out.println("ORDERINFOOOOO: " + orderInfo);
 
             try {
                 FileWriter myWriter = new FileWriter(writePath, true);
                 myWriter.write(orderInfo + "\n");
                 myWriter.close();
-                System.out.println("ID: " + "-----> ✔");
             } catch (IOException e) {
                 System.out.println("### -----> Er is een fout opgetreden bij ID: ");
                 e.printStackTrace();
