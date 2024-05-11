@@ -62,8 +62,8 @@ public static void main(String[] args) {
  orders.add(new Order(i++, "lucas", "Minahassastraat", "1094RV", "Amsterdam", 145, "usb"));
  orders.add(new Order(i++, "lucas", "Eerste Atjehstraat", "1094KL", "Amsterdam", 2, "usb"));
  orders.add(new Order(i++, "lucas", "Reinwardtstraat", "1093LA", "Amsterdam", 344, "usb"));
- orders.add(new Order(i++, "lucas", "Eerste Van Swindenstraat", "1093XD", "Amsterdam", 44, "usb")); //deze
- orders.add(new Order(i++, "lucas", "Tweede van Swindenstraat", "1093VG", "Amsterdam", 31, "usb"));
+// orders.add(new Order(i++, "lucas", "Eerste Van Swindenstraat", "1093XD", "Amsterdam", 44, "usb")); //deze
+// orders.add(new Order(i++, "lucas", "Tweede van Swindenstraat", "1093VG", "Amsterdam", 31, "usb"));
 // orders.add(new Order(i++, "lucas", "Laing's Nekstraat", "1092GX", "Amsterdam", 44, "usb"));
 // orders.add(new Order(i++, "lucas", "Tweede Constantijn Huygensstraat", "1054CP", "Amsterdam", 41, "usb"));
 // orders.add(new Order(i++, "lucas", "Valeriusplein", "1075BJ", "Amsterdam", 15, "usb"));
@@ -136,7 +136,6 @@ public static void main(String[] args) {
 // orders.add(new Order(i++, "lucas", "Langeweide", "1722WX", "Zuid-Scharwoude", 260, "usb"));
 // orders.add(new Order(i++, "lucas", "Langeweide", "1722WK", "Zuid-Scharwoude", 293, "usb"));
 // orders.add(new Order(i++, "lucas", "Frederik Hendrikstraat", "1723KD", "Noord-Scharwoude", 35, "usb"));
-//
 
 
  Adressen_GEO_Data_Filter AdressenObject1 = new Adressen_GEO_Data_Filter(orders);
@@ -144,7 +143,7 @@ public static void main(String[] args) {
 
     RouteBuilder.BuildRoutes_Starter();
 
-//
+
 
 //    System.out.println(orders);
 //

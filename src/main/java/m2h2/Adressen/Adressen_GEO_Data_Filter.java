@@ -53,7 +53,7 @@ public class Adressen_GEO_Data_Filter {
 
 
 
-        System.out.println(ConsoleColorCodes.ANSI_YELLOW + "Het process wordt uitgevoerd" + ConsoleColorCodes.ANSI_RESET);
+        System.out.println("\n" + ConsoleColorCodes.ANSI_YELLOW + "Het process wordt uitgevoerd" + ConsoleColorCodes.ANSI_RESET);
 
 
         for (int i = 0; i < orders.size(); i++) {

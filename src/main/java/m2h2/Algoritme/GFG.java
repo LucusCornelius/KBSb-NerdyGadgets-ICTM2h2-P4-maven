@@ -40,11 +40,11 @@ public class GFG {
                 testPoint.x = 136215; //Startpunt is Utrecht
                 testPoint.y = 455886;
 
-                // Parameter to decide the number of nearest neighbors to consider
+
+                //K NN
                 int k = 1;
 
-                System.out.println(ConsoleColorCodes.ANSI_YELLOW + "Het dichtstbijzijnde punt vanaf het startpunt UTRECHT is " +  findClosestCity(arr, n, k, testPoint) + "\n" + ConsoleColorCodes.ANSI_RESET);
-//                System.out.println(ConsoleColorCodes.ANSI_PURPLE + "Route" + route + "\n\n\n\n\n" + ConsoleColorCodes.ANSI_RESET);
+                System.out.println("\n" + ConsoleColorCodes.ANSI_YELLOW + "Het dichtstbijzijnde punt vanaf het startpunt UTRECHT is " +  findClosestCity(arr, n, k, testPoint) + "\n" + ConsoleColorCodes.ANSI_RESET);
 
 
 
