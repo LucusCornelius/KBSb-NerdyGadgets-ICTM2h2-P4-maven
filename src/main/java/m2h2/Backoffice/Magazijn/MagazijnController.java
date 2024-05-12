@@ -49,7 +49,7 @@ public class MagazijnController {
 
     public JScrollPane getTable(MagazijnController mController, String status){
         TableCellRenderer tableRenderer;
-        JTable table = new JTable(new MagazijnTableModel(mController, status));
+        JTable table = new JTable(new MagazijnTableModel(getTableData(status)));
         tableRenderer = table.getDefaultRenderer(JButton.class);
         table.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tableRenderer));
         table.setBounds(0, 0 , 600, 400);
