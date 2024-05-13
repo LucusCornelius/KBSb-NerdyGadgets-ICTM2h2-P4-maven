@@ -1,6 +1,6 @@
 package m2h2.Algoritme;
 
-import Console_Color_Codes.ConsoleColorCodes;
+import m2h2.Console_Color_Codes.ConsoleColorCodes;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.NotFoundException;
 import com.google.zxing.WriterException;
@@ -15,7 +15,7 @@ import java.util.*;
 
 public class GFG {
 
-    static ArrayList<Orders_Met_Coordinaten> route = new ArrayList<>();
+    private static ArrayList<Orders_Met_Coordinaten> route = new ArrayList<>();
 
     public static void createPoints(ArrayList<Orders_Met_Coordinaten> orders, String Regio) {
         int n = orders.size();
@@ -53,10 +53,6 @@ public class GFG {
 
                 try {
 
-
-                    //ergens in amsterdam: 4.898435157003786, 52.34329645288008
-
-                            //utrecht: 5.113111,52.09092
                     StringBuilder route_URL = new StringBuilder("http://127.0.0.1:5000/route/v1/driving/4.898435157003786,52.34329645288008;");
 
 
@@ -191,5 +187,6 @@ public class GFG {
         }
     }
 
-
+    // This function finds the closest city to the test point using
+    // k nearest neighbour algorithm.
 }

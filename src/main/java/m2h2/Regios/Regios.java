@@ -29,27 +29,27 @@ public class Regios {
    public void setPostcodeOpRegio(String postcode, Orders_Met_Coordinaten orders) {
       try {
 
-         int postcodesInt = Integer.parseInt(postcode.substring(0, postcode.length() - 4));
+            int postcodesInt = Integer.parseInt(postcode.substring(0, postcode.length() - 4));
 
-         if (postcodesInt >= 10 && postcodesInt <= 41) {
-            regio_West_Postcodes.add(orders);
-         }
+            if (postcodesInt >= 10 && postcodesInt <= 41) {
+                regio_West_Postcodes.add(orders);
+            }
 
-         if (postcodesInt >= 79 && postcodesInt <= 99) {
-            regio_Noord_Postcodes.add(orders);
-         }
+            if (postcodesInt >= 79 && postcodesInt <= 99) {
+                regio_Noord_Postcodes.add(orders);
+            }
 
-         if (postcodesInt >= 66 && postcodesInt <= 77 || postcodesInt >= 80 && postcodesInt <= 83 ) {
-            regio_Oost_Postcodes.add(orders);
-         }
+            if (postcodesInt >= 66 && postcodesInt <= 77 || postcodesInt >= 80 && postcodesInt <= 83 ) {
+                regio_Oost_Postcodes.add(orders);
+            }
 
-         if (postcodesInt >= 53 && postcodesInt <= 65) {
-            regio_Zuid_Oost_Postcodes.add(orders);
-         }
+            if (postcodesInt >= 53 && postcodesInt <= 65) {
+                regio_Zuid_Oost_Postcodes.add(orders);
+            }
 
-         if (postcodesInt >= 42 && postcodesInt <= 52) {
-            regio_Zuid_West_Postcodes.add(orders);
-         }
+            if (postcodesInt >= 42 && postcodesInt <= 52) {
+                regio_Zuid_West_Postcodes.add(orders);
+            }
 
       } catch (Exception e) {
           System.out.println(e);
