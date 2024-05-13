@@ -78,20 +78,6 @@ public class Regios {
     }
 
 
-    private void writeToFileFunctions(String orderInfo, String writePath, boolean clearFiles) {
-
-
-            try {
-                FileWriter myWriter = new FileWriter(writePath, true);
-                myWriter.write(orderInfo + "\n");
-                myWriter.close();
-            } catch (IOException e) {
-                System.out.println("### -----> Er is een fout opgetreden bij ID: ");
-                e.printStackTrace();
-            }
-
-
-    }
 }
 
 
