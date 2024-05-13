@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class DeliveryController {
 
     private JPanel mainPanel;
-    private JLabel DeliveryLabel;
     private Route route;
     private ArrayList<Order> orders;
     private Integer id;
@@ -31,7 +30,10 @@ public class DeliveryController {
         mainPanel.removeAll();
         mainPanel.setLayout(new GridLayout(5, 1));
 
-        mainPanel.add(DeliveryLabel = new JLabel("Aangenomen route"));
+        mainPanel.add(new JLabel("Aangenomen routeID : " + route.getID()));
+        mainPanel.setFont(new Font("Segoe UI Semibold", 1, 24));
+        mainPanel.setForeground(new Color(51, 51, 51));
+
         JScrollPane sp = getTable();
         mainPanel.add(sp);
 

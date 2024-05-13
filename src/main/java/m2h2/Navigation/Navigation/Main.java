@@ -189,7 +189,7 @@ public class Main extends javax.swing.JFrame implements ActionListener{
 // Homescherm met kleur
         mainPanel.setBackground(new Color(255, 255, 255));
         mainPanel.add(jLabel1, BorderLayout.NORTH);
-        jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24)); // NOI18N
+        jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
         jLabel1.setForeground(new Color(51, 51, 51));
         jLabel1.setText("Backoffice NerdyGadgets");
 
@@ -295,16 +295,16 @@ public class Main extends javax.swing.JFrame implements ActionListener{
             jLabel1.setForeground(new Color(51, 51, 51));
             jLabel1.setText("Koerier");
 
-            JLabel jLabel4 = new JLabel("Bekijk mijn route(s)");
-            jLabel4.setFont(new Font("Segoe UI Semibold",1,14));
-            jLabel4.setForeground(new Color(51,51,51));
+//            JLabel jLabel4 = new JLabel("Bekijk mijn route(s)");
+//            jLabel4.setFont(new Font("Segoe UI Semibold",1,14));
+//            jLabel4.setForeground(new Color(51,51,51));
 
             KoerierController kController = new KoerierController(mainPanel);
             JScrollPane sp = kController.getTable(kController, "Aannemen order");
 
             mainPanel.setLayout(new GridLayout(5,1));
             mainPanel.add(jLabel1, BorderLayout.NORTH);
-            mainPanel.add(jLabel4, BorderLayout.NORTH);
+//            mainPanel.add(jLabel4, BorderLayout.NORTH);
             mainPanel.add(sp, BorderLayout.CENTER);
             mainPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE,20));
 
