@@ -129,7 +129,8 @@ public class Adressen_GEO_Data_Filter {
 
 
                         int totalOrders = orders.size();
-//                        double dummyOrders = 650;
+
+                        double dummyOrders = 450;
                         double maxOrders = 200;
 
                         int startIndex = 0;
@@ -138,19 +139,26 @@ public class Adressen_GEO_Data_Filter {
 
                         double m = totalOrders / maxOrders;
                         double n = Math.floor(m);
-                        double restwaarde = (int) (m - n) * maxOrders;
-                        System.out.println(restwaarde);
+                        double restwaarde = (m - n) * maxOrders;
+
+                        int batchCount = 0;
 
                         for (int j = 0; j <= n; j++){
                             if (j < n){
+                                System.out.println("test1");
                                 System.out.println(startIndex + " " + endIndex);
-                                GFG.createPoints(new ArrayList<>(regio.getRegio_West_Postcodes().subList(startIndex, endIndex)), "W");
+                                System.out.println("b: " + batchCount + regio.getRegio_West_Postcodes().subList(0, 3) + "\n\n");
+//                                GFG.createPoints(new ArrayList<>(regio.getRegio_West_Postcodes().subList(startIndex, endIndex)), "W");
                                 startIndex += 200;
                                 endIndex += 200;
+
                             }
                             if (j == n){
-                                System.out.println(startIndex + " " + (endIndex - (200 - (int)restwaarde)));
-                                GFG.createPoints(new ArrayList<>(regio.getRegio_West_Postcodes().subList(startIndex, endIndex)), "W");
+                                System.out.println("test2");
+                                System.out.println("batch: " + batchCount + startIndex + " " + (endIndex + (int)((restwaarde) - maxOrders)) + "\n\n");
+                                System.out.println(regio.getRegio_West_Postcodes().subList(startIndex, endIndex));
+//                                GFG.createPoints(new ArrayList<>(regio.getRegio_West_Postcodes().subList(startIndex, endIndex)), "W");
+                                batchCount++;
 
                             }
                         }
@@ -158,11 +166,11 @@ public class Adressen_GEO_Data_Filter {
 
 
 
-                        GFG.createPoints(regio.getRegio_West_Postcodes(), "W");
-                        GFG.createPoints(regio.getRegio_Zuid_West_Postcodes(), "ZW");
-                        GFG.createPoints(regio.getRegio_Oost_Postcodes(), "O");
-                        GFG.createPoints(regio.getRegio_Zuid_Oost_Postcodes(), "ZO");
-                        GFG.createPoints(regio.getRegio_Noord_Postcodes(), "N");
+//                        GFG.createPoints(regio.getRegio_West_Postcodes(), "W");
+//                        GFG.createPoints(regio.getRegio_Zuid_West_Postcodes(), "ZW");
+//                        GFG.createPoints(regio.getRegio_Oost_Postcodes(), "O");
+//                        GFG.createPoints(regio.getRegio_Zuid_Oost_Postcodes(), "ZO");
+//                        GFG.createPoints(regio.getRegio_Noord_Postcodes(), "N");
 
 
                         if(error_counter > 0) {
