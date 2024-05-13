@@ -5,6 +5,7 @@ import m2h2.Backoffice.Components.Route;
 import m2h2.Backoffice.Components.Tables.JTableButtonMouseListener;
 import m2h2.Backoffice.Components.Tables.JTableButtonRenderer;
 import m2h2.Backoffice.Magazijn.MagazijnRouteTableModel;
+import m2h2.Regios.Orders_Met_Coordinaten;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
@@ -16,7 +17,7 @@ public class DeliveryController {
     private JPanel mainPanel;
     private Route route;
     private javax.swing.JLabel jLabel1;
-    private ArrayList<Order> orders;
+    private ArrayList<Orders_Met_Coordinaten> orders;
     private Integer id;
 
     private void initComponents() {

@@ -1,5 +1,8 @@
 package m2h2.Algoritme;
 
+import m2h2.Backoffice.Components.Bus;
+import m2h2.Backoffice.Components.Koerier;
+import m2h2.Backoffice.Components.Route;
 import m2h2.Console_Color_Codes.ConsoleColorCodes;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
@@ -12,10 +15,17 @@ import java.util.*;
 
 
 public class GFG {
-
+/*
     private static ArrayList<Orders_Met_Coordinaten> route = new ArrayList<>();
 
+ */
+    private static Route route;
+
     public static void createPoints(ArrayList<Orders_Met_Coordinaten> orders, String Regio) {
+        Bus bus = new Bus("GH-75-PL");
+        Koerier koerier = new Koerier("Rick");
+
+        route = new Route(bus , Regio , "klaar voor picken" , koerier , orders);
         int n = orders.size();
         Point[] arr = new Point[n];
 
@@ -54,10 +64,10 @@ public class GFG {
                     StringBuilder route_URL = new StringBuilder("http://127.0.0.1:5000/route/v1/driving/4.898435157003786,52.34329645288008;");
 
 
-                    for (int j = 0; j < route.size(); j++) {
+                    for (int j = 0; j < route.getOrders().size(); j++) {
                         route_URL.append(orders.get(j).getCoordinaten_OSMR());
 
-                        if(j == route.size() -1 ) {
+                        if(j == route.getOrders().size() -1 ) {
 
                             String url = route_URL.toString();
 
@@ -110,7 +120,7 @@ public class GFG {
             // Now consider the first k elements
 
             for (int i = 0; i < arr.length; i++) {
-                route.add(arr[i].order);
+                route.getOrders().add(arr[i].order);
             }
 
         } catch(Exception e) {
@@ -122,9 +132,9 @@ public class GFG {
     // This function finds the closest adres to the test point using
     // k nearest neighbour algorithm.
 
-    private static void writeToFileFunctions(ArrayList<Orders_Met_Coordinaten> orders_gesorteerd_op_route) {
+    private static void writeToFileFunctions(Route gesorteerdeRoute) {
 
-
+        ArrayList<Orders_Met_Coordinaten> orders_gesorteerd_op_route = gesorteerdeRoute.getOrders();
         try {
             FileWriter myWriter = new FileWriter("src/main/java/m2h2/Sqlite_Queries_Outputs/orders_gesorteerd_op_route.txt", true);
 

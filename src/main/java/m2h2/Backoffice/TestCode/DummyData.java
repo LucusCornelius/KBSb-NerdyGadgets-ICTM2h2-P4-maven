@@ -92,9 +92,12 @@ public class DummyData {
         orders.add(new Order("lucas", "Langeweide", "1722WX", "Zuid-Scharwoude", 260));
         orders.add(new Order("lucas", "Langeweide", "1722WK", "Zuid-Scharwoude", 293));
         orders.add(new Order("lucas", "Frederik Hendrikstraat", "1723KD", "Noord-Scharwoude", 35));
+        /*
         Bus bus = new Bus("GH-75-PL");
         Koerier koerier = new Koerier("Rick");
         Route route = new Route(bus, "west", "klaar voor picken", koerier, orders);
+
+         */
 
         Adressen_GEO_Data_Filter AdressenObject1 = new Adressen_GEO_Data_Filter(orders);
 

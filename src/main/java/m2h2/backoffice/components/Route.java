@@ -1,5 +1,7 @@
 package m2h2.Backoffice.Components;
 
+import m2h2.Regios.Orders_Met_Coordinaten;
+
 import java.util.ArrayList;
 
 public class Route {
@@ -41,7 +43,7 @@ public class Route {
     private Integer ID;
     private Bus bus;
     private String regio;
-    private ArrayList<Order> orders;
+    private ArrayList<Orders_Met_Coordinaten> orders;
     private String status;
     private Koerier koerier;
 
@@ -54,7 +56,7 @@ public class Route {
     public Route(Bus bus, String regio, String status) {
         this(bus, regio, status, null, null);
     }
-    public Route(Bus bus, String regio, String status, Koerier koerier, ArrayList<Order> orders) {
+    public Route(Bus bus, String regio, String status, Koerier koerier, ArrayList<Orders_Met_Coordinaten> orders) {
         setID();
         if (orders == null) {
             orders = new ArrayList<>();
@@ -127,14 +129,14 @@ public class Route {
         return status;
     }
 
-    public void addOrder(Order order) {
+    public void addOrder(Orders_Met_Coordinaten order) {
         orders.add(order);
     }
     public Integer getSize(){
         return (Integer) orders.size();
     }
 
-    public ArrayList<Order> getOrders() {
+    public ArrayList<Orders_Met_Coordinaten> getOrders() {
         return orders;
     }
 

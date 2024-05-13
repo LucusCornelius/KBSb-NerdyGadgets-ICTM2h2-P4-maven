@@ -2,6 +2,7 @@ package m2h2.Backoffice.Magazijn;
 
 import m2h2.Backoffice.Components.*;
 import m2h2.Backoffice.Components.Tables.*;
+import m2h2.Regios.Orders_Met_Coordinaten;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
@@ -16,7 +17,7 @@ public class MagazijnRouteController implements ActionListener {
     private JLabel magazijnLabel;
     private Route route;
     private MagazijnController mController;
-    private ArrayList<Order> orders;
+    private ArrayList<Orders_Met_Coordinaten> orders;
     private Integer id;
 
     public MagazijnRouteController(Integer routeID, JPanel mainPanel) {
