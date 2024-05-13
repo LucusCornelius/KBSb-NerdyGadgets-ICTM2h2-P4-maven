@@ -3,7 +3,32 @@
 
 ### 2. Dataset download links.
 * Item 1
-   * [link1](https://service.pdok.nl/lv/bag/atom/bag.xml)[bestand van 7.02GB]
-   * [link2](https://service.pdok.nl/lv/bag/atom/bag.xml)
+   * https://service.pdok.nl/lv/bag/atom/bag.xml (bovenste van 7gb)
+   * 
 
-Maak een mapje aan genaamd "Nederland_Geografische_Data" in de "m2h2" map van het project. Stop hier deze bestanden in.
+### 3. Open Source Routing System
+
+
+1. installeer docker.
+2. cd documents
+3. mkdir OSRM-KBSb
+
+4. docker pull ghcr.io/project-osrm/osrm-backend:v5.27.1
+
+
+5. wget http://download.geofabrik.de/europe/netherlands-latest.osm.pbf
+    Voor Windows even opzoeken hoe je wget moet downloaden. Ik heb geen verstand van windows.
+    
+    Voor mensen met smaak (zoals Jeff) brew install wget. Daarna kun je die stap 1 verder uitvoeren.
+
+6. docker run -t -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backend osrm-extract -p /opt/car.lua /data/netherlands-latest.osm.pbf || echo "osrm-extract failed"
+
+
+7. docker run -t -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backend osrm-partition /data/netherlands-latest.osrm || echo "osrm-partition failed"
+8. docker run -t -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backend osrm-customize /data/netherlands-latest.osrm || echo "osrm-customize failed"
+
+
+9. docker run -t -i -p 5000:5000 -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backend osrm-routed --algorithm mld /data/netherlands-latest.osrm
+
+10. Voor meer info: https://github.com/Project-OSRM/osrm-backend
+

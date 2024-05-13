@@ -49,7 +49,7 @@ public class MagazijnController {
 
     public JScrollPane getTable(MagazijnController mController, String status){
         TableCellRenderer tableRenderer;
-        JTable table = new JTable(new MagazijnTableModel(mController, status));
+        JTable table = new JTable(new MagazijnTableModel(getTableData(status)));
         tableRenderer = table.getDefaultRenderer(JButton.class);
         table.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tableRenderer));
         table.setBounds(0, 0 , 600, 400);
@@ -85,16 +85,16 @@ public class MagazijnController {
                 });
 
                 Object[] dataline = {
-                        klaarVoorPicken.get(i).getID(),
-                        klaarVoorPicken.get(i).getBus(),
-                        klaarVoorPicken.get(i).getSize(),
-                        klaarVoorPicken.get(i).getPostcodeRange(),
-                        tableButton
+                    klaarVoorPicken.get(i).getID(), 
+                    klaarVoorPicken.get(i).getBus(), 
+                    klaarVoorPicken.get(i).getSize(), 
+                    klaarVoorPicken.get(i).getPostcodeRange(),
+                    tableButton 
                 };
                 data[i] = dataline;
             }
             return data;
-        }
+        } 
         if (status.equals(bmp)) {
             Object[][] data = new Object[bezigMetPicken.size()][5];
             for (int i = 0; i < bezigMetPicken.size(); i++){
@@ -114,30 +114,30 @@ public class MagazijnController {
                     }
                 });
                 Object[] dataline = {
-                        bezigMetPicken.get(i).getID(),
-                        bezigMetPicken.get(i).getBus(),
-                        bezigMetPicken.get(i).getSize(),
-                        bezigMetPicken.get(i).getPostcodeRange(),
-                        tableButton
+                    bezigMetPicken.get(i).getID(), 
+                    bezigMetPicken.get(i).getBus(), 
+                    bezigMetPicken.get(i).getSize(), 
+                    bezigMetPicken.get(i).getPostcodeRange(),
+                    tableButton
                 };
                 data[i] = dataline;
             }
-            return data;
+            return data;      
         }
         if (status.equals(kvv)) {
             Object[][] data = new Object[klaarVoorversturen.size()][5];
             for (int i = 0; i < klaarVoorversturen.size(); i++){
                 Object[] dataline = {
-                        klaarVoorversturen.get(i).getID(),
-                        klaarVoorversturen.get(i).getBus(),
-                        klaarVoorversturen.get(i).getSize(),
-                        klaarVoorversturen.get(i).getPostcodeRange(),
-                        kvv
+                    klaarVoorversturen.get(i).getID(), 
+                    klaarVoorversturen.get(i).getBus(), 
+                    klaarVoorversturen.get(i).getSize(), 
+                    klaarVoorversturen.get(i).getPostcodeRange(),
+                    kvv 
                 };
                 data[i] = dataline;
             }
-            return data;
-        }
+            return data;         
+        } 
         System.out.println("### geen correcte status - getTableData MagazijnController ###");
         Object[][] data = new Object[1][5];
         Object[] dataline = {"-" , "-" , "-" , "-" , "-"};

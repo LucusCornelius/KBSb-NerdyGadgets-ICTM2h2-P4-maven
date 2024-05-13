@@ -24,7 +24,6 @@ public class Route {
         return null;
     }
 
-    private Integer ID;
 
     public static ArrayList<Route> getRoutes() {
         ArrayList<Route> r = new ArrayList<>();
@@ -39,6 +38,7 @@ public class Route {
         return r;
     }
 
+    private Integer ID;
     private Bus bus;
     private String regio;
     private ArrayList<Order> orders;
@@ -68,6 +68,10 @@ public class Route {
         setStatus(status);
 
         routes.add(this);
+    }
+    public Object[][] getDescriptionTableData(){
+        Object[][] tableData = {{getID() , getBus() , getSize() , getPostcodeRange()}};
+        return tableData;
     }
 
     public String getKoerier() {

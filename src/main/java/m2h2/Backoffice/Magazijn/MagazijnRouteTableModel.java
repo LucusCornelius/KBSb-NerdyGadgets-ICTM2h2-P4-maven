@@ -39,4 +39,5 @@ public class MagazijnRouteTableModel extends AbstractTableModel {
     public Class getCellClass(int row, int col) {
         return getValueAt(row,col).getClass();
     }
+
 }

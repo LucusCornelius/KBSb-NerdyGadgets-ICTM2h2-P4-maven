@@ -1,13 +1,168 @@
 package m2h2.Algoritme;
 
+import m2h2.Console_Color_Codes.ConsoleColorCodes;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import m2h2.Regios.Orders_Met_Coordinaten;
+import m2h2.RouteBuilder.RouteBuilder;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
-class GFG {
 
-    static class Point {
+public class GFG {
 
-        String city; // Name of the city
-        double x, y; // Co-ordinate of city
+    private static ArrayList<Orders_Met_Coordinaten> route = new ArrayList<>();
+
+    public static void createPoints(ArrayList<Orders_Met_Coordinaten> orders, String Regio) {
+        int n = orders.size();
+        Point[] arr = new Point[n];
+
+        for (int i = 0; i < orders.size(); i++) {
+
+
+
+            arr[i] = new Point();
+            arr[i].adres = orders.get(i).getStraatnaam();
+            arr[i].huisnummer = orders.get(i).getHuisnummer();
+            arr[i].x = orders.get(i).getCoordinaten_RijksDriehoek_X();
+            arr[i].y = orders.get(i).getCoordinaten_RijksDriehoek_Y();
+            arr[i].order = orders.get(i);
+
+
+
+            if(orders.size() == i + 1) {
+
+                Point testPoint = new Point();
+                testPoint.x = 136215; //Startpunt is Utrecht
+                testPoint.y = 455886;
+
+
+                //K NN
+                int k = 1;
+
+                System.out.println("\n" + ConsoleColorCodes.ANSI_YELLOW + "Het dichtstbijzijnde punt vanaf het startpunt UTRECHT is " +  findClosestCity(arr, n, k, testPoint) + "\n" + ConsoleColorCodes.ANSI_RESET);
+
+
+
+                resetFile();
+                writeToFileFunctions(route);
+
+                try {
+
+                    StringBuilder route_URL = new StringBuilder("http://127.0.0.1:5000/route/v1/driving/4.898435157003786,52.34329645288008;");
+
+
+                    for (int j = 0; j < route.size(); j++) {
+                        route_URL.append(orders.get(j).getCoordinaten_OSMR());
+
+                        if(j == route.size() -1 ) {
+
+                            String url = route_URL.toString();
+
+                            int lastIndex = url.lastIndexOf(";");
+
+                            if (lastIndex != -1) {
+
+                                url = url.substring(0, lastIndex) + url.substring(lastIndex + 1);
+
+                                route_URL = new StringBuilder(url);
+                            }
+                            route_URL.append("?alternatives=false&steps=true&annotations=false&geometries=geojson&overview=full");
+                        }
+                    }
+
+                    String path = "route.png";
+
+                    // Encoding charset
+                    String charset = "UTF-8";
+
+                    Map<EncodeHintType, ErrorCorrectionLevel> hashMap
+                            = new HashMap<EncodeHintType,
+                            ErrorCorrectionLevel>();
+
+                    hashMap.put(EncodeHintType.ERROR_CORRECTION,
+                            ErrorCorrectionLevel.L);
+
+
+
+                    RouteBuilder.setRoutes(route_URL.toString(), Regio);
+                    System.out.println(route_URL);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        }
+    }
+
+    static String findClosestCity(Point arr[], int n, int k, Point p) {
+        try {
+            // Fill distances of all arr from p
+            for (int i = 0; i < n; i++)
+                arr[i].distance = Math.sqrt(
+                        Math.pow((arr[i].x - p.x), 2)
+                                + Math.pow((arr[i].y - p.y), 2));
+
+            // Sort the arr by distance from p
+            Arrays.sort(arr, new Comparison());
+
+            // Now consider the first k elements
+
+            for (int i = 0; i < arr.length; i++) {
+                route.add(arr[i].order);
+            }
+
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        return arr[0].adres;
+    }
+
+    // This function finds the closest adres to the test point using
+    // k nearest neighbour algorithm.
+
+    private static void writeToFileFunctions(ArrayList<Orders_Met_Coordinaten> orders_gesorteerd_op_route) {
+
+
+        try {
+            FileWriter myWriter = new FileWriter("src/main/java/m2h2/Sqlite_Queries_Outputs/orders_gesorteerd_op_route.txt", true);
+
+            for (int i = 0; i < orders_gesorteerd_op_route.size(); i++) {
+                myWriter.write(orders_gesorteerd_op_route.get(i) + "\n");
+                System.out.println(ConsoleColorCodes.ANSI_PURPLE + "ID: " + i + " -----> ✔" + ConsoleColorCodes.ANSI_RESET);
+            }
+            myWriter.close(); // Remember to close the FileWriter
+        } catch (IOException e) {
+            System.out.println("### -----> Er is een fout opgetreden bij ID: ");
+            e.printStackTrace();
+        }
+    }
+
+    private static void resetFile() {
+
+
+        try {
+            FileWriter myWriter = new FileWriter("src/main/java/m2h2/Sqlite_Queries_Outputs/orders_gesorteerd_op_route.txt", false);
+
+
+                myWriter.write("");
+                myWriter.close(); // Remember to close the FileWriter
+
+        } catch (IOException e) {
+            System.out.println("### -----> Reset mislukt");
+            e.printStackTrace();
+        }
+    }
+
+    public static class Point {
+
+        String adres; // Name of the adres
+
+        Orders_Met_Coordinaten order;
+
+        int huisnummer;
+        double x, y; // Co-ordinate of adres
         double distance; // Distance from test point
 
 
@@ -32,84 +187,4 @@ class GFG {
 
     // This function finds the closest city to the test point using
     // k nearest neighbour algorithm.
-
-
-    static ArrayList<String> route = new ArrayList<>();
-
-    static String findClosestCity(Point arr[], int n, int k, Point p) {
-        // Fill distances of all cities from p
-        for (int i = 0; i < n; i++)
-            arr[i].distance = Math.sqrt(
-                    Math.pow((arr[i].x - p.x), 2)
-                            + Math.pow((arr[i].y - p.y), 2));
-
-        // Sort the cities by distance from p
-        Arrays.sort(arr, new Comparison());
-
-        // Now consider the first k elements
-
-        for (int i = 0; i < arr.length; i++) {
-            route.add(arr[i].city);
-        }
-
-        return arr[0].city;
-    }
-
-    // Driver code
-    /* public static void main(String[] args)
-    {
-        int n = 7;
-
-        Point[] cities = new Point[n];
-        cities[0] = new Point();
-        cities[0].city = "De Wijk";
-        cities[0].x = 52.6762;
-        cities[0].y = 6.2842;
-
-        cities[1] = new Point();
-        cities[1].city = "Zwolle";
-        cities[1].x = 52.5171;
-        cities[1].y = 6.0833;
-
-        cities[2] = new Point();
-        cities[2].city = "Hilversum";
-        cities[2].x = 52.22333;
-        cities[2].y = 5.17639;
-
-        cities[3] = new Point();
-        cities[3].city = "Utrecht";
-        cities[3].x = 52.0907;
-        cities[3].y = 5.1214;
-
-        cities[4] = new Point();
-        cities[4].city = "Eindhoven";
-        cities[4].x = 51.4416;
-        cities[4].y = 5.4697;
-
-        cities[5] = new Point();
-        cities[5].city = "Groningen";
-        cities[5].x = 53.2194;
-        cities[5].y = 6.5665;
-
-        cities[6] = new Point();
-        cities[6].city = "Maastricht";
-        cities[6].x = 50.8514;
-        cities[6].y = 5.6913;
-
-
-
-
-
-        Point testPoint = new Point();
-        testPoint.x = 52.0907; //Startpunt is Utrecht
-        testPoint.y = 5.1214;
-
-        // Parameter to decide the number of nearest neighbors to consider
-        int k = 1;
-
-        System.out.println(ConsoleColorCodes.ANSI_YELLOW + "De dichtstbijzijnde stad vanaf het startpunt UTRECHT is " +  findClosestCity(cities, n, k, testPoint) + ConsoleColorCodes.ANSI_RESET);
-        System.out.println(ConsoleColorCodes.ANSI_PURPLE + "Route" + route + ConsoleColorCodes.ANSI_RESET);
-
-
-    } */
 }

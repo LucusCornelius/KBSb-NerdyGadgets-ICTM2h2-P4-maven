@@ -10,10 +10,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class MagazijnRouteController {
-    private JPanel mainPanel;
+public class MagazijnRouteController implements ActionListener {
+    private JButton terugButton, doorsturenButton, printButton;
+    private JPanel mainPanel, buttonPanel, topPanel;
     private JLabel magazijnLabel;
     private Route route;
+    private MagazijnController mController;
     private ArrayList<Order> orders;
     private Integer id;
 
@@ -21,6 +23,7 @@ public class MagazijnRouteController {
         this.route = Route.getRoute(routeID);
         orders = route.getOrders();
         this.mainPanel = mainPanel;
+        this.mController = mController;
 
         setMagazijnRoutePanel();
 
@@ -31,21 +34,60 @@ public class MagazijnRouteController {
         mainPanel.removeAll();
         mainPanel.setLayout(new GridLayout(5,1));
 
-        mainPanel.add(magazijnLabel = new JLabel("Magazijn"));
+        topPanel = new JPanel(new FlowLayout());
+        magazijnLabel = new JLabel("Magazijn");
+        printButton = new JButton("uitprinten");
+        topPanel.add(magazijnLabel);
+        topPanel.add(printButton);
+        topPanel.setBackground(Color.white);
+        mainPanel.add(topPanel);
+
+        JScrollPane descriptionSPane = getDescriptiontable();
+        mainPanel.add(descriptionSPane);
+
         JScrollPane sp = getTable();
         mainPanel.add(sp);
+
+        terugButton = new JButton("terug");
+        terugButton.addActionListener(this);
+        doorsturenButton = new JButton("doorsturen");
+        doorsturenButton.addActionListener(this);
+        buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.setBackground(Color.WHITE);
+        buttonPanel.add(terugButton);
+        buttonPanel.add(doorsturenButton);
+        mainPanel.add(buttonPanel);
 
         mainPanel.revalidate();
         mainPanel.repaint();
     }
 
+    public JScrollPane getDescriptiontable(){
+        JTable table = new JTable(new MagazijnTableModel(route));
+
+        table.setBounds(0, 0 , 600, 400);
+        table.setRowHeight(table.getRowHeight() + 15);
+
+        JScrollPane sp = new JScrollPane(table);
+        sp.setBounds(0,0,600,600);
+        return sp;
+    }
+
     public JScrollPane getTable(){
         JTable table = new JTable(new MagazijnRouteTableModel(this)){
-
             @Override
             public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
-
                 JComponent component = (JComponent) super.prepareRenderer(renderer, row, col);
+                if (getValueAt(row, 0) != null) {
+                    //achtergrond van de route inzicht opbasis van of het ID even/ oneven. dit moet nog aangepast worden
+                    if ((Integer) getValueAt(row, 0) % 2 == 0) {
+                        component.setBackground(Color.WHITE);
+                        component.setForeground(Color.BLACK);
+                    } else {
+                        component.setBackground(Color.LIGHT_GRAY);
+                        component.setForeground(Color.BLACK);
+                    }
+                }
                 return component;
             }
         };
@@ -70,15 +112,12 @@ public class MagazijnRouteController {
         for (int i = 0; i < orders.size(); i++){
             if (orders.get(i).getOrderLines().size() == 1){
                 data[rowIndex] = orders.get(i).getDataline();
-                System.out.println(data);
                 rowIndex++;
             } else {
                 for (int j = 0; j < orders.get(i).getOrderLines().size(); j++) {
                     data[rowIndex] = orders.get(i).getDataline(j);
                     rowIndex++;
                 }
-                System.out.println("extra datalines");
-                System.out.println(data);
             }
         }
         return data;
@@ -91,5 +130,27 @@ public class MagazijnRouteController {
             }
         }
         return size;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == terugButton){
+            route.setStatus("klaar voor picken");
+            mainPanel.removeAll();
+            MagazijnController mController = new MagazijnController(mainPanel);
+            mController.setMagazijnPanel();
+
+            mainPanel.revalidate();
+            mainPanel.repaint();
+        }
+        if (e.getSource() == doorsturenButton){
+            route.setStatus("klaar voor versturen");
+            mainPanel.removeAll();
+            MagazijnController mController = new MagazijnController(mainPanel);
+            mController.setMagazijnPanel();
+
+            mainPanel.revalidate();
+            mainPanel.repaint();
+        }
     }
 }
