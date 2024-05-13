@@ -12,7 +12,9 @@
 1. installeer docker.
 2. cd documents
 3. mkdir OSRM-KBSb
+
 4. docker pull ghcr.io/project-osrm/osrm-backend:v5.27.1
+
 
 5. wget http://download.geofabrik.de/europe/netherlands-latest.osm.pbf
     Voor Windows even opzoeken hoe je wget moet downloaden. Ik heb geen verstand van windows.
@@ -29,3 +31,4 @@
 9. docker run -t -i -p 5000:5000 -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backend osrm-routed --algorithm mld /data/netherlands-latest.osrm
 
 10. Voor meer info: https://github.com/Project-OSRM/osrm-backend
+
