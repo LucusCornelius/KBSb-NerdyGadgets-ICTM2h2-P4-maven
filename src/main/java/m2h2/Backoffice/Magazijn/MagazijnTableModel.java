@@ -22,6 +22,7 @@ public class MagazijnTableModel extends AbstractTableModel {
         data = route.getDescriptionTableData();
     }
 
+
     public int getColumnCount() {
         return columnNames.length;
     }
