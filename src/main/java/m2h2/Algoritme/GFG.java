@@ -17,15 +17,12 @@ public class GFG {
 
     private static ArrayList<Orders_Met_Coordinaten> route = new ArrayList<>();
 
-    public static void createPoints(ArrayList<Orders_Met_Coordinaten> orders) {
+    public static void createPoints(ArrayList<Orders_Met_Coordinaten> orders, String Regio) {
         int n = orders.size();
         Point[] arr = new Point[n];
 
         for (int i = 0; i < orders.size(); i++) {
 
-            System.out.println(orders.get(i).getWriteToFile());
-
-            System.out.println("TESAT" + orders.size());
 
 
             arr[i] = new Point();
@@ -36,22 +33,20 @@ public class GFG {
             arr[i].order = orders.get(i);
 
 
-            System.out.println("UITVOEREN" + orders.size() + "-> " + i);
 
             if(orders.size() == i + 1) {
 
-                System.out.println();
-
-                System.out.println("READY");
                 Point testPoint = new Point();
                 testPoint.x = 136215; //Startpunt is Utrecht
                 testPoint.y = 455886;
 
-                // Parameter to decide the number of nearest neighbors to consider
+
+                //K NN
                 int k = 1;
 
-                System.out.println(ConsoleColorCodes.ANSI_YELLOW + "De dichtstbijzijnde stad vanaf het startpunt UTRECHT is " +  findClosestCity(arr, n, k, testPoint) + ConsoleColorCodes.ANSI_RESET);
-                System.out.println(ConsoleColorCodes.ANSI_PURPLE + "Route" + route + ConsoleColorCodes.ANSI_RESET);
+                System.out.println("\n" + ConsoleColorCodes.ANSI_YELLOW + "Het dichtstbijzijnde punt vanaf het startpunt UTRECHT is " +  findClosestCity(arr, n, k, testPoint) + "\n" + ConsoleColorCodes.ANSI_RESET);
+
+
 
                 resetFile();
                 writeToFileFunctions(route);
@@ -62,7 +57,7 @@ public class GFG {
 
 
                     for (int j = 0; j < route.size(); j++) {
-                        route_URL.append(orders.get(i).getCoordinaten_OSMR());
+                        route_URL.append(orders.get(j).getCoordinaten_OSMR());
 
                         if(j == route.size() -1 ) {
 
@@ -94,9 +89,8 @@ public class GFG {
 
 
 
-                    RouteBuilder.setRoutes_West(route_URL.toString());
+                    RouteBuilder.setRoutes(route_URL.toString(), Regio);
                     System.out.println(route_URL);
-                    System.out.println("QR Code Generated ");
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -137,9 +131,8 @@ public class GFG {
             FileWriter myWriter = new FileWriter("src/main/java/m2h2/Sqlite_Queries_Outputs/orders_gesorteerd_op_route.txt", true);
 
             for (int i = 0; i < orders_gesorteerd_op_route.size(); i++) {
-                System.out.println(i);
                 myWriter.write(orders_gesorteerd_op_route.get(i) + "\n");
-                System.out.println("ID: " + i + " -----> ✔\n");
+                System.out.println(ConsoleColorCodes.ANSI_PURPLE + "ID: " + i + " -----> ✔" + ConsoleColorCodes.ANSI_RESET);
             }
             myWriter.close(); // Remember to close the FileWriter
         } catch (IOException e) {
@@ -158,7 +151,6 @@ public class GFG {
                 myWriter.write("");
                 myWriter.close(); // Remember to close the FileWriter
 
-            System.out.println(ConsoleColorCodes.ANSI_GREEN + "orders_gesorteerd_op_route.txt ge-reset!" + ConsoleColorCodes.ANSI_RESET);
         } catch (IOException e) {
             System.out.println("### -----> Reset mislukt");
             e.printStackTrace();
