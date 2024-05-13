@@ -302,7 +302,7 @@ public class Main extends javax.swing.JFrame implements ActionListener{
             jLabel1.setForeground(new Color(51, 51, 51));
             jLabel1.setText("Koerier");
 
-            MagazijnController Mg = new MagazijnController();
+            MagazijnController Mg = new MagazijnController(mainPanel);
 
             mainPanel.revalidate();
             mainPanel.repaint();
