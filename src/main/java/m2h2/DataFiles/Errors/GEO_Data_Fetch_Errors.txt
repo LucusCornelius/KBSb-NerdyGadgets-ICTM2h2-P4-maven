@@ -1,1 +1,1 @@
-java.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null Order{, orderID=55naam='lucas', straatnaam='Josua Gekeerstraat', postcode='1561DW', huisnummer=18, order='usb', plaatsnaam='Krommenie'}
+java.lang.IndexOutOfBoundsException: toIndex = 199 Order{, orderID=2naam='lucas', straatnaam='Eerste Atjehstraat', postcode='1094KL', huisnummer=2, order='usb', plaatsnaam='Amsterdam'}
