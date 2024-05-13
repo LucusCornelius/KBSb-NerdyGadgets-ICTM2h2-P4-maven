@@ -128,63 +128,63 @@ public class Adressen_GEO_Data_Filter {
                         FileWriter.WriteToFile(regio.getRegio_Oost_Postcodes().toString(), "src/main/java/m2h2/DataFiles/Postcodes/Postcodes_Oost.txt", true);
 
 
-                        int totalOrders = orders.size();
-                        double dummyOrders = 450;
-                        double maxOrders = 200;
-                        int aantal_bussen;
-
-                        double y;
-
-                        int startIndex = 0;
-                        int endIndex = 199;
-
-                            aantal_bussen = (int) Math.ceil(dummyOrders / maxOrders);
-                            System.out.println(aantal_bussen);
-
-                            double m = dummyOrders / maxOrders;
-                            double n = Math.floor(m);
-                            double restwaarde = (m - n) * maxOrders;
-//                            System.out.println(restwaarde);
-
-
-
-                            int dividend = 450;
-                            int divisor = 200;
-
-                            int result = dividend / divisor - 1;
-
-                        for (int j = 0; j < result; j++) {
-
-
-                                System.out.println("K");
-                                startIndex = startIndex + 200;
-                                endIndex = endIndex + 200;
-
-                            System.out.println(startIndex);
-                            System.out.println(endIndex);
-
-                            if(j == result - 1) {
-                                try {
-                                    int hulp_restWaarde = (int)restwaarde;
-
-                                    startIndex = startIndex + 200;
-                                    endIndex = endIndex + hulp_restWaarde;
-
-                                    System.out.println(startIndex + " " + endIndex);
-
-                                } catch (Exception e) {
-                                    System.out.println(e);
-                                }
-
-                            }
+//                        int totalOrders = orders.size();
+//                        double dummyOrders = 450;
+//                        double maxOrders = 200;
+//                        int aantal_bussen;
+//
+//                        double y;
+//
+//                        int startIndex = 0;
+//                        int endIndex = 199;
+//
+//                            aantal_bussen = (int) Math.ceil(dummyOrders / maxOrders);
+//                            System.out.println(aantal_bussen);
+//
+//                            double m = dummyOrders / maxOrders;
+//                            double n = Math.floor(m);
+//                            double restwaarde = (m - n) * maxOrders;
+////                            System.out.println(restwaarde);
+//
+//
+//
+//                            int dividend = 450;
+//                            int divisor = 200;
+//
+//                            int result = dividend / divisor - 1;
+//
+//                        for (int j = 0; j < result; j++) {
+//
+//
+//                                System.out.println("K");
+//                                startIndex = startIndex + 200;
+//                                endIndex = endIndex + 200;
+//
+//                            System.out.println(startIndex);
+//                            System.out.println(endIndex);
+//
+//                            if(j == result - 1) {
+//                                try {
+//                                    int hulp_restWaarde = (int)restwaarde;
+//
+//                                    startIndex = startIndex + 200;
+//                                    endIndex = endIndex + hulp_restWaarde;
+//
+//                                    System.out.println(startIndex + " " + endIndex);
+//
+//                                } catch (Exception e) {
+//                                    System.out.println(e);
+//                                }
+//
+//                            }
 
 //                            System.out.println(regio.getRegio_West_Postcodes().subList(startIndex, endIndex));
 
-                        }
+//                        }
 
 
 
-//                        GFG.createPoints(regio.getRegio_West_Postcodes(), "W");
+                        GFG.createPoints(regio.getRegio_West_Postcodes(), "W");
                         GFG.createPoints(regio.getRegio_Zuid_West_Postcodes(), "ZW");
                         GFG.createPoints(regio.getRegio_Oost_Postcodes(), "O");
                         GFG.createPoints(regio.getRegio_Zuid_Oost_Postcodes(), "ZO");
