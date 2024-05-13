@@ -71,6 +71,31 @@ public class Route {
         routes.add(this);
     }
 
+    //Route zonder koerier en bus
+    public Route(String regio, String status) {
+        orders = new ArrayList<>();
+
+        setID();
+        setRegio(regio);
+        setStatus(status);
+
+        routes.add(this);
+    }
+
+    //Route met koerier zonder bus
+    public Route(String regio, String status, Koerier koerier) {
+        orders = new ArrayList<>();
+
+        setID();
+        setBus(bus);
+        setRegio(regio);
+        setStatus(status);
+        setKoerier(koerier);
+
+        routes.add(this);
+    }
+
+
     public String getKoerier() {
         if (this.koerier == null) {
             return "-";
@@ -100,6 +125,9 @@ public class Route {
     }
 
     public Bus getBus() {
+        if (bus == null){
+            return null;
+        }
         return bus;
     }
 
