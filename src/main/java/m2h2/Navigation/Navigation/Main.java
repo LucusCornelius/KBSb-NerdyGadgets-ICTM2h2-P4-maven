@@ -1,5 +1,7 @@
 package m2h2.Navigation.Navigation;
 
+import m2h2.Backoffice.Magazijn.MagazijnController;
+
 import javax.swing.*;
 
 import java.awt.*;
@@ -299,6 +301,8 @@ public class Main extends javax.swing.JFrame implements ActionListener{
             jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
             jLabel1.setForeground(new Color(51, 51, 51));
             jLabel1.setText("Koerier");
+
+            MagazijnController Mg = new MagazijnController();
 
             mainPanel.revalidate();
             mainPanel.repaint();
