@@ -1,6 +1,6 @@
 package m2h2.Algoritme;
 
-import Console_Color_Codes.ConsoleColorCodes;
+import m2h2.Console_Color_Codes.ConsoleColorCodes;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.NotFoundException;
 import com.google.zxing.WriterException;
