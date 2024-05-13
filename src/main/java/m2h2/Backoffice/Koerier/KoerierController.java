@@ -8,6 +8,7 @@ import m2h2.Backoffice.Magazijn.MagazijnRouteController;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -53,8 +54,8 @@ public class KoerierController {
 
                 tableButton.setActionCommand(i+"");
                 //border moet kleur krijgen nu krijgt de cell de bordercolor
-                tableButton.setBackground(new Color(250,250 ,140));
-                tableButton.setBorder(new LineBorder(new Color(250,250,0)));
+//                tableButton.setBackground(new Color(250,250 ,140));
+//                tableButton.setBorder(new LineBorder(new Color(250,250,0)));
 
                 tableButton.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent e) {

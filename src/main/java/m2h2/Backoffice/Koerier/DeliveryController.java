@@ -15,11 +15,17 @@ public class DeliveryController {
 
     private JPanel mainPanel;
     private Route route;
+    private javax.swing.JLabel jLabel1;
     private ArrayList<Order> orders;
     private Integer id;
 
+    private void initComponents() {
+        jLabel1 = new JLabel();
+    }
+
     public DeliveryController(Integer routeID, JPanel mainPanel) {
         this.mainPanel = mainPanel;
+        initComponents();
         this.route = Route.getRoute(routeID);
         orders =route.getOrders();
 
@@ -30,9 +36,12 @@ public class DeliveryController {
         mainPanel.removeAll();
         mainPanel.setLayout(new GridLayout(5, 1));
 
-        mainPanel.add(new JLabel("Aangenomen routeID : " + route.getID()));
-        mainPanel.setFont(new Font("Segoe UI Semibold", 1, 24));
+        jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
+        jLabel1.setForeground(new Color(51, 51, 51));
+        jLabel1.setText("Aangenomen routeID : " + route.getID());
+
         mainPanel.setForeground(new Color(51, 51, 51));
+        mainPanel.add(jLabel1, BorderLayout.NORTH);
 
         JScrollPane sp = getTable();
         mainPanel.add(sp);
