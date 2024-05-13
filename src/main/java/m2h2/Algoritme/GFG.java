@@ -15,7 +15,7 @@ import java.util.*;
 
 public class GFG {
 
-    static ArrayList<Orders_Met_Coordinaten> route = new ArrayList<>();
+    private static ArrayList<Orders_Met_Coordinaten> route = new ArrayList<>();
 
     public static void createPoints(ArrayList<Orders_Met_Coordinaten> orders) {
         int n = orders.size();
@@ -197,27 +197,4 @@ public class GFG {
 
     // This function finds the closest city to the test point using
     // k nearest neighbour algorithm.
-
-
-    static ArrayList<String> route = new ArrayList<>();
-
-    static String findClosestCity(Point arr[], int n, int k, Point p) {
-        // Fill distances of all cities from p
-        for (int i = 0; i < n; i++)
-            arr[i].distance = Math.sqrt(
-                    Math.pow((arr[i].x - p.x), 2)
-                            + Math.pow((arr[i].y - p.y), 2));
-
-        // Sort the cities by distance from p
-        Arrays.sort(arr, new Comparison());
-
-        // Now consider the first k elements
-
-        for (int i = 0; i < arr.length; i++) {
-            route.add(arr[i].city);
-        }
-
-        return arr[0].city;
-    }
-
 }
