@@ -21,12 +21,8 @@ public class DeliveryController {
 
     public DeliveryController(Integer routeID, JPanel mainPanel) {
         this.mainPanel = mainPanel;
-        try {
-            orders = route.getOrders();
-        } catch (NullPointerException ex){
-            System.out.println("Geen data aanwezig");
-        }
         this.route = Route.getRoute(routeID);
+        orders =route.getOrders();
 
         setDeliveryPanel();
     }

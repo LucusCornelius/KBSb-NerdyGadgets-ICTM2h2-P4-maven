@@ -30,6 +30,10 @@ public class DeliveryTableModel extends AbstractTableModel {
     }
 
     public Class getColumnClass(int column) {
-        return getValueAt(0, column).getClass();
+        try {
+            return getValueAt(0, column).getClass();
+        } catch (NullPointerException e){
+            return String.class;
+        }
     }
 }

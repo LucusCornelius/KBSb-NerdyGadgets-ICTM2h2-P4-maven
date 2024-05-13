@@ -302,7 +302,7 @@ public class Main extends javax.swing.JFrame implements ActionListener{
             KoerierController kController = new KoerierController(mainPanel);
             JScrollPane sp = kController.getTable(kController, "Aannemen order");
 
-            mainPanel.setLayout(new GridLayout(3,1));
+            mainPanel.setLayout(new GridLayout(5,1));
             mainPanel.add(jLabel1, BorderLayout.NORTH);
             mainPanel.add(jLabel4, BorderLayout.NORTH);
             mainPanel.add(sp, BorderLayout.CENTER);
