@@ -4,7 +4,7 @@ package m2h2.Adressen;
 import m2h2.Console_Color_Codes.ConsoleColorCodes;
 import m2h2.Algoritme.GFG;
 import m2h2.FileWriter.FileWriter;
-import m2h2.Orders.Order;
+import m2h2.Backoffice.Components.*;
 import m2h2.Regios.Orders_Met_Coordinaten;
 import m2h2.Regios.Regios;
 
@@ -57,8 +57,8 @@ public class Adressen_GEO_Data_Filter {
 
 
         for (int i = 0; i < orders.size(); i++) {
-
-            Orders_Met_Coordinaten ordersMetCoordinaten = new Orders_Met_Coordinaten(orders.get(i).getOrderID(), orders.get(i).getNaam(), orders.get(i).getStraatnaam(), orders.get(i).getPostcode(), orders.get(i).getHuisnummer(), orders.get(i).getOrder());
+            Orders_Met_Coordinaten OMC = new Orders_Met_Coordinaten(orders.get(i).getNaam(),orders.get(i).getStraatnaam(), orders.get(i).getPostcode(), orders.get(i).getPlaatsnaam(), orders.get(i).getHuisnummer()) ;
+            //order met cords
 
 
             try (
@@ -75,9 +75,9 @@ public class Adressen_GEO_Data_Filter {
 
 
 
-                String postcode = orders.get(i).getPostcode();
-                int huisnummer = orders.get(i).getHuisnummer();
-                String woonplaats = orders.get(i).getPlaatsnaam();
+                String postcode = OMC.getPostcode();
+                int huisnummer = OMC.getHuisnummer();
+                String woonplaats = OMC.getPlaatsnaam();
                 String huisletter = null;
                 String toevoeging = null;
 
@@ -104,11 +104,11 @@ public class Adressen_GEO_Data_Filter {
 
 
                 try {
-                    ordersMetCoordinaten.setCoordinaten_RijksDriehoek(Double.parseDouble(rs.getString(2)), Double.parseDouble(rs.getString(4)));
+                    OMC.setCoordinaten_RijksDriehoek(Double.parseDouble(rs.getString(2)), Double.parseDouble(rs.getString(4)));
 
 
 
-                    RDtoDegrees(rs.getString(1), Double.parseDouble(rs.getString(2)), Double.parseDouble(rs.getString(4)), ordersMetCoordinaten);
+                    RDtoDegrees(rs.getString(1), Double.parseDouble(rs.getString(2)), Double.parseDouble(rs.getString(4)), OMC);
 
 
                     if((i+1 == orders.size())) {

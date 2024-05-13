@@ -47,22 +47,26 @@ public class Route {
 
     //Routes met koerier (voltooide routes)
     public Route(Bus bus, String regio, String status, Koerier koerier) {
-        orders = new ArrayList<>();
-
-        setID();
-        setBus(bus);
-        setRegio(regio);
-        setStatus(status);
-        setKoerier(koerier);
-
-        routes.add(this);
+        this(bus, regio, status, koerier, null);
     }
 
     //Route aanmaken zonder koerier (onvoltooide routes)
     public Route(Bus bus, String regio, String status) {
-        orders = new ArrayList<>();
-
+        this(bus, regio, status, null, null);
+    }
+    public Route(Bus bus, String regio, String status, Koerier koerier, ArrayList<Order> orders) {
         setID();
+        if (orders == null) {
+            orders = new ArrayList<>();
+        } else {
+            this.orders = orders;
+        }
+        if (koerier == null) {
+            setKoerier(null);
+        } else {
+            setKoerier(koerier);
+        }
+
         setBus(bus);
         setRegio(regio);
         setStatus(status);

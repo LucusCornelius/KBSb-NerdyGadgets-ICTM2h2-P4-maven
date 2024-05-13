@@ -5,9 +5,11 @@ import java.util.*;
 public class Order {
     private static int IDCounter;
     private int ID;
+    private String naam;
     private String straatnaam;
     private int huisnummer;
     private String postcode;
+    private String plaatsnaam;
     private ArrayList<OrderLine> orderLines;
     private boolean bezorgd;
     private boolean opVoorraad;
@@ -15,10 +17,21 @@ public class Order {
     public Order(String straatnaam, int huisnummer, String postcode, boolean bezorgd){
         orderLines = new ArrayList<>();
         setID();
+        setNaam("");
         setStraatnaam(straatnaam);
         setHuisnummer(huisnummer);
         setPostcode(postcode);
         setBezorgd(bezorgd);
+    }
+    public Order(String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer){
+        orderLines = new ArrayList<>();
+        setID();
+        setNaam(naam);
+        setStraatnaam(straatnaam);
+        setHuisnummer(huisnummer);
+        setPostcode(postcode);
+        setPlaatsnaam(plaatsnaam);
+        setBezorgd(false);
     }
 
     public void setID() {
@@ -32,6 +45,15 @@ public class Order {
     public int getID() {
         return ID;
     }
+
+    public void setNaam(String naam) {
+        this.naam = naam;
+    }
+
+    public void setPlaatsnaam(String plaatsnaam) {
+        this.plaatsnaam = plaatsnaam;
+    }
+
     public void setStraatnaam(String straatnaam) {
         this.straatnaam = straatnaam;
     }
@@ -52,6 +74,19 @@ public class Order {
             System.out.println("ongeldige postcode");
         }
     }
+
+    public String getNaam() {
+        return naam;
+    }
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public String getPlaatsnaam() {
+        return plaatsnaam;
+    }
+
     public String getBeschrijving(){
         if (orderLines.size() == 1) {
             return orderLines.get(0).getBeschrijving();
