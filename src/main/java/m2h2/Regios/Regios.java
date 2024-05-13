@@ -1,25 +1,32 @@
 package m2h2.Regios;
 
-import m2h2.Orders.Order;
+
+import m2h2.Algoritme.GFG;
 
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Regios {
 
-   private ArrayList<Order> regio_West_Postcodes = new ArrayList<>();
-   private ArrayList<Order> regio_Noord_Postcodes = new ArrayList<>();
-   private ArrayList<Order> regio_Oost_Postcodes = new ArrayList<>();
-   private ArrayList<Order> regio_Zuid_Oost_Postcodes = new ArrayList<>();
-   private ArrayList<Order> regio_Zuid_West_Postcodes = new ArrayList<>();
+    boolean clearFiles = false;
+
+    String writePath = "/Users/lucasvissers/IdeaProjects/KBSb-NerdyGadgets-ICTM2h2-P4-maven/src/main/java/m2h2/sqlite_queries_outputs/";
+
+   private ArrayList<Orders_Met_Coordinaten> regio_West_Postcodes = new ArrayList<>();
+   private ArrayList<Orders_Met_Coordinaten> regio_Noord_Postcodes = new ArrayList<>();
+   private ArrayList<Orders_Met_Coordinaten> regio_Oost_Postcodes = new ArrayList<>();
+   private ArrayList<Orders_Met_Coordinaten> regio_Zuid_Oost_Postcodes = new ArrayList<>();
+   private ArrayList<Orders_Met_Coordinaten> regio_Zuid_West_Postcodes = new ArrayList<>();
 
 
-   public Regios(ArrayList<Order> orders) {
-      for (int i = 0; i < orders.size(); i++) {
-         setPostcodeOpRegio(orders.get(i).getPostcode(), orders.get(i));
+   public Regios(ArrayList<Orders_Met_Coordinaten> ordersMetCoordinaten) {
+      for (int i = 0; i < ordersMetCoordinaten.size(); i++) {
+         setPostcodeOpRegio(ordersMetCoordinaten.get(i).getPostcode(), ordersMetCoordinaten.get(i));
       }
    }
 
-   public void setPostcodeOpRegio(String postcode, Order orders) {
+   public void setPostcodeOpRegio(String postcode, Orders_Met_Coordinaten orders) {
       try {
 
          int postcodesInt = Integer.parseInt(postcode.substring(0, postcode.length() - 4));
@@ -45,28 +52,74 @@ public class Regios {
          }
 
       } catch (Exception e) {
-
+          System.out.println(e);
       }
    }
 
 
-    public ArrayList<Order> getRegio_West_Postcodes() {
+    public ArrayList<Orders_Met_Coordinaten> getRegio_West_Postcodes() {
         return regio_West_Postcodes;
     }
 
-    public ArrayList<Order> getRegio_Noord_Postcodes() {
+    public ArrayList<Orders_Met_Coordinaten> getRegio_Noord_Postcodes() {
         return regio_Noord_Postcodes;
     }
 
-    public ArrayList<Order> getRegio_Oost_Postcodes() {
+    public ArrayList<Orders_Met_Coordinaten> getRegio_Oost_Postcodes() {
         return regio_Oost_Postcodes;
     }
 
-    public ArrayList<Order> getRegio_Zuid_Oost_Postcodes() {
+    public ArrayList<Orders_Met_Coordinaten> getRegio_Zuid_Oost_Postcodes() {
         return regio_Zuid_Oost_Postcodes;
     }
 
-    public ArrayList<Order> getRegio_Zuid_West_Postcodes() {
+    public ArrayList<Orders_Met_Coordinaten> getRegio_Zuid_West_Postcodes() {
         return regio_Zuid_West_Postcodes;
     }
+
+    public void writeToFile() {
+        for (int i = 0; i < getRegio_Noord_Postcodes().size(); i++) {
+            writeToFileFunctions(getRegio_Noord_Postcodes().get(i).getWriteToFile(), (this.writePath + "regio_noord_orders.txt"), clearFiles);
+
+        }
+
+        for (int i = 0; i < getRegio_West_Postcodes().size(); i++) {
+            writeToFileFunctions(getRegio_West_Postcodes().get(i).getWriteToFile(), (this.writePath + "regio_west_orders.txt"), clearFiles);
+
+        }
+
+        for (int i = 0; i < getRegio_Zuid_West_Postcodes().size(); i++) {
+            writeToFileFunctions(getRegio_Zuid_West_Postcodes().get(i).getWriteToFile(), (this.writePath + "regio_zuid_west_orders.txt"), clearFiles);
+        }
+
+        for (int i = 0; i < getRegio_Zuid_Oost_Postcodes().size(); i++) {
+            writeToFileFunctions(getRegio_Zuid_Oost_Postcodes().get(i).getWriteToFile(), (this.writePath + "regio_zuid_oost_orders.txt"), clearFiles);
+        }
+
+        for (int i = 0; i < getRegio_Oost_Postcodes().size(); i++) {
+                writeToFileFunctions(getRegio_Oost_Postcodes().get(i).getWriteToFile(), (this.writePath + "regio_oost_orders.txt"), clearFiles);
+            }
+
+
+
 }
+
+    private void writeToFileFunctions(String orderInfo, String writePath, boolean clearFiles) {
+
+        System.out.println("ORDERINFOOOOO: " + orderInfo);
+
+            try {
+                FileWriter myWriter = new FileWriter(writePath, true);
+                myWriter.write(orderInfo + "\n");
+                myWriter.close();
+                System.out.println("ID: " + "-----> ✔");
+            } catch (IOException e) {
+                System.out.println("### -----> Er is een fout opgetreden bij ID: ");
+                e.printStackTrace();
+            }
+
+
+    }
+}
+
+

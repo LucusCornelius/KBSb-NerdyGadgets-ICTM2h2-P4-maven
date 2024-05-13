@@ -1,0 +1,10 @@
+<gpx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd" version="1.1" creator="togpx"><wpt lat="52.318261" lon="5.04293"><name>Fort Diemerdamplein</name><desc>hint=P24XgL1uF4AZAAAAAAAAABAAAAAwAAAAKNCFQQAAAAAwsyxBMbUBQhkAAAAAAAAAEAAAADAAAAAkBgAA8vJMADVQHgMX90wAN1EeAwEAPwD8WA1T
+distance=77.826997481
+name=Fort Diemerdamplein</desc></wpt><wpt lat="52.318969" lon="5.042831"><name>Bloemendalerpoldersingel</name><desc>hint=JHEXgCxxF4AGAAAAMgAAAAAAAAAWAAAACMiEQGbOA0IAAAAAGplrQQYAAAAyAAAAAAAAABYAAAAkBgAAj_JMAPlSHgNv90wA6VEeAwAAfwz8WA1T
+distance=90.310779362
+name=Bloemendalerpoldersingel</desc></wpt><wpt lat="52.318293" lon="5.042905"><name>Fort Diemerdamplein</name><desc>hint=P24XgL1uF4AGAAAAAAAAACkAAAAqAAAA7KZ8QAAAAADAKdxBhNXjQQYAAAAAAAAAKQAAACoAAAAkBgAA2fJMAFVQHgMW9UwALFEeAwIA7xT8WA1T
+distance=45.810151885
+name=Fort Diemerdamplein</desc></wpt><trk><name></name><desc>weight_name=routability
+weight=103.7
+duration=103.7
+distance=356</desc><trkseg><trkpt lat="52.318261" lon="5.04293"/><trkpt lat="52.318293" lon="5.042905"/><trkpt lat="52.318348" lon="5.042649"/><trkpt lat="52.318363" lon="5.04258"/><trkpt lat="52.318378" lon="5.042511"/><trkpt lat="52.318478" lon="5.042575"/><trkpt lat="52.318564" lon="5.042603"/><trkpt lat="52.31869" lon="5.042669"/><trkpt lat="52.319004" lon="5.042852"/><trkpt lat="52.319023" lon="5.042763"/><trkpt lat="52.319127" lon="5.042265"/><trkpt lat="52.318883" lon="5.042128"/><trkpt lat="52.319127" lon="5.042265"/><trkpt lat="52.319023" lon="5.042763"/><trkpt lat="52.319004" lon="5.042852"/><trkpt lat="52.318969" lon="5.042831"/><trkpt lat="52.31869" lon="5.042669"/><trkpt lat="52.318564" lon="5.042603"/><trkpt lat="52.318495" lon="5.042514"/><trkpt lat="52.318467" lon="5.042487"/><trkpt lat="52.318394" lon="5.042435"/><trkpt lat="52.318378" lon="5.042511"/><trkpt lat="52.318363" lon="5.04258"/><trkpt lat="52.318348" lon="5.042649"/><trkpt lat="52.318293" lon="5.042905"/></trkseg></trk></gpx>
