@@ -2,8 +2,6 @@ package m2h2.Algoritme;
 
 import m2h2.Console_Color_Codes.ConsoleColorCodes;
 import com.google.zxing.EncodeHintType;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.WriterException;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import m2h2.Regios.Orders_Met_Coordinaten;
 import m2h2.RouteBuilder.RouteBuilder;
