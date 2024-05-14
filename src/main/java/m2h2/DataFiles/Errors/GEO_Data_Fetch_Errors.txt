@@ -1,1 +1,1 @@
-java.lang.IndexOutOfBoundsException: Index 286 out of bounds for length 286 Order{, orderID=297naam='lucas', straatnaam='Burgemeester Albertiplein', postcode='1561WJ', huisnummer=18, order='usb', plaatsnaam='Krommenie'}
+java.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null Order{, orderID=42naam='lucas', straatnaam='Mercuriusweg', postcode='1443VA', huisnummer=33, order='usb', plaatsnaam='Purmerend'}
