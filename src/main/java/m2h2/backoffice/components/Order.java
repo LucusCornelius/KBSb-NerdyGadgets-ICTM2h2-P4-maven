@@ -2,11 +2,15 @@ package m2h2.Backoffice.Components;
 
 import java.util.*;
 
+import static java.util.regex.Pattern.matches;
+import static net.sf.geographiclib.GeoMath.digits;
+
 public class Order {
     private static int IDCounter;
     private int ID;
     private String straatnaam;
     private int huisnummer;
+    private String adres;
     private String postcode;
     private ArrayList<OrderLine> orderLines;
     private boolean bezorgd;
@@ -52,13 +56,54 @@ public class Order {
             System.out.println("ongeldige postcode");
         }
     }
-    public String getBeschrijving(){
-        if (orderLines.size() == 1) {
-            return orderLines.get(0).getBeschrijving();
+
+    public int getPostcodeNummers(){
+        String nummerString = postcode.substring(0, 4);
+        try {
+            return Integer.parseInt(nummerString);
+        } catch (NumberFormatException e) {
+            System.out.println("### verkeerde postcodeformat! - getPostcodeNummers Order ###");
+            return -1;
         }
-        //meerdere toevoegen
-        return "meerdere";
     }
+
+    public String getPostcodeLetters(){
+        String letters = postcode.substring(4,6);
+        letters.matches("[A-Z]{2}");
+        return letters;
+    }
+
+    public String getPostcode(){
+        return getPostcodeNummers() + " " + getPostcodeLetters();
+    }
+
+
+    public String getAdres() {
+        return straatnaam + " " + huisnummer;
+    }
+
+    public void setBezorgd(boolean bezorgd) {
+        this.bezorgd = bezorgd;
+    }
+
+    public boolean getBezorgd(){
+        if (bezorgd){
+            return Boolean.TRUE;
+        } else{
+            return Boolean.FALSE;
+        }
+    }
+    public void addOrderline(OrderLine orderline){
+        orderLines.add(orderline);
+    }
+
+    //    public String getBeschrijving(){
+//        if (orderLines.size() == 1) {
+//            return orderLines.get(0).getBeschrijving();
+//        }
+//        //meerdere toevoegen
+//        return "meerdere";
+//    }
     public Object[] getDataline(){
         return getDataline(0);
     }
@@ -66,6 +111,16 @@ public class Order {
         OrderLine product = orderLines.get(index);
         Object[] dataline = {ID, getOpVoorraad(), product.getID(), product.getAantal(), product.getSectie(), product.getBeschrijving()};
         return dataline;
+    }
+
+    public Object[] getDatalineRoute(){
+        return getDatalineRoute(0);
+    }
+
+    public Object[] getDatalineRoute(int index){
+        OrderLine route = orderLines.get(index);
+        Object[] datalineroute = {ID, getAdres(), getPostcode(), route.getAantal(), getBezorgd()};
+        return datalineroute;
     }
 
     public Boolean getOpVoorraad(){
@@ -89,28 +144,11 @@ public class Order {
         return orderLines;
     }
     /*
-    public String getPostcode() {
-        return postcode;
-    }
-    */
-    public int getPostcodeNummers(){
-        String nummerString = postcode.substring(0, 4);
-        try {
-            return Integer.parseInt(nummerString);
-        } catch (NumberFormatException e) {
-            System.out.println("### verkeerde postcodeformat! - getPostcodeNummers Order ###");
-            return -1;
+        public String getPostcode() {
+            return postcode;
         }
-    }
-    public void setBezorgd(boolean bezorgd) {
-        this.bezorgd = bezorgd;
-    }
-    public boolean getBezorgd(){
-        return bezorgd;
-    }
-    public void addOrderline(OrderLine orderline){
-        orderLines.add(orderline);
-    }
+        */
+
     @Override
     public String toString() {
         String s = (

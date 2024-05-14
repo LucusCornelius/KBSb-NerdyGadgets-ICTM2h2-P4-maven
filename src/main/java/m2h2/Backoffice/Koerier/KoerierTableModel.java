@@ -1,13 +1,15 @@
 package m2h2.Backoffice.Koerier;
 
+import m2h2.Backoffice.Components.Route;
+
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 public class KoerierTableModel extends AbstractTableModel {
 
-    private final String[] cols = {"ID-route", "Bus", "Aantal orders", "Regio", "Postcodes", ""};
+    private String[] cols = {"ID-route", "Bus", "Aantal orders", "Regio", "Postcodes", ""};
 
-    private final Object[][] data;
+    private Object[][] data;
 
     public KoerierTableModel(KoerierController kController, String status){
         super();
