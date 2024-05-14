@@ -132,69 +132,69 @@ public class Adressen_GEO_Data_Filter {
                         FileWriter.WriteToFile(regio.getRegio_Zuid_Oost_Postcodes().toString(), "src/main/java/m2h2/DataFiles/Postcodes/Postcodes_Zuid-Oost.txt", true);
                         FileWriter.WriteToFile(regio.getRegio_Oost_Postcodes().toString(), "src/main/java/m2h2/DataFiles/Postcodes/Postcodes_Oost.txt", true);
 
-
-                        int totalOrders = orders.size();
-
-
-
-                        double m = totalOrders / maxOrders;
-                        double n = Math.floor(m);
-                        double restwaarde = (m - n) * maxOrders;
-
-                        int batchCount = 0;
-
-
-                        for (int j = 0; j <= n; j++){
-                            if (j < n){
-
-                                for (int k = startIndex; k <= endIndex ; k++) {
-//                                    System.out.println(1 + " " + k);
-
-                                    System.out.println("batch 1: " + regio.getRegio_West_Postcodes().get(k));
-                                    ArrayList<Orders_Met_Coordinaten> west = new ArrayList<>();
-                                    west.add(regio.getRegio_West_Postcodes().get(k));
-                                }
-
-                                System.out.println("Eerste is true");
-                                System.out.println(startIndex + " " + endIndex);
 //
-////                                GFG.createPoints(new ArrayList<>(regio.getRegio_West_Postcodes().subList(startIndex, endIndex)), "W");
-                                startIndex += 200;
-                                endIndex += 200;
+//                        int totalOrders = orders.size();
+//
+//
+//
+//                        double m = totalOrders / maxOrders;
+//                        double n = Math.floor(m);
+//                        double restwaarde = (m - n) * maxOrders;
+//
+//                        int batchCount = 0;
+//
+//
+//                        for (int j = 0; j <= n; j++){
+//                            if (j < n){
+//
+//                                for (int k = startIndex; k <= endIndex ; k++) {
+////                                    System.out.println(1 + " " + k);
+//
+//                                    System.out.println("batch 1: " + regio.getRegio_West_Postcodes().get(k));
+//                                    ArrayList<Orders_Met_Coordinaten> west = new ArrayList<>();
+//                                    west.add(regio.getRegio_West_Postcodes().get(k));
+//                                }
+//
+//                                System.out.println("Eerste is true");
+//                                System.out.println(startIndex + " " + endIndex);
+////
+//////                                GFG.createPoints(new ArrayList<>(regio.getRegio_West_Postcodes().subList(startIndex, endIndex)), "W");
+//                                startIndex += 200;
+//                                endIndex += 200;
+//
+//
+//
+//                            }
+//                            if (j == n){
+//                                System.out.println("tweede is true");
+//
+//                                int endIndex_Casted = (endIndex + (int)((restwaarde) - maxOrders) + 2);
+//                                System.out.println(startIndex + " " + endIndex_Casted);
+//
+////                                System.out.println("test2");
+////                                System.out.println("batch 2: " + batchCount + " " + endIndex_Casted + "\n\n");
+//
+//                                for (int d = startIndex; d < endIndex_Casted ; d++) {
+////                                    System.out.println(2 + " " + d);
+//                                    System.out.println("batch 2: "  + regio.getRegio_West_Postcodes().get(d));
+//                                    ArrayList<Orders_Met_Coordinaten> west = new ArrayList<>();
+//                                    west.add(regio.getRegio_West_Postcodes().get(d));
+//                                }
+//////                                GFG.createPoints(new ArrayList<>(regio.getRegio_West_Postcodes().subList(startIndex, endIndex)), "W");
+//
+////                                batchCount++;
+//
+//                            }
+//                        }
 
 
 
-                            }
-                            if (j == n){
-                                System.out.println("tweede is true");
 
-                                int endIndex_Casted = (endIndex + (int)((restwaarde) - maxOrders) + 2);
-                                System.out.println(startIndex + " " + endIndex_Casted);
-
-//                                System.out.println("test2");
-//                                System.out.println("batch 2: " + batchCount + " " + endIndex_Casted + "\n\n");
-
-                                for (int d = startIndex; d < endIndex_Casted ; d++) {
-//                                    System.out.println(2 + " " + d);
-                                    System.out.println("batch 2: "  + regio.getRegio_West_Postcodes().get(d));
-                                    ArrayList<Orders_Met_Coordinaten> west = new ArrayList<>();
-                                    west.add(regio.getRegio_West_Postcodes().get(d));
-                                }
-////                                GFG.createPoints(new ArrayList<>(regio.getRegio_West_Postcodes().subList(startIndex, endIndex)), "W");
-
-//                                batchCount++;
-
-                            }
-                        }
-
-
-
-
-//                        GFG.createPoints(regio.getRegio_West_Postcodes(), "W");
-//                        GFG.createPoints(regio.getRegio_Zuid_West_Postcodes(), "ZW");
-//                        GFG.createPoints(regio.getRegio_Oost_Postcodes(), "O");
-//                        GFG.createPoints(regio.getRegio_Zuid_Oost_Postcodes(), "ZO");
-//                        GFG.createPoints(regio.getRegio_Noord_Postcodes(), "N");
+                        GFG.createPoints(regio.getRegio_West_Postcodes(), "W");
+                        GFG.createPoints(regio.getRegio_Zuid_West_Postcodes(), "ZW");
+                        GFG.createPoints(regio.getRegio_Oost_Postcodes(), "O");
+                        GFG.createPoints(regio.getRegio_Zuid_Oost_Postcodes(), "ZO");
+                        GFG.createPoints(regio.getRegio_Noord_Postcodes(), "N");
 
 
                         if(error_counter > 0) {
