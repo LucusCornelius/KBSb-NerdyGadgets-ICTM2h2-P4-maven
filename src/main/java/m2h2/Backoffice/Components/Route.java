@@ -24,7 +24,6 @@ public class Route {
         return null;
     }
 
-
     public static ArrayList<Route> getRoutes() {
         ArrayList<Route> r = new ArrayList<>();
         ArrayList<Route> oR = new ArrayList<>();
@@ -39,10 +38,7 @@ public class Route {
     }
 
     private Integer ID;
-    private Bus bus;
-    private String regio;
     private ArrayList<Order> orders;
-    private String status;
     private Koerier koerier;
 
     //Routes met koerier (voltooide routes)
