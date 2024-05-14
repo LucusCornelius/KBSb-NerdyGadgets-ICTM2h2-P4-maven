@@ -199,7 +199,6 @@ public class Adressen_GEO_Data_Filter {
 
                         if(error_counter > 0) {
                             System.out.println("\n" + ConsoleColorCodes.ANSI_RED + "Er hebben " + error_counter + " fouten plaatsgevonden bij het ophalen van de coördinaten van adressen. Voor meer informatie zie de logfile in DataFiles/GEO_Data_Fetch_Errors.txt");
-                            endIndex--;
                         }
 
                     }
@@ -208,6 +207,7 @@ public class Adressen_GEO_Data_Filter {
                     error_counter++;
                     String data = e + " " + orders.get(i) + "\n";
                     FileWriter.WriteToFile(data, "src/main/java/m2h2/DataFiles/Errors/GEO_Data_Fetch_Errors.txt", true);
+                    endIndex--;
                 }
 
                 rs.close();
