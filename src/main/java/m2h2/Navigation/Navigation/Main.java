@@ -1,24 +1,21 @@
 package m2h2.Navigation.Navigation;
 
-import javax.swing.*;
+import m2h2.Backoffice.Koerier.KoerierController;
+import m2h2.Backoffice.TestCode.DummyData;
+import m2h2.Backoffice.Magazijn.MagazijnController;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import m2h2.Backoffice.Magazijn.MagazijnController;
 import m2h2.Backoffice.Overzicht.OverzichtController;
-import m2h2.Backoffice.TestCode.DummyData;
 
 public class Main extends javax.swing.JFrame implements ActionListener{
 
     private javax.swing.JButton Route;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JButton Menu;
@@ -31,6 +28,8 @@ public class Main extends javax.swing.JFrame implements ActionListener{
     SideMenuPanel sp;
 
     public Main() {
+        DummyData Ddata = new DummyData();
+        Ddata.setDummyData();
         initComponents();
         sp = new SideMenuPanel(this);
         sp.setMain(mainPanel);
@@ -53,10 +52,6 @@ public class Main extends javax.swing.JFrame implements ActionListener{
         jLabel13 = new JLabel();
         mainPanel = new JPanel();
         jLabel1 = new JLabel();
-        jLabel2 = new JLabel();
-        jLabel3 = new JLabel();
-        jLabel6 = new JLabel();
-        jLabel7 = new JLabel();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -194,13 +189,14 @@ public class Main extends javax.swing.JFrame implements ActionListener{
 // Homescherm met kleur
         mainPanel.setBackground(new Color(255, 255, 255));
         mainPanel.add(jLabel1, BorderLayout.NORTH);
-        jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24)); // NOI18N
+        jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
         jLabel1.setForeground(new Color(51, 51, 51));
         jLabel1.setText("Backoffice NerdyGadgets");
 
 //Hier kan je wat toevoegen voor in de homepage(staat nu weergegeven op route)
 
 // einde toevoegen voor de homepage
+
 
         GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -237,8 +233,6 @@ public class Main extends javax.swing.JFrame implements ActionListener{
     }
 
     public static void main(String args[]) {
-        DummyData dummy = new DummyData();
-        dummy.setDummyData();
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -302,10 +296,24 @@ public class Main extends javax.swing.JFrame implements ActionListener{
         }
 
         if (e.getSource() == Koerier){
-            mainPanel.setBackground(new Color(255, 255, 255));
+            mainPanel.removeAll();
+
             jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
             jLabel1.setForeground(new Color(51, 51, 51));
             jLabel1.setText("Koerier");
+
+//            JLabel jLabel4 = new JLabel("Bekijk mijn route(s)");
+//            jLabel4.setFont(new Font("Segoe UI Semibold",1,14));
+//            jLabel4.setForeground(new Color(51,51,51));
+
+            KoerierController kController = new KoerierController(mainPanel);
+            JScrollPane sp = kController.getTable(kController, "Aannemen order");
+
+            mainPanel.setLayout(new GridLayout(5,1));
+            mainPanel.add(jLabel1, BorderLayout.NORTH);
+//            mainPanel.add(jLabel4, BorderLayout.NORTH);
+            mainPanel.add(sp, BorderLayout.CENTER);
+            mainPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE,20));
 
             mainPanel.revalidate();
             mainPanel.repaint();
