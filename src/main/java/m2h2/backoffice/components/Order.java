@@ -10,7 +10,6 @@ public class Order {
     private int ID;
     private String straatnaam;
     private int huisnummer;
-    private String adres;
     private String postcode;
     private ArrayList<OrderLine> orderLines;
     private boolean bezorgd;
