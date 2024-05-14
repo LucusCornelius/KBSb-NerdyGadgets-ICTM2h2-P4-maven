@@ -1,11 +1,10 @@
-package m2h2.backoffice.components;
+package m2h2.Backoffice.Components;
 
 import java.util.ArrayList;
 
-
 public class Route {
     private static ArrayList<Route> routes = new ArrayList<>();
-    private static int IDCounter;
+    private static Integer IDCounter = (Integer) 1;
 
     public static ArrayList<Route> getRoutes(String status) {
         ArrayList<Route> r = new ArrayList<>();
@@ -15,6 +14,14 @@ public class Route {
             }
         }
         return r;
+    }
+    public static Route getRoute(Integer id){
+        for(Route route: routes){
+            if (route.getID().equals(id)) {
+                return route;
+            }
+        }
+        return null;
     }
 
     public static ArrayList<Route> getRoutes() {
@@ -30,11 +37,8 @@ public class Route {
         return r;
     }
 
-    private int ID;
-    private Bus bus;
-    private String regio;
+    private Integer ID;
     private ArrayList<Order> orders;
-    private String status;
     private Koerier koerier;
 
     //Routes met koerier (voltooide routes)
@@ -61,9 +65,16 @@ public class Route {
 
         routes.add(this);
     }
+    public Object[][] getDescriptionTableData(){
+        Object[][] tableData = {{getID() , getBus() , getSize() , getPostcodeRange()}};
+        return tableData;
+    }
 
-    public Koerier getKoerier() {
-        return koerier;
+    public String getKoerier() {
+        if (this.koerier == null) {
+            return "-";
+        }
+        return koerier.getName();
     }
 
     public void setKoerier(Koerier koerier) {
@@ -71,7 +82,7 @@ public class Route {
     }
 
     public void setID() {
-        if (ID == 0) {
+        if (ID == null) {
             IDCounter++;
             ID = IDCounter;
         } else {
@@ -79,7 +90,7 @@ public class Route {
         }
     }
 
-    public int getID() {
+    public Integer getID() {
         return ID;
     }
 
@@ -111,6 +122,30 @@ public class Route {
     public void addOrder(Order order) {
         orders.add(order);
     }
+    public Integer getSize(){
+        return (Integer) orders.size();
+    }
+
+    public ArrayList<Order> getOrders() {
+        return orders;
+    }
+
+    public String getPostcodeRange(){
+        String pr = "";
+        int min = 9999;
+        int max = 0;
+        for(Order order:orders){
+            if (order.getPostcodeNummers() != -1) {
+                if (order.getPostcodeNummers() < min) {
+                    min = order.getPostcodeNummers();
+                }
+                if (order.getPostcodeNummers() > max) {
+                    max = order.getPostcodeNummers();
+                }
+            }
+        }
+        return min + " - " + max;
+    }
 
     @Override
     public String toString() {
@@ -127,12 +162,14 @@ public class Route {
                             "regio: " + regio + "\n" +
                             "koerier: " + koerier + "\n"
             );
-        }
-        if (orders.size() == 0) {
-            s = s + "geen orders";
-        } else {
-            for (Order order : orders) {
-                s = s + order + "\n";
+
+            if (orders.isEmpty()) {
+
+                s = s + "geen orders";
+            } else {
+                for (Order order : orders) {
+                    s = s + order + "\n";
+                }
             }
         }
         return s;

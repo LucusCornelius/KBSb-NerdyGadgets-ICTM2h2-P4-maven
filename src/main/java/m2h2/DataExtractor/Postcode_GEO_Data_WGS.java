@@ -35,8 +35,6 @@ public class Postcode_GEO_Data_WGS {
             ResultSet rs = preparedStatement.executeQuery();
 
 
-            System.out.println("-----> Connectie gemaakt!");
-
 
             while (rs.next()) {
                 try {
@@ -87,8 +85,6 @@ public class Postcode_GEO_Data_WGS {
             FileWriter myWriter = new FileWriter("/Users/lucasvissers/IdeaProjects/KBSb-NerdyGadgets-ICTM2h2-P4-maven/src/main/java/m2h2/sqlite_queries_outputs/Postcode_output.txt", true);
             myWriter.write("Postcode: " + postcode + " ID: " + id + " Coördinaten: " + LatitudeGraden + "° " + LatitudeMinuten + ", " + LongitudeGraden + "° " + LongitudeMinuten + "\n");
             myWriter.close();
-            System.out.println("ID: " + progressie + "-----> ✔");
-            progressie++;
         } catch (IOException e) {
             System.out.println("### -----> Er is een fout opgetreden bij ID: " + progressie);
             e.printStackTrace();

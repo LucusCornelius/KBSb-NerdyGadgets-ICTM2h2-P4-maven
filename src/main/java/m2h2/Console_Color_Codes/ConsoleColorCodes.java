@@ -1,4 +1,4 @@
-package Console_Color_Codes;
+package m2h2.Console_Color_Codes;
 
 public class ConsoleColorCodes {
 
