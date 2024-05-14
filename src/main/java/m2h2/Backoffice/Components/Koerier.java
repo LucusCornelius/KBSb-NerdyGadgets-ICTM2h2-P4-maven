@@ -13,7 +13,7 @@ public class Koerier {
 
     public void setName(String name) {
         if (name == null || name.isEmpty()) {
-            return;
+            this.name =  "-";
         } else {
             this.name = name;
         }

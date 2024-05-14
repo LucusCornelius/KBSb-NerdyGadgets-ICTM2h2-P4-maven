@@ -28,7 +28,7 @@ public class OverzichtController {
         routes = Route.getRoutes();
         for (Route route : routes) {
             try {
-                if (route.getKoerier() == "-" || route.getBus() == null) {
+                if (route.getKoerier() == "-" || route.getBus() == "-") {
                     nVoltooideRoutes.add(route);
                 } else  {
                     voltooideRoutes.add(route);

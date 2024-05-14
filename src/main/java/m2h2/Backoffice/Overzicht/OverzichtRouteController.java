@@ -41,7 +41,14 @@ public class OverzichtRouteController {
 
     public JScrollPane getTable(){
         TableCellRenderer tableCellRenderer;
-        JTable table = new JTable(new OverzichtRouteTableModel(this));
+
+        Object[][] row = {{
+                this.route.getID(), this.route.getBus(), this.route.getRegio(), this.route.getKoerier()
+        }};
+        String[] col = {"Route nr", "Regio", "Koerier", "Bus"};
+
+        JTable table = new JTable(new OverzichtTableModel(col, row));
+
         tableCellRenderer = table.getDefaultRenderer(JButton.class);
         table.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tableCellRenderer));
 
@@ -54,12 +61,5 @@ public class OverzichtRouteController {
         sp.setBounds(0,0,600,600);
         return sp;
     }
-    public Object[][] getTableData(){
-        Object[][] data = {
-                {this.route.getID(), this.route.getBus(), this.route.getRegio(), this.route.getKoerier()}
-        };
-
-        return data;
-
-    }
+    
 }
