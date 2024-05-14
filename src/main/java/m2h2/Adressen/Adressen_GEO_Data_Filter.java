@@ -20,9 +20,14 @@ public class Adressen_GEO_Data_Filter {
 
     private ArrayList<Orders_Met_Coordinaten> orders_met_coordinaten = new ArrayList<>();
 
-    private int progressie = 1;
-
     private int error_counter = 0;
+
+
+    double dummyOrders = 450;
+    double maxOrders = 200;
+    int startIndex = 0;
+    int endIndex = 199;
+
 
 
     public Adressen_GEO_Data_Filter(ArrayList<Order> orders) {
@@ -130,13 +135,6 @@ public class Adressen_GEO_Data_Filter {
 
                         int totalOrders = orders.size();
 
-                        System.out.println("Totale orders: " + totalOrders);
-
-                        double dummyOrders = 450;
-                        double maxOrders = 200;
-
-                        int startIndex = 0;
-                        int endIndex = 199;
 
 
                         double m = totalOrders / maxOrders;
@@ -201,6 +199,7 @@ public class Adressen_GEO_Data_Filter {
 
                         if(error_counter > 0) {
                             System.out.println("\n" + ConsoleColorCodes.ANSI_RED + "Er hebben " + error_counter + " fouten plaatsgevonden bij het ophalen van de coördinaten van adressen. Voor meer informatie zie de logfile in DataFiles/GEO_Data_Fetch_Errors.txt");
+                            endIndex--;
                         }
 
                     }
