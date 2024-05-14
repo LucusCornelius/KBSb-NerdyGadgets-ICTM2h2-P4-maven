@@ -2,6 +2,7 @@ package m2h2.Backoffice.Koerier;
 
 import m2h2.Backoffice.Components.Route;
 
+import javax.print.DocFlavor;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
@@ -33,7 +34,11 @@ public class KoerierTableModel extends AbstractTableModel {
     }
 
     public Class getColumnClass(int column) {
-        return getValueAt(0, column).getClass();
+        try {
+            return getValueAt(0, column).getClass();
+        } catch (NullPointerException e){
+            return String.class;
+        }
     }
 
 }
