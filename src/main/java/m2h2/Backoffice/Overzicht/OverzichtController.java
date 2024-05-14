@@ -14,10 +14,11 @@ import java.util.ArrayList;
 public class OverzichtController {
     //In controller alle routes ophalen
     //Voltooide routes en niet voltooide routes
-    //niet voltooid is als geen bus en koerier is toegewezen
+    //niet voltooid is als geen bus of koerier is toegewezen
     private ArrayList<Route> voltooideRoutes;
     private ArrayList<Route> nVoltooideRoutes;
     private JPanel mainPanel;
+
 
     public OverzichtController(JPanel mainPanel) {
         this.mainPanel = mainPanel;
@@ -96,6 +97,10 @@ public class OverzichtController {
         return scrollPane;
     }
 
+    /*
+    ---------------- VANAF HIER ONVOLTOOIDE DEEL -----------------
+     */
+
     public JScrollPane getOnvoltooideRoutesOverzicht(){
         TableCellRenderer tableRenderer;
 
@@ -118,8 +123,8 @@ public class OverzichtController {
                         System.out.println("### hele gekke dingen - buttonAction getTableDate MagazijnController ###");
                         id = -1;
                     }
-                    MagazijnRouteController mRouteController = new MagazijnRouteController(nVoltooideRoutes.get(id).getID(), mainPanel);
-                    nVoltooideRoutes.get(id);
+                    System.out.println(id);
+                    OverzichtRouteController overzichtRouteController = new OverzichtRouteController(nVoltooideRoutes.get(id), mainPanel);
                 }
             });
 
@@ -140,7 +145,7 @@ public class OverzichtController {
                     }
                 }
             });
-            
+
             Object[] row = {
                     nVoltooideRoutes.get(i).getID(),
                     nVoltooideRoutes.get(i).getRegio(),
