@@ -263,16 +263,23 @@ public class Main extends javax.swing.JFrame implements ActionListener{
             mainPanel.setBackground(new Color(255, 255, 255));
             jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
             jLabel1.setForeground(new Color(51, 51, 51));
-            jLabel1.setText("Route");
+            jLabel1.setText("Overzicht routes");
             mainPanel.add(jLabel1);
             mainPanel.setLayout(new GridLayout(7,1));
 
             OverzichtController oController = new OverzichtController(mainPanel);
             JScrollPane scrollPane = oController.getVoltooideRoutesOverzicht();
             JScrollPane ovScrollpane = oController.getOnvoltooideRoutesOverzicht();
-            mainPanel.add(ovScrollpane);
-            mainPanel.add(scrollPane);
 
+            JLabel ovRoutes = new JLabel("Onvoltooide routes");
+            ovRoutes.setFont(new Font("Segoe UI Semibold", 1, 20));
+            mainPanel.add(ovRoutes);
+            mainPanel.add(ovScrollpane);
+
+            JLabel vRoutes = new JLabel("Voltooide routes");
+            vRoutes.setFont(new Font("Segoe UI Semibold", 1, 20));
+            mainPanel.add(vRoutes);
+            mainPanel.add(scrollPane);
 
             mainPanel.revalidate();
             mainPanel.repaint();
