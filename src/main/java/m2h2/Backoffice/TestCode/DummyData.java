@@ -11,7 +11,7 @@ public class DummyData {
         //Backoffice & Magazijn DummyData
         Koerier k1 = new Koerier("Willem");
         Bus b1 = new m2h2.Backoffice.Components.Bus("67-jh-kk");
-        Route r1 = new Route(b1 , "west" , "klaar voor picken");
+        Route r1 = new Route(b1 , "west" , "klaar voor picken", k1);
         Order o1 = new Order("kerkhofslaan", 7, "8479HH", false);
         OrderLine ol1 = new OrderLine("A" , 2 , "USB");
         o1.addOrderline(ol1);
@@ -32,7 +32,7 @@ public class DummyData {
 
 
         Bus b2 = new Bus("68-45-kk");
-        Route r2 = new Route(b2 , "Oost" , "bezig met picken");
+        Route r2 = new Route(b2 , "Oost" , "bezig met picken", k1);
         Order o21 = new Order("kerkhofslaan", 7, "8479HH", false);
         OrderLine ol21 = new OrderLine("A" , 2 , "USB");
         o21.addOrderline(ol21);
@@ -46,7 +46,7 @@ public class DummyData {
 
         //koerier DummyData
         Bus b5 = new Bus("68-45-kk");
-        Route r8 = new Route(b5 , "Oost" , "Aannemen order");
+        Route r8 = new Route("Oost" , "klaar voor picken");
         Order o25 = new Order("kerkhofslaan", 7, "8479HH", false);
         OrderLine ol25 = new OrderLine("A" , 2 , "USB");
         o21.addOrderline(ol25);
@@ -59,7 +59,7 @@ public class DummyData {
         r8.addOrder(o25);
 
         Bus b6 = new Bus("34-67-mm");
-        Route r9 = new Route(b6, "West", "Aannemen order");
+        Route r9 = new Route("West", "Aannemen order", k1);
         Order o28 = new Order("Stationstraat", 10, "8466KK", false);
         OrderLine ol28 = new OrderLine("C", 3, "Headphones");
         o28.addOrderline(ol28);
