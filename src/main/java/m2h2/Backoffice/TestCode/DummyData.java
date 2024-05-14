@@ -12,10 +12,14 @@ public class DummyData {
 
     public void setDummyData(){
         ArrayList<Order> orders = new ArrayList<Order>();
-
-
-        orders.add(new Order("lucas", "Ambonplein", "1094PW", "Amsterdam", 59));
-        orders.add(new Order("lucas", "Minahassastraat", "1094RV", "Amsterdam", 145));
+        Order O = new Order("lucas", "Ambonplein", "1094PW", "Amsterdam", 59);
+        OrderLine OL = new OrderLine("B", 2, "usb");
+        O.addOrderline(OL);
+        orders.add(O);
+        O = new Order("lucas", "Minahassastraat", "1094RV", "Amsterdam", 145);
+        OL = new OrderLine("A", 3, "shirt");
+        O.addOrderline(OL);
+        orders.add(O);
         orders.add(new Order("lucas", "Eerste Atjehstraat", "1094KL", "Amsterdam", 2));
         orders.add(new Order("lucas", "Reinwardtstraat", "1093LA", "Amsterdam", 344));
         orders.add(new Order("lucas", "Tweede van Swindenstraat", "1093VG", "Amsterdam", 31));
