@@ -32,7 +32,6 @@ public class MagazijnController {
         this.mainPanel = mainPanel;
         updateStatus();
     }
-
     public ArrayList<Route> getKlaarVoorPicken() {
         return klaarVoorPicken;
     }
