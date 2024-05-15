@@ -8,13 +8,22 @@ import javax.swing.table.AbstractTableModel;
 
 public class KoerierTableModel extends AbstractTableModel {
 
-    private String[] cols = {"ID-route", "Bus", "Aantal orders", "Regio", "Postcodes", ""};
+    private String[] cols;
 
     private Object[][] data;
 
     public KoerierTableModel(KoerierController kController, String status){
         super();
+        String[] tableHeader = {"ID-route", "Bus", "Aantal orders", "Regio", "Postcodes", ""};
+        cols = tableHeader;
         data = kController.getTableData(status);
+    }
+
+    public KoerierTableModel(Route route){
+        super();
+        String[] tableHeader = {"ID-Route" , "Bus" , "Aantal orders" , "Postcodes"};
+        cols = tableHeader;
+        data = route.getDescriptionTableData();
     }
 
     public int getColumnCount() {

@@ -8,6 +8,7 @@ import m2h2.Backoffice.Magazijn.MagazijnRouteTableModel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 public class DeliveryController implements ActionListener {
 
-    private JButton terugButton, routeVoltooien, printRoute;
+    private JButton terugButton, routeVoltooien, uitprinten;
     private JPanel mainPanel, buttonPanel;
     private Route route;
     private javax.swing.JLabel jLabel1;
@@ -43,13 +44,13 @@ public class DeliveryController implements ActionListener {
 
         jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
         jLabel1.setForeground(new Color(51, 51, 51));
-        jLabel1.setText("Aangenomen routeID : " + route.getID());
+        jLabel1.setText("Aangenomen route");
 
         mainPanel.setForeground(new Color(51, 51, 51));
         mainPanel.add(jLabel1, BorderLayout.NORTH);
-//
-//        JScrollPane DescriptionSP = getDescriptionHeaderTable();
-//        mainPanel.add(DescriptionSP);
+
+        JScrollPane DescriptionSP = getDescriptionHeaderTable();
+        mainPanel.add(DescriptionSP);
 
         JScrollPane sp = getTable();
         mainPanel.add(sp);
@@ -61,28 +62,43 @@ public class DeliveryController implements ActionListener {
         routeVoltooien = new JButton("Route voltooien");
         routeVoltooien.addActionListener(this);
 
+        uitprinten = new  JButton("Uitprinten");
+        uitprinten.addActionListener(this);
+
         buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setBackground(Color.WHITE);
 
         //toevoegen
         buttonPanel.add(terugButton);
         buttonPanel.add(routeVoltooien);
+        buttonPanel.add(uitprinten);
         mainPanel.add(buttonPanel);
 
         mainPanel.revalidate();
         mainPanel.repaint();
     }
 
-//    public JScrollPane getDescriptionHeaderTable(){
-//        JTable table = new JTable(new KoerierTableModel(route));
-//
-//        table.setBounds(0, 0 , 600, 400);
-//        table.setRowHeight(table.getRowHeight() + 15);
-//
-//        JScrollPane sp = new JScrollPane(table);
-//        sp.setBounds(0,0,600,600);
-//        return sp;
-//    }
+    public JScrollPane getDescriptionHeaderTable(){
+        JTable table = new JTable(new KoerierTableModel(route));
+        table.setFont(new Font("Segoe UI", Font.PLAIN,14));
+        table.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD,15));
+        table.setRowHeight(40);
+
+        table.getColumnModel().getColumn(0).setPreferredWidth(50);
+        table.getColumnModel().getColumn(1).setPreferredWidth(50);
+        table.getColumnModel().getColumn(2).setPreferredWidth(100);
+        table.getColumnModel().getColumn(3).setPreferredWidth(50);
+
+        DefaultTableCellRenderer linksZetten = new DefaultTableCellRenderer();
+        linksZetten.setHorizontalAlignment(SwingConstants.LEFT);
+
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(linksZetten);
+        }
+
+        JScrollPane sp = new JScrollPane(table);
+        return sp;
+    }
 
     public JScrollPane getTable() {
         JTable table = new JTable(new DeliveryTableModel(this)) {
