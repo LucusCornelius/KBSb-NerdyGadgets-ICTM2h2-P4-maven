@@ -20,10 +20,15 @@ public class KoerierController {
 
     private ArrayList<Route> AannemenRoute;
     private String Aar = "Aannemen order";
-
+    private javax.swing.JLabel jLabel1;
     private JPanel mainPanel;
 
+    private void initComponents() {
+        jLabel1 = new JLabel();
+    }
+
     public KoerierController(JPanel mainPanel) {
+        initComponents();
         AannemenRoute = Route.getRoutes("Aannemen order");
         this.mainPanel = mainPanel;
     }
@@ -72,9 +77,6 @@ public class KoerierController {
                     }
                 });
 
-//                tableButton.setBorder(BorderFactory.createLineBorder(Color.green, 1,true));
-//                tableButton.setFocusBorder();
-
                 Object[] dataline = {
                         AannemenRoute.get(i).getID(),
                         AannemenRoute.get(i).getBus(),
@@ -89,5 +91,20 @@ public class KoerierController {
         }
         System.out.println("### Er is geen Route beschikbaar ###");
         return null;
+    }
+
+    public void setKoerierPanel(){
+
+        jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
+        jLabel1.setForeground(new Color(51, 51, 51));
+        jLabel1.setText("Koerier");
+
+        mainPanel.setForeground(new Color(51, 51, 51));
+        mainPanel.add(jLabel1, BorderLayout.NORTH);
+
+        mainPanel.setLayout(new GridLayout(5,1));
+        mainPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE,20));
+
+        mainPanel.add(getTable(this, Aar));
     }
 }

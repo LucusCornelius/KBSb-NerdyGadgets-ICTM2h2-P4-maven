@@ -8,13 +8,17 @@ import m2h2.Backoffice.Magazijn.MagazijnRouteTableModel;
 import m2h2.Regios.Orders_Met_Coordinaten;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class DeliveryController {
+public class DeliveryController implements ActionListener {
 
-    private JPanel mainPanel;
+    private JButton terugButton, routeVoltooien, printRoute;
+    private JPanel mainPanel, buttonPanel;
     private Route route;
     private javax.swing.JLabel jLabel1;
     private ArrayList<Orders_Met_Coordinaten> orders;
@@ -25,8 +29,8 @@ public class DeliveryController {
     }
 
     public DeliveryController(Integer routeID, JPanel mainPanel) {
-        this.mainPanel = mainPanel;
         initComponents();
+        this.mainPanel = mainPanel;
         this.route = Route.getRoute(routeID);
         orders =route.getOrders();
 
@@ -43,13 +47,42 @@ public class DeliveryController {
 
         mainPanel.setForeground(new Color(51, 51, 51));
         mainPanel.add(jLabel1, BorderLayout.NORTH);
+//
+//        JScrollPane DescriptionSP = getDescriptionHeaderTable();
+//        mainPanel.add(DescriptionSP);
 
         JScrollPane sp = getTable();
         mainPanel.add(sp);
 
+        //toevoeging buttons
+        terugButton = new JButton("Ga Terug");
+        terugButton.addActionListener(this);
+
+        routeVoltooien = new JButton("Route voltooien");
+        routeVoltooien.addActionListener(this);
+
+        buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.setBackground(Color.WHITE);
+
+        //toevoegen
+        buttonPanel.add(terugButton);
+        buttonPanel.add(routeVoltooien);
+        mainPanel.add(buttonPanel);
+
         mainPanel.revalidate();
         mainPanel.repaint();
     }
+
+//    public JScrollPane getDescriptionHeaderTable(){
+//        JTable table = new JTable(new KoerierTableModel(route));
+//
+//        table.setBounds(0, 0 , 600, 400);
+//        table.setRowHeight(table.getRowHeight() + 15);
+//
+//        JScrollPane sp = new JScrollPane(table);
+//        sp.setBounds(0,0,600,600);
+//        return sp;
+//    }
 
     public JScrollPane getTable() {
         JTable table = new JTable(new DeliveryTableModel(this)) {
@@ -77,19 +110,19 @@ public class DeliveryController {
     }
 
     public Object[][] getTableData(){
-        Object[][] data = new Object[getOrdersTableSize()][6];
+        Object[][] data = new Object[getOrdersTableSize()][5];
         int rowIndex = 0;
         for (int i = 0; i < orders.size(); i++){
             if (orders.get(i).getOrderLines().size() == 1){
-                data[rowIndex] = orders.get(i).getDataline();
+                data[rowIndex] = orders.get(i).getDatalineRoute();
                 System.out.println(data);
                 rowIndex++;
             } else {
                 for (int j = 0; j < orders.get(i).getOrderLines().size(); j++) {
-                    data[rowIndex] = orders.get(i).getDataline(j);
+                    data[rowIndex] = orders.get(i).getDatalineRoute(j);
                     rowIndex++;
                 }
-                System.out.println("extra datalines");
+                System.out.println("extra datalines routes");
                 System.out.println(data);
             }
         }
@@ -103,6 +136,19 @@ public class DeliveryController {
             }
         }
         return size;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == terugButton){
+            route.setStatus("Aannemen order");
+            mainPanel.removeAll();
+            KoerierController kController = new KoerierController(mainPanel);
+            kController.setKoerierPanel();
+
+            mainPanel.revalidate();
+            mainPanel.repaint();
+        }
     }
 }
 
