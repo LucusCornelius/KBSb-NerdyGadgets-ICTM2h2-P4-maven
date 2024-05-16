@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Adressen_GEO_Data_Filter {
     private String url = "src/main/java/m2h2/Nederland_Geografische_Data/bag-light.gpkg";
-    private ArrayList<Order> orders;
+    private ArrayList<Orders_Met_Coordinaten> orders;
 
     private ArrayList<Orders_Met_Coordinaten> orders_met_coordinaten = new ArrayList<>();
 
@@ -25,7 +25,8 @@ public class Adressen_GEO_Data_Filter {
     private int error_counter = 0;
 
 
-    public Adressen_GEO_Data_Filter(ArrayList<Order> orders) {
+    public Adressen_GEO_Data_Filter(ArrayList<Orders_Met_Coordinaten> orders) {
+        orders_met_coordinaten = orders;
         this.orders = orders;
         Filter_Coordinaten_Op_Adres();
     }
@@ -258,11 +259,11 @@ public class Adressen_GEO_Data_Filter {
 
 
 
-    public void addOrder(Order order) {
+    public void addOrder(Orders_Met_Coordinaten order) {
         orders.add(order);
     }
 
-    public ArrayList<Order> getOrders() {
+    public ArrayList<Orders_Met_Coordinaten> getOrders() {
         return orders;
     }
 

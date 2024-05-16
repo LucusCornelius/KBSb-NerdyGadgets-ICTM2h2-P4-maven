@@ -134,11 +134,11 @@ public static void main(String[] args) {
  orders.add(new Order("lucas", "Langeweide", "1722WX", "Zuid-Scharwoude", 260));
  orders.add(new Order("lucas", "Langeweide", "1722WK", "Zuid-Scharwoude", 293));
  orders.add(new Order("lucas", "Frederik Hendrikstraat", "1723KD", "Noord-Scharwoude", 35));
-
+/*
 
  Adressen_GEO_Data_Filter AdressenObject1 = new Adressen_GEO_Data_Filter(orders);
 
-
+*/
     RouteBuilder.BuildRoutes_Starter();
 
 
