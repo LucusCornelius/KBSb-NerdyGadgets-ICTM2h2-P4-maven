@@ -133,11 +133,11 @@ public class Route {
         this.bus = bus;
     }
 
-    public Bus getBus() {
+    public String getBus() {
         if (bus == null){
-            return null;
+            return "-";
         }
-        return bus;
+        return bus.getKenteken();
     }
 
     public void setRegio(String regio) {
@@ -191,14 +191,14 @@ public class Route {
                 "route-ID: " + ID + "\n" +
                         "Bus: " + bus + "\n" +
                         "regio: " + regio + "\n" +
-                        "Koerier: Geen \n"
+                        "Koerier: " + koerier +"\n"
         );
         if (koerier != null) {
             s = (
                     "route-ID: " + ID + "\n" +
                             "Bus: " + bus + "\n" +
                             "regio: " + regio + "\n" +
-                            "koerier: " + koerier + "\n"
+                            "koerier: " + koerier.getName() + "\n"
             );
 
             if (orders.isEmpty()) {
