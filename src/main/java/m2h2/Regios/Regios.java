@@ -9,10 +9,6 @@ import java.io.IOException;
 
 public class Regios {
 
-    boolean clearFiles = false;
-
-    String writePath = "/Users/lucasvissers/IdeaProjects/KBSb-NerdyGadgets-ICTM2h2-P4-maven/src/main/java/m2h2/sqlite_queries_outputs/";
-
    private ArrayList<Orders_Met_Coordinaten> regio_West_Postcodes = new ArrayList<>();
    private ArrayList<Orders_Met_Coordinaten> regio_Noord_Postcodes = new ArrayList<>();
    private ArrayList<Orders_Met_Coordinaten> regio_Oost_Postcodes = new ArrayList<>();
