@@ -102,7 +102,8 @@ public class DummyData {
         Route route = new Route(bus, "west", "klaar voor picken", koerier, orders);
 
          */
-        //Backoffice & Magazijn DummyData
+        //Backoffice & Magazijn
+        /*
         Koerier k1 = new Koerier("Willem");
         Bus b1 = new m2h2.Backoffice.Components.Bus("67-jh-kk");
         Route r1 = new Route(b1 , "west" , "klaar voor picken", k1);
@@ -112,10 +113,10 @@ public class DummyData {
         OrderLine ol2 = new OrderLine("b" , 2 , "shirt");
         o1.addOrderline(ol2);
         r1.addOrder(o1);
-
+*/
         Adressen_GEO_Data_Filter AdressenObject1 = new Adressen_GEO_Data_Filter(orders);
 
-
+/*
         Bus b2 = new Bus("68-45-kk");
         Route r2 = new Route(b2 , "Oost" , "bezig met picken", k1);
         Order o21 = new Order("kerkhofslaan", 7, "8479HH", false);
@@ -166,6 +167,8 @@ public class DummyData {
         OrderLine ol32 = new OrderLine("G", 4, "Laptop");
         o31.addOrderline(ol32);
         r10.addOrder(o31);
+
+         */
 
 
         RouteBuilder.BuildRoutes_Starter();

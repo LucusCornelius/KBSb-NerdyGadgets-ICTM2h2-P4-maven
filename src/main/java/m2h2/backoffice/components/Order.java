@@ -102,7 +102,14 @@ public class Order {
         Object[] dataline = {ID, getOpVoorraad(), product.getID(), product.getAantal(), product.getSectie(), product.getBeschrijving()};
         return dataline;
     }
-
+    public Object[] getDatalineRoute(){
+        return getDataline(0);
+    }
+    public Object[] getDatalineRoute(int index){
+        OrderLine product = orderLines.get(index);
+        Object[] dataline = {ID, getOpVoorraad(), product.getID(), product.getAantal(), product.getSectie(), product.getBeschrijving()};
+        return dataline;
+    }
     public Boolean getOpVoorraad(){
         if (opVoorraad){
             return Boolean.TRUE;
