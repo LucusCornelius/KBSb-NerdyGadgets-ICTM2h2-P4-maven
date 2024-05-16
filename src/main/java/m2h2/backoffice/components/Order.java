@@ -75,13 +75,12 @@ public class Order {
 
 
     public String getAdres() {
-        return straatnaam + " " + huisnummer;
+        return straatnaam + huisnummer;
     }
 
     public void setBezorgd(boolean bezorgd) {
         this.bezorgd = bezorgd;
     }
-
     public boolean getBezorgd(){
         if (bezorgd){
             return Boolean.TRUE;

@@ -102,10 +102,8 @@ public class DeliveryController implements ActionListener {
 
     public JScrollPane getTable() {
         JTable table = new JTable(new DeliveryTableModel(this)) {
-
             @Override
             public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
-
                 JComponent component = (JComponent) super.prepareRenderer(renderer, row, col);
                 return component;
             }
@@ -115,8 +113,12 @@ public class DeliveryController implements ActionListener {
         tableRenderer = table.getDefaultRenderer(JButton.class);
         table.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tableRenderer));
 
+        table.setDefaultEditor(Boolean.class, table.getDefaultEditor(Boolean.class));
+        table.setDefaultRenderer(Boolean.class, table.getDefaultRenderer(Boolean.class));
+
         table.setBounds(0, 0, 600, 400);
         table.setRowHeight(table.getRowHeight() + 15);
+        table.addMouseListener(new JTableButtonMouseListener(table));
 
         table.addMouseListener(new JTableButtonMouseListener(table));
 
@@ -203,13 +205,13 @@ public class DeliveryController implements ActionListener {
         dialog.add(panel2);
 
         JButton terugButton = new JButton("Ga Terug");
-        terugButton.setBackground(new Color(255,204,204));
+//        terugButton.setBackground(new Color(255,204,204));
         terugButton.setOpaque(true);
         terugButton.setBorderPainted(false);
         terugButton.addActionListener(event -> dialog.dispose());
 
         JButton doorsturenButton = new JButton("Doorsturen");
-        doorsturenButton.setBackground(new Color(204,255,204));
+//        doorsturenButton.setBackground(new Color(204,255,204));
         doorsturenButton.setOpaque(true);
         doorsturenButton.setBorderPainted(false);
         doorsturenButton.addActionListener(event -> {
