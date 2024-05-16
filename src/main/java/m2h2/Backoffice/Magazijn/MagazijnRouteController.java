@@ -1,6 +1,6 @@
 package m2h2.Backoffice.Magazijn;
 
-import  m2h2.Backoffice.Components.*;
+import m2h2.Backoffice.Components.*;
 import m2h2.Backoffice.Components.Tables.*;
 import m2h2.Regios.Orders_Met_Coordinaten;
 
