@@ -1,5 +1,8 @@
 package m2h2.Backoffice.Components.Database;
 
+import m2h2.Backoffice.Components.OrderLine;
+import m2h2.Regios.Orders_Met_Coordinaten;
+
 public class DatabaseTestFile {
     public static void main(String[] args) {
         try {
@@ -11,5 +14,12 @@ public class DatabaseTestFile {
         }
 
         DatabaseConnectie dbCon = new DatabaseConnectie();
+
+        Orders_Met_Coordinaten O = new Orders_Met_Coordinaten("lucas", "Ambonplein", "1094PW", "Amsterdam", 59);
+        OrderLine OL = new OrderLine("B", 2, "usb");
+        O.addOrderline(OL);
+
+        dbCon.testdb();
+
     }
 }
