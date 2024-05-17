@@ -25,6 +25,7 @@ public class DummyData {
         orders.add(new Orders_Met_Coordinaten("lucas", "Reinwardtstraat", "1093LA", "Amsterdam", 344));
         orders.add(new Orders_Met_Coordinaten("lucas", "Tweede van Swindenstraat", "1093VG", "Amsterdam", 31));
         orders.add(new Orders_Met_Coordinaten("lucas", "Eerste Van Swindenstraat", "1093XD", "Amsterdam", 44));
+        /*
         orders.add(new Orders_Met_Coordinaten("lucas", "Laing's Nekstraat", "1092GX", "Amsterdam", 44));
         orders.add(new Orders_Met_Coordinaten("lucas", "Tweede Constantijn Huygensstraat", "1054CP", "Amsterdam", 41));
         orders.add(new Orders_Met_Coordinaten("lucas", "Valeriusplein", "1075BJ", "Amsterdam", 15));
@@ -98,16 +99,18 @@ public class DummyData {
         orders.add(new Orders_Met_Coordinaten("lucas", "Langeweide", "1722WK", "Zuid-Scharwoude", 293));
         orders.add(new Orders_Met_Coordinaten("lucas", "Frederik Hendrikstraat", "1723KD", "Noord-Scharwoude", 35));
 
+         */
+
 
         Bus bus = new Bus("GH-75-PL");
         Koerier koerier = new Koerier("Rick");
         Route route = new Route(bus, "west", "", koerier, orders);
 
+        Adressen_GEO_Data_Filter AdressenObject1 = new Adressen_GEO_Data_Filter(orders);
+
 
         //Backoffice & Magazijn
         /*
-
-        Adressen_GEO_Data_Filter AdressenObject1 = new Adressen_GEO_Data_Filter(orders);
 
         Koerier k1 = new Koerier("Willem");
         Bus b1 = new m2h2.Backoffice.Components.Bus("67-jh-kk");

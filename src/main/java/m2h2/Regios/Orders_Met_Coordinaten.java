@@ -93,12 +93,12 @@ public class Orders_Met_Coordinaten extends Order {
     @Override
     public String toString() {
         return "GefilterdeAdressen: {" +
-                "orderID=" + orderID +
-                " naam=' " + naam + '\'' +
-                ", straatnaam='" + straatnaam + '\'' +
-                ", postcode='" + postcode + '\'' +
-                ", huisnummer=" + huisnummer +
-                ", order='" + order + '\'' +
+                "orderID=" + super.getID() +
+                " naam=' " + super.getNaam() + '\'' +
+                ", straatnaam='" + super.getStraatnaam() + '\'' +
+                ", postcode='" + super.getPostcode() + '\'' +
+                ", huisnummer=" + super.getHuisnummer() +
+                ", order='" + super.getBeschrijving() + '\'' +
                 ", Coordinaten_DMS='" + getCoordinaten_DMS() + '\'' +
                 ", Coordinaten_DECIMAL_RIJKSDRIEHOEK='" + "X= " + Coordinaten_RijksDriehoek_X + " ||| " + "Y= " + Coordinaten_RijksDriehoek_Y + '\'' +
                 ", Coordinaten_DECIMAL='" + "X= " + Coordinaten_DecimalDegrees_X + " ||| " + "Y= " + Coordinaten_DecimalDegrees_Y + '\'' +

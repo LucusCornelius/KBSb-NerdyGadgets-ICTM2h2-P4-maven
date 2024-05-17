@@ -15,7 +15,7 @@ import java.util.Random;
 import java.util.List;
 
 public class Adressen_GEO_Data_Filter {
-    private String url = "src/main/java/m2h2/Nederland_Geografische_Data/bag-light.gpkg";
+    private String url = "jdbc:sqlite:src/main/java/m2h2/Nederland_Geografische_Data/bag-light.gpkg";
     private ArrayList<Orders_Met_Coordinaten> orders;
 
     private ArrayList<Orders_Met_Coordinaten> orders_met_coordinaten = new ArrayList<>();
@@ -60,23 +60,17 @@ public class Adressen_GEO_Data_Filter {
 
 
         for (int i = 0; i < orders.size(); i++) {
-            Orders_Met_Coordinaten OMC = new Orders_Met_Coordinaten(orders.get(i).getNaam(),orders.get(i).getStraatnaam(), orders.get(i).getPostcode(), orders.get(i).getPlaatsnaam(), orders.get(i).getHuisnummer()) ;
+            Orders_Met_Coordinaten OMC = orders.get(i);
             //order met cords
 
 
-            try (
-                    Connection connection = DriverManager.getConnection(url); Statement statement = connection.createStatement())
-            {
+            try (Connection connection = DriverManager.getConnection(url); Statement statement = connection.createStatement()){
 
 
                 int progress = (i + 1) * 100 / orders.size();
                 System.out.print("\r[" + "=".repeat(progress) + " ".repeat(100 - progress) + "] " + progress + "%");
 
-
-
                 statement.setQueryTimeout(30);
-
-
 
                 String postcode = OMC.getPostcode();
                 int huisnummer = OMC.getHuisnummer();
@@ -107,6 +101,7 @@ public class Adressen_GEO_Data_Filter {
 
 
                 try {
+
                     OMC.setCoordinaten_RijksDriehoek(Double.parseDouble(rs.getString(2)), Double.parseDouble(rs.getString(4)));
 
 
