@@ -66,8 +66,8 @@ public class RouteBuilder {
             }
 
             if (future != null) {
-                future.join();
                 System.out.println(ConsoleColorCodes.ANSI_RED + "\n ROUTE BUILDER GESTART" + ConsoleColorCodes.ANSI_RESET);
+                future.join();
             }
         }
     }
@@ -75,9 +75,6 @@ public class RouteBuilder {
 
 
     private static void BuildRoute(String Route_URL_REGIO, String Regio, int batch_count) {
-
-        System.out.println(Route_URL_REGIO);
-
 
         System.out.println(ConsoleColorCodes.ANSI_YELLOW + "\n POST REQUEST wordt uitgevoerd!\n" + ConsoleColorCodes.ANSI_RESET);
 
@@ -119,9 +116,6 @@ public class RouteBuilder {
     }
 
     private static void formatResponseGeoJSON(String jsonResponse, String Regio, String Route_URL_REGIO, int batch_count) {
-
-        System.out.println("Doppio");
-
         JsonObject jsonObject = new Gson().fromJson(jsonResponse, JsonObject.class);
 
         JsonObject geoJson = new JsonObject();
@@ -162,23 +156,21 @@ public class RouteBuilder {
 
         geoJson.add("features", features);
 
-        CompletableFuture<Void> future = null;
-
-
-
-        future = CompletableFuture.runAsync(() -> GeoJson_to_GPX(geoJson.toString(), Regio, Route_URL_REGIO, batch_count));
-
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            try {
+                GeoJson_to_GPX(geoJson.toString(), Regio, Route_URL_REGIO, batch_count);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
         FileWriter.WriteToFile(geoJson.toString(), "src/main/java/m2h2/DataFiles/Responses/PostReqGeoJSON_Filtered.geojson", true);
-
 
         future.join();
     }
 
 
     private static void GeoJson_to_GPX(String geoJSON, String Regio, String Route_URL_Regio, int batch_count) {
-        System.out.println("Running this: " + Regio);
-
 
         ArrayList<String> lat = new ArrayList<>();
         ArrayList<String> longi = new ArrayList<>();
@@ -217,8 +209,6 @@ public class RouteBuilder {
 
 
         try {
-            System.out.println("123: " + Regio);
-
             JSONObject geoJsonObject = new JSONObject(geoJSON);
 
             java.io.FileWriter gpxWriter = new java.io.FileWriter("src/main/java/m2h2/DataFiles/GPX/" + Regio + "_batch_" + batch_count + ".gpx");

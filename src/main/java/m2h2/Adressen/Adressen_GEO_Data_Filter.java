@@ -41,29 +41,29 @@ public class Adressen_GEO_Data_Filter {
             System.out.println("Er heeft een error plaatsgevonden tijdens het legen van de GPX-bestanden-map.");
         }
 
+
+        printOrders();
         voegCoordinatenAanArray();
     }
 
 
-//        System.out.println("ORDERS" + orders);
 
-//        String[] colorStrings = {ConsoleColorCodes.ANSI_GREEN.toString(), ConsoleColorCodes.ANSI_RED.toString(), ConsoleColorCodes.ANSI_BLUE.toString()};
-//        int colorIndex = 0; // Initialize the color index
-//
-//        for (int i = 0; i < orders.size(); i++) {
-//            String color = colorStrings[colorIndex]; // Get the color based on the current color index
-//
-//            // Print the processed orders with the current color
-//            System.out.println(color + "Processed orders: " + orders.get(i) + ConsoleColorCodes.ANSI_RESET);
-//
-//            // Increment the color index, resetting to 0 after reaching the end of the palette
-//            colorIndex = (colorIndex + 1) % colorStrings.length;
-//
-//            // Check if three prints have been made, if so, reset the color index to 0
-//            if ((i + 1) % 3 == 0) {
-//                colorIndex = 0;
-//            }
-//        }
+    private void printOrders() {
+        String[] colorStrings = {ConsoleColorCodes.ANSI_GREEN.toString(), ConsoleColorCodes.ANSI_RED.toString(), ConsoleColorCodes.ANSI_BLUE.toString()};
+        int colorIndex = 0;
+
+        for (int i = 0; i < orders.size(); i++) {
+            String color = colorStrings[colorIndex];
+
+            System.out.println(color + "Processed orders: " + orders.get(i) + ConsoleColorCodes.ANSI_RESET);
+
+            colorIndex = (colorIndex + 1) % colorStrings.length;
+
+            if ((i + 1) % 3 == 0) {
+                colorIndex = 0;
+            }
+        }
+    }
 
 
     private void voegCoordinatenAanArray() {
