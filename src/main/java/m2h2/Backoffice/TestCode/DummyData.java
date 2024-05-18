@@ -13,7 +13,7 @@ public class DummyData {
 
     public void setDummyData(){
         ArrayList<Orders_Met_Coordinaten> orders = new ArrayList<Orders_Met_Coordinaten>();
-        Orders_Met_Coordinaten O = new Orders_Met_Coordinaten("lucas", "Ambonplein", "1094PW", "Amsterdam", 59);
+        Orders_Met_Coordinaten O = new Orders_Met_Coordinaten("lus", "Ambonplein", "1094PW", "Amsterdam", 59);
         OrderLine OL = new OrderLine("B", 2, "usb");
         O.addOrderline(OL);
         orders.add(O);
