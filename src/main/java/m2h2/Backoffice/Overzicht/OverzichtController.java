@@ -7,6 +7,7 @@ import m2h2.Backoffice.Magazijn.MagazijnRouteController;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -38,6 +39,29 @@ public class OverzichtController {
                 System.out.println(error);
             }
         }
+    }
+
+    public void setOverzichtPanel(){
+        mainPanel.removeAll();
+        mainPanel.setBackground(new Color(255, 255, 255));
+
+        JLabel Titel = new JLabel("Overzicht routes");
+        Titel.setFont(new Font("Segoe UI Semibold", 1, 24));
+        mainPanel.add(Titel);
+
+        mainPanel.setLayout(new GridLayout(5,1));
+        mainPanel.setBorder(BorderFactory.createLineBorder(Color.white, 10));
+
+        JLabel ovRoutes = new JLabel("Onvoltooide routes");
+        ovRoutes.setFont(new Font("Segoe UI Semibold", 1, 20));
+        mainPanel.add(ovRoutes);
+        mainPanel.add(getOnvoltooideRoutesOverzicht());
+
+        JLabel vRoutes = new JLabel("Voltooide routes");
+        vRoutes.setFont(new Font("Segoe UI Semibold", 1, 20));
+        mainPanel.add(vRoutes);
+        mainPanel.add(getVoltooideRoutesOverzicht());
+
     }
 
     public ArrayList<Route> getVoltooideRoutes() {

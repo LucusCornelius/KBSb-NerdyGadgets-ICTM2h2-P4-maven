@@ -36,7 +36,7 @@ public class OverzichtRouteController {
      */
     public void setOverzichtRoutePanel() {
         mainPanel.removeAll();
-        mainPanel.setLayout(new GridLayout(5,1));
+        mainPanel.setLayout(new GridLayout(7,1));
 
         mainPanel.add(overzichtLabel = new JLabel("Niet volledige route"));
         JScrollPane sp = getTable();
@@ -79,9 +79,11 @@ public class OverzichtRouteController {
         mainPanel.revalidate();
         mainPanel.repaint();
     }
+
     /*
     Tabel met data van route erin
      */
+
     public JScrollPane getTable(){
         TableCellRenderer tableCellRenderer;
 
@@ -164,7 +166,11 @@ public class OverzichtRouteController {
                     route.setKoerier(getSelectedKoerier());
                     route.setBus(getSelectedBus());
                     route.setStatus("klaar voor picken");
-                    OverzichtRouteController overzichtRouteController = new OverzichtRouteController(route, mainPanel);
+                    OverzichtController overzichtController = new OverzichtController(mainPanel);
+                    overzichtController.setOverzichtPanel();
+
+                    mainPanel.revalidate();
+                    mainPanel.repaint();
                 }
             }
         });
