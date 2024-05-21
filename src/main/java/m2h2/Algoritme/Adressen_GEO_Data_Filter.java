@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Adressen_GEO_Data_Filter {
 
-    private static String GPX_SourcePad = "src/main/java/m2h2/DataFiles/GPX";
+    private String GPX_SourcePad = "src/main/java/m2h2/DataFiles/GPX";
 
     private String bag_light_GPKG_URL = "jdbc:sqlite:/Users/lucasvissers/IdeaProjects/KBSb-NerdyGadgets-ICTM2h2-P4-maven/src/main/java/m2h2/Nederland_Geografische_Data/bag-light.gpkg";
     private ArrayList<Order> orders;
