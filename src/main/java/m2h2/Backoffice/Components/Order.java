@@ -11,6 +11,8 @@ public class Order {
     private ArrayList<OrderLine> orderLines;
     private boolean bezorgd;
     private boolean opVoorraad;
+    private int BezorgdTeller;
+    private int NietBezorgd;
 
     public Order(String straatnaam, int huisnummer, String postcode, boolean bezorgd){
         orderLines = new ArrayList<>();
@@ -70,18 +72,17 @@ public class Order {
     }
 
     public String getPostcode(){
-        return getPostcodeNummers() + " " + getPostcodeLetters();
+        return getPostcodeNummers() + getPostcodeLetters();
     }
 
 
     public String getAdres() {
-        return straatnaam + " " + huisnummer;
+        return straatnaam + huisnummer;
     }
 
     public void setBezorgd(boolean bezorgd) {
         this.bezorgd = bezorgd;
     }
-
     public boolean getBezorgd(){
         if (bezorgd){
             return Boolean.TRUE;
