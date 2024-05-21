@@ -99,11 +99,11 @@ public class Route {
     }
 
 
-    public String getKoerier() {
+    public Koerier getKoerier() {
         if (this.koerier == null) {
-            return "-";
+            return null;
         }
-        return koerier.getName();
+        return koerier;
     }
 
     public void setKoerier(Koerier koerier) {
@@ -127,11 +127,11 @@ public class Route {
         this.bus = bus;
     }
 
-    public String getBus() {
+    public Bus getBus() {
         if (bus == null){
-            return "-";
+            return null ;
         }
-        return bus.getKenteken();
+        return bus;
     }
 
     public void setRegio(String regio) {
