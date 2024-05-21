@@ -1,4 +1,4 @@
-package m2h2.Regios;
+package m2h2.Algoritme;
 
 public class GefilterdeAdressen {
 

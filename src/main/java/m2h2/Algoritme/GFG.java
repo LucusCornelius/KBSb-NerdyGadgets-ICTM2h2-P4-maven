@@ -1,102 +1,226 @@
 package m2h2.Algoritme;
 
 import m2h2.Console_Color_Codes.ConsoleColorCodes;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import m2h2.Regios.Orders_Met_Coordinaten;
-import m2h2.RouteBuilder.RouteBuilder;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
-
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class GFG {
 
-    private static ArrayList<Orders_Met_Coordinaten> route = new ArrayList<>();
+//    private static ArrayList<Orders_Met_Coordinaten> route = new ArrayList<>();
 
-    public static void createPoints(ArrayList<Orders_Met_Coordinaten> orders, String Regio) {
-        int n = orders.size();
+    private static String route;
+
+    private static ArrayList<Orders_Met_Coordinaten> regio_West = new ArrayList<>();
+    private static ArrayList<Orders_Met_Coordinaten> regio_Noord = new ArrayList<>();
+    private static ArrayList<Orders_Met_Coordinaten> regio_Oost = new ArrayList<>();
+    private static ArrayList<Orders_Met_Coordinaten> regio_Zuid_Oost = new ArrayList<>();
+    private static ArrayList<Orders_Met_Coordinaten> regio_Zuid_West = new ArrayList<>();
+
+    private static int aantalRegios = 5;
+
+
+
+    private static void addAllIfNotNull(ArrayList<Orders_Met_Coordinaten> destination, ArrayList<Orders_Met_Coordinaten> source) {
+        if (source != null) {
+            destination.addAll(source);
+        }
+    }
+    public static void setOrders(Regios regios) {
+        System.out.println("Orders worden voorberreid voor algoritme.");
+
+        addAllIfNotNull(regio_West, regios.getRegio_West_Postcodes());
+        addAllIfNotNull(regio_Noord, regios.getRegio_Noord_Postcodes());
+        addAllIfNotNull(regio_Oost, regios.getRegio_Oost_Postcodes());
+        addAllIfNotNull(regio_Zuid_Oost, regios.getRegio_Zuid_Oost_Postcodes());
+        addAllIfNotNull(regio_Zuid_West, regios.getRegio_Zuid_West_Postcodes());
+
+        String[] regionCodes = {"w", "n", "o", "zo", "zw"};
+        for (String code : regionCodes) {
+                if(!getRegionList(code).isEmpty()) {
+                    createPoints(getRegionList(code), code);
+                } else {
+                    System.out.println("De volgende regio's zijn leeg: " + code);
+                }
+
+        }
+    }
+
+    private static ArrayList<Orders_Met_Coordinaten> getRegionList(String regionCode) {
+        switch (regionCode) {
+            case "w":
+                return regio_West;
+            case "n":
+                return regio_Noord;
+            case "o":
+                return regio_Oost;
+            case "zo":
+                return regio_Zuid_Oost;
+            case "zw":
+                return regio_Zuid_West;
+            default:
+                return null;
+        }
+    }
+
+    public static void createPoints(ArrayList<Orders_Met_Coordinaten> regio, String regio_letter) {
+
+        System.out.println("Regio: " + regio_letter);
+        System.out.println(regio);
+
+        int n = regio.size();
         Point[] arr = new Point[n];
 
-        for (int i = 0; i < orders.size(); i++) {
-
-
+        for (int i = 0; i < regio.size(); i++) {
 
             arr[i] = new Point();
-            arr[i].adres = orders.get(i).getStraatnaam();
-            arr[i].huisnummer = orders.get(i).getHuisnummer();
-            arr[i].x = orders.get(i).getCoordinaten_RijksDriehoek_X();
-            arr[i].y = orders.get(i).getCoordinaten_RijksDriehoek_Y();
-            arr[i].order = orders.get(i);
+            arr[i].adres = regio.get(i).getStraatnaam();
+            arr[i].huisnummer = regio.get(i).getHuisnummer();
+            arr[i].x = regio.get(i).getCoordinaten_RijksDriehoek_X();
+            arr[i].y = regio.get(i).getCoordinaten_RijksDriehoek_Y();
+            arr[i].order = regio.get(i);
+            arr[i].osmr = regio.get(i).getCoordinaten_OSMR();
 
 
-
-            if(orders.size() == i + 1) {
+            if(regio.size() == i + 1) {
 
                 Point testPoint = new Point();
                 testPoint.x = 136215; //Startpunt is Utrecht
                 testPoint.y = 455886;
 
-
                 //K NN
                 int k = 1;
 
-                System.out.println("\n" + ConsoleColorCodes.ANSI_YELLOW + "Het dichtstbijzijnde punt vanaf het startpunt UTRECHT is " +  findClosestCity(arr, n, k, testPoint) + "\n" + ConsoleColorCodes.ANSI_RESET);
+                ArrayList<Point> sortedOrders = findClosestCity(arr, n, k, testPoint);
 
-
-
-                resetFile();
-                writeToFileFunctions(route);
+                System.out.println("\n" + ConsoleColorCodes.ANSI_YELLOW + "Het dichtstbijzijnde punt vanaf het startpunt UTRECHT is "  + "\n" + ConsoleColorCodes.ANSI_RESET);
 
                 try {
 
-                    StringBuilder route_URL = new StringBuilder("http://127.0.0.1:5000/route/v1/driving/4.898435157003786,52.34329645288008;");
 
 
-                    for (int j = 0; j < route.size(); j++) {
-                        route_URL.append(orders.get(j).getCoordinaten_OSMR());
+                    int batch_count = 0;
+                    int sortedOrders_size = sortedOrders.size();
+                    double maxOrders = 200;
 
-                        if(j == route.size() -1 ) {
+                    int aantal_bussen = (int) Math.ceil( sortedOrders_size / maxOrders);
 
-                            String url = route_URL.toString();
+                    System.out.println("bussen: " + aantal_bussen);
 
-                            int lastIndex = url.lastIndexOf(";");
+                    double m = sortedOrders_size / maxOrders;
+                    double a = Math.floor(m);
+                    double restwaarde = (m - a) * maxOrders;
 
-                            if (lastIndex != -1) {
+                    System.out.println("size: " + sortedOrders_size);
 
-                                url = url.substring(0, lastIndex) + url.substring(lastIndex + 1);
 
-                                route_URL = new StringBuilder(url);
+                    int startIndex = 0;
+                    int endIndex = 199;
+
+                    String start_url = "http://127.0.0.1:5000/route/v1/driving/5.0651060782846375,52.10576529347831;";
+
+                    StringBuilder route_URL = new StringBuilder(start_url);
+
+                        for (int j = 0; j < aantal_bussen - 1; j++) {
+                            System.out.println("startIndex: " + startIndex + "endIndex: " + endIndex);
+
+                            List<Point> sublist = sortedOrders.subList(startIndex, endIndex - 1);
+                            for (Point point : sublist) {
+                                String coordinates = point.osmr;
+                                route_URL.append(coordinates);
                             }
-                            route_URL.append("?alternatives=false&steps=true&annotations=false&geometries=geojson&overview=full");
+                            startIndex = endIndex + 1;
+                            endIndex += 200;
+
+
+                            if (j == aantal_bussen - 2) {
+                                batch_count++;
+                                final int batchCount = batch_count;
+                                System.out.println(batchCount);
+
+
+                                route_URL.append("5.0651060782846375,52.10576529347831?alternatives=false&steps=true&annotations=false&geometries=geojson&overview=full");
+
+
+                                System.out.println(route_URL);
+
+                                final String route_osmr_complete_URL = route_URL.toString();
+                                route_URL.replace(0, route_URL.length(), start_url);
+
+
+                                CompletableFuture<Void> future = CompletableFuture.runAsync(() -> RouteBuilder.setRoutes(route_osmr_complete_URL, regio_letter, batchCount));
+
+                                future.thenRun(() -> System.out.println("setRoutes is klaar"));
+
+                                future.join();
+
+                            }
+
                         }
+
+
+                    if (restwaarde == 0) {
+                        System.out.println(startIndex);
+                        System.out.println(endIndex - 1);
+                    } else {
+
+                        System.out.println(ConsoleColorCodes.ANSI_GREEN + "\n BLOCK 2\n" + "Regio: " + regio_letter);
+                        System.out.println("startIndex: " + startIndex + "endIndex: " + (int)(startIndex + restwaarde));
+
+                        List<Point> sublist = sortedOrders.subList((int) startIndex, (int)(startIndex + restwaarde));
+                        int sublistSize = sublist.size();
+                        System.out.println("sublist: " + sublistSize);
+                        int loopCount = 0;
+                        for (Point point : sublist) {
+                            String coordinates = point.osmr;
+                            route_URL.append(coordinates);
+                            loopCount++;
+                        }
+
+                        if (loopCount == sublistSize) {
+                            batch_count++;
+                            final int batchCount = batch_count;
+
+
+                            route_URL.append("5.0651060782846375,52.10576529347831?alternatives=false&steps=true&annotations=false&geometries=geojson&overview=full");
+                            System.out.println("batch_count: " + batchCount);
+                            System.out.println(route_URL);
+
+
+                            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+                                try {
+                                    RouteBuilder.setRoutes(route_URL.toString(), regio_letter, batchCount);
+                                } catch (Exception e) {
+                                    e.printStackTrace(); // Handle the exception appropriately
+                                }
+                            });
+
+                            future.thenRun(() -> {
+                                System.out.println("setRoutes is klaar");
+                                synchronized (route_URL) {
+                                    route_URL.replace(0, route_URL.length(), start_url);
+                                }
+                            }).exceptionally(e -> {
+                                e.printStackTrace(); // Handle any exceptions that occurred during the asynchronous operation
+                                return null;
+                            });
+
+                            future.join(); // Ensure this is intentional, as it blocks the main thread
+
+                        }
+
                     }
 
-                    String path = "route.png";
-
-                    // Encoding charset
-                    String charset = "UTF-8";
-
-                    Map<EncodeHintType, ErrorCorrectionLevel> hashMap
-                            = new HashMap<EncodeHintType,
-                            ErrorCorrectionLevel>();
-
-                    hashMap.put(EncodeHintType.ERROR_CORRECTION,
-                            ErrorCorrectionLevel.L);
-
-
-
-                    RouteBuilder.setRoutes(route_URL.toString(), Regio);
-                    System.out.println(route_URL);
                 } catch (Exception e) {
-                    System.out.println(e);
+                    e.printStackTrace();
                 }
             }
         }
     }
 
-    static String findClosestCity(Point arr[], int n, int k, Point p) {
+
+    static ArrayList<Point> findClosestCity(Point arr[], int n, int k, Point p) {
         try {
             // Fill distances of all arr from p
             for (int i = 0; i < n; i++)
@@ -107,52 +231,14 @@ public class GFG {
             // Sort the arr by distance from p
             Arrays.sort(arr, new Comparison());
 
-            // Now consider the first k elements
-
-            for (int i = 0; i < arr.length; i++) {
-                route.add(arr[i].order);
-            }
+            // Create the sortedOrders array and populate it with sorted points
+            ArrayList<Point> sortedOrders = new ArrayList<>(Arrays.asList(arr));
+            return sortedOrders;
 
         } catch(Exception e) {
             System.out.println(e);
         }
-        return arr[0].adres;
-    }
-
-    // This function finds the closest adres to the test point using
-    // k nearest neighbour algorithm.
-
-    private static void writeToFileFunctions(ArrayList<Orders_Met_Coordinaten> orders_gesorteerd_op_route) {
-
-
-        try {
-            FileWriter myWriter = new FileWriter("src/main/java/m2h2/Sqlite_Queries_Outputs/orders_gesorteerd_op_route.txt", true);
-
-            for (int i = 0; i < orders_gesorteerd_op_route.size(); i++) {
-                myWriter.write(orders_gesorteerd_op_route.get(i) + "\n");
-                System.out.println(ConsoleColorCodes.ANSI_PURPLE + "ID: " + i + " -----> ✔" + ConsoleColorCodes.ANSI_RESET);
-            }
-            myWriter.close(); // Remember to close the FileWriter
-        } catch (IOException e) {
-            System.out.println("### -----> Er is een fout opgetreden bij ID: ");
-            e.printStackTrace();
-        }
-    }
-
-    private static void resetFile() {
-
-
-        try {
-            FileWriter myWriter = new FileWriter("src/main/java/m2h2/Sqlite_Queries_Outputs/orders_gesorteerd_op_route.txt", false);
-
-
-                myWriter.write("");
-                myWriter.close(); // Remember to close the FileWriter
-
-        } catch (IOException e) {
-            System.out.println("### -----> Reset mislukt");
-            e.printStackTrace();
-        }
+        return null; // Handle potential error cases or return another appropriate value
     }
 
     public static class Point {
@@ -165,16 +251,14 @@ public class GFG {
         double x, y; // Co-ordinate of adres
         double distance; // Distance from test point
 
+        String osmr;
+
 
     }
 
     // Used to sort an array of points by increasing
     // order of distance
     static class Comparison implements Comparator<Point> {
-
-
-
-
         public int compare(Point a, Point b)
         {
             if (a.distance < b.distance)
@@ -185,6 +269,5 @@ public class GFG {
         }
     }
 
-    // This function finds the closest city to the test point using
-    // k nearest neighbour algorithm.
+
 }
