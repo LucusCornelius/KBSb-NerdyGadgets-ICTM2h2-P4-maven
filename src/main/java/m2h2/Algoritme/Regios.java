@@ -1,11 +1,7 @@
-package m2h2.Regios;
+package m2h2.Algoritme;
 
-
-import m2h2.Algoritme.GFG;
 
 import java.util.ArrayList;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class Regios {
 

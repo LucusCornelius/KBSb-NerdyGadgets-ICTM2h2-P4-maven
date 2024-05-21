@@ -1,20 +1,13 @@
-package m2h2.Adressen;
+package m2h2.Algoritme;
 
 
 import m2h2.Console_Color_Codes.ConsoleColorCodes;
-import m2h2.Algoritme.GFG;
 import m2h2.FileWriter.FileWriter;
-import m2h2.Orders.Order;
-import m2h2.Regios.Orders_Met_Coordinaten;
-import m2h2.Regios.Regios;
 
 
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.List;
 
 public class Adressen_GEO_Data_Filter {
 

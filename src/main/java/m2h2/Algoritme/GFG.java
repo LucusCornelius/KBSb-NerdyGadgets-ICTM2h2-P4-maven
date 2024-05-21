@@ -1,11 +1,7 @@
 package m2h2.Algoritme;
 
 import m2h2.Console_Color_Codes.ConsoleColorCodes;
-import m2h2.Regios.Orders_Met_Coordinaten;
-import m2h2.Regios.Regios;
-import m2h2.RouteBuilder.RouteBuilder;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
