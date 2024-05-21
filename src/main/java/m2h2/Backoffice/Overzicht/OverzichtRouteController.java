@@ -36,7 +36,7 @@ public class OverzichtRouteController {
      */
     public void setOverzichtRoutePanel() {
         mainPanel.removeAll();
-        mainPanel.setLayout(new GridLayout(7,1));
+        mainPanel.setLayout(new GridLayout(8,1));
 
         mainPanel.add(overzichtLabel = new JLabel("Niet volledige route"));
         JScrollPane sp = getTable();
@@ -72,6 +72,9 @@ public class OverzichtRouteController {
                 }
             });
         }
+
+        JButton terug = terugKnop();
+        mainPanel.add(terug);
 
         JButton jbDoorstuur = doorstuurKnop();
         mainPanel.add(jbDoorstuur);
@@ -176,5 +179,23 @@ public class OverzichtRouteController {
         });
         return doorstuurButton;
     }
-    
+    /***
+     *
+     * Ga terug knop
+     *
+     */
+    public JButton terugKnop(){
+        JButton terugButton = new JButton("Terug");
+        terugButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                OverzichtController overzichtController = new OverzichtController(mainPanel);
+                overzichtController.setOverzichtPanel();
+
+                mainPanel.revalidate();
+                mainPanel.repaint();
+            }
+        });
+        return terugButton;
+    }
 }

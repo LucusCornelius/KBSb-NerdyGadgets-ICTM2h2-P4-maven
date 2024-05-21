@@ -30,8 +30,10 @@ public class OverzichtController {
         for (Route route : routes) {
             try {
                 if (route.getKoerier() == null || route.getBus() == null) {
+                    route.setStatus("onvoltooide route");
                     nVoltooideRoutes.add(route);
                 } else  {
+                    route.setStatus("klaar voor picken");
                     voltooideRoutes.add(route);
                 }
             } catch (NullPointerException e) {

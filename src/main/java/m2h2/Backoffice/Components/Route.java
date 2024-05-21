@@ -65,7 +65,7 @@ public class Route {
         setID();
         setBus(bus);
         setRegio(regio);
-        setStatus(status);
+        setStatus("onvoltooide route");
 
         routes.add(this);
     }
@@ -80,7 +80,7 @@ public class Route {
 
         setID();
         setRegio(regio);
-        setStatus(status);
+        setStatus("onvoltooide route");
 
         routes.add(this);
     }
@@ -92,7 +92,7 @@ public class Route {
         setID();
         setBus(bus);
         setRegio(regio);
-        setStatus(status);
+        setStatus("onvoltooide route");
         setKoerier(koerier);
 
         routes.add(this);
