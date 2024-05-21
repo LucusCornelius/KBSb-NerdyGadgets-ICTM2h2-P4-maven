@@ -7,9 +7,11 @@ public class DeliveryTableModel extends AbstractTableModel {
     private String[] cols = {"Route-ID", "Bezorgadres", "Postcode", "Aantal pakketten per klant", "Afgeleverd"};
 
     private Object[][] data;
+    private DeliveryController dController;
 
-    public DeliveryTableModel(DeliveryController dController){
+    public DeliveryTableModel(DeliveryController dController) {
         super();
+        this.dController = dController;
         data = dController.getTableData();
     }
 
@@ -18,7 +20,7 @@ public class DeliveryTableModel extends AbstractTableModel {
     }
 
     public int getRowCount() {
-            return data.length;
+        return data.length;
     }
 
     public String getColumnName(int col) {
@@ -28,6 +30,7 @@ public class DeliveryTableModel extends AbstractTableModel {
     public Object getValueAt(int row, int col) {
         return data[row][col];
     }
+
     @Override
     public Class<?> getColumnClass(int column) {
         switch (column) {
@@ -46,8 +49,11 @@ public class DeliveryTableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object aValue, int row, int col) {
         if (col == 4 && aValue instanceof Boolean) {
-            data[row][col] = aValue;
+            boolean oldValue = (Boolean) data[row][col];
+            boolean newValue = (Boolean) aValue;
+            data[row][col] = newValue;
             fireTableCellUpdated(row, col);
+            dController.updateCounters(newValue, oldValue);
         }
     }
 }

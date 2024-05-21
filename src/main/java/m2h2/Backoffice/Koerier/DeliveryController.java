@@ -4,7 +4,6 @@ import m2h2.Backoffice.Components.Order;
 import m2h2.Backoffice.Components.Route;
 import m2h2.Backoffice.Components.Tables.JTableButtonMouseListener;
 import m2h2.Backoffice.Components.Tables.JTableButtonRenderer;
-import m2h2.Backoffice.Magazijn.MagazijnRouteTableModel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -23,6 +22,10 @@ public class DeliveryController implements ActionListener {
     private javax.swing.JLabel jLabel1;
     private ArrayList<Order> orders;
     private Integer id;
+    private int deliveredCount = 0;
+    private int returnedCount = 0;
+    private JTextField ordersBezorgd;
+    private JTextField ordersTerug;
 
     private void initComponents() {
         jLabel1 = new JLabel();
@@ -39,7 +42,6 @@ public class DeliveryController implements ActionListener {
 
     public void setDeliveryPanel() {
         mainPanel.removeAll();
-//        mainPanel.setBackground(new Color(0,0,0, 100));
         mainPanel.setLayout(new GridLayout(5, 1));
 
         jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
@@ -55,7 +57,6 @@ public class DeliveryController implements ActionListener {
         JScrollPane sp = getTable();
         mainPanel.add(sp);
 
-        //toevoeging buttons
         terugButton = new JButton("Ga Terug");
         terugButton.addActionListener(this);
 
@@ -133,15 +134,22 @@ public class DeliveryController implements ActionListener {
         for (int i = 0; i < orders.size(); i++) {
             if (orders.get(i).getOrderLines().size() == 1) {
                 data[rowIndex] = orders.get(i).getDatalineRoute();
-                System.out.println(data);
+                if ((Boolean) data[rowIndex][4]) {
+                    deliveredCount++;
+                } else {
+                    returnedCount++;
+                }
                 rowIndex++;
             } else {
                 for (int j = 0; j < orders.get(i).getOrderLines().size(); j++) {
                     data[rowIndex] = orders.get(i).getDatalineRoute(j);
+                    if ((Boolean) data[rowIndex][4]) {
+                        deliveredCount++;
+                    } else {
+                        returnedCount++;
+                    }
                     rowIndex++;
                 }
-                System.out.println("extra datalines routes");
-                System.out.println(data);
             }
         }
         return data;
@@ -157,6 +165,26 @@ public class DeliveryController implements ActionListener {
         return size;
     }
 
+    public void updateCounters(boolean newValue, boolean oldValue) {
+        if (newValue != oldValue) {
+            if (newValue) {
+                deliveredCount++;
+                returnedCount--;
+            } else {
+                deliveredCount--;
+                returnedCount++;
+            }
+            updateDialog();
+        }
+    }
+
+    private void updateDialog() {
+        if (ordersBezorgd != null && ordersTerug != null) {
+            ordersBezorgd.setText(String.valueOf(deliveredCount));
+            ordersTerug.setText(String.valueOf(returnedCount));
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == terugButton) {
@@ -170,7 +198,6 @@ public class DeliveryController implements ActionListener {
         } else if (e.getSource() == routeVoltooien) {
             showRouteCompleteDialog();
         }
-
     }
 
     private void showRouteCompleteDialog() {
@@ -184,14 +211,16 @@ public class DeliveryController implements ActionListener {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel label1 = new JLabel("Aantal orders bezorgd: ");
-        JTextField ordersBezorgd = new JTextField("175");
+        ordersBezorgd = new JTextField();
         ordersBezorgd.setEditable(false);
         ordersBezorgd.setBackground(Color.WHITE);
+        ordersBezorgd.setText(String.valueOf(deliveredCount));
 
         JLabel label2 = new JLabel("Aantal orders terug naar magazijn: ");
-        JTextField ordersTerug = new JTextField("5");
+        ordersTerug = new JTextField();
         ordersTerug.setEditable(false);
         ordersTerug.setBackground(Color.WHITE);
+        ordersTerug.setText(String.valueOf(returnedCount));
 
         JPanel panel1 = new JPanel(new BorderLayout());
         panel1.add(label1, BorderLayout.NORTH);
