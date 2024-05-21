@@ -149,8 +149,8 @@ public class Order {
     @Override
     public String toString() {
         String s = (
-            "order-ID: " + ID + "\n" +
-            "adres: " + straatnaam + " " + huisnummer + " " + postcode + "\n"
+                "order-ID: " + ID + "\n" +
+                        "adres: " + straatnaam + " " + huisnummer + " " + postcode + "\n"
         );
         if (orderLines.size() != 0) {
             for(OrderLine orderLine: orderLines){
