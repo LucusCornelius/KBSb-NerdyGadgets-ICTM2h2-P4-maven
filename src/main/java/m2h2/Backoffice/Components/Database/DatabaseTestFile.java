@@ -22,7 +22,7 @@ public class DatabaseTestFile {
         OrderLine OL = new OrderLine("B", 2, "usb");
         O.addOrderline(OL);
 
-        System.out.println(dbCon.customerExists(O));
+        dbCon.insertOrder(O);
 
     }
 }
