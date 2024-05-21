@@ -96,6 +96,9 @@ public class MagazijnRouteController implements ActionListener {
         tableRenderer = table.getDefaultRenderer(JButton.class);
         table.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tableRenderer));
 
+        table.setDefaultEditor(Boolean.class, table.getDefaultEditor(Boolean.class));
+        table.setDefaultRenderer(Boolean.class, table.getDefaultRenderer(Boolean.class));
+
         table.setBounds(0, 0 , 600, 400);
         table.setRowHeight(table.getRowHeight() + 15);
 
@@ -106,11 +109,11 @@ public class MagazijnRouteController implements ActionListener {
         return sp;
     }
 
-    public Object[][] getTableData(){
+    public Object[][] getTableData() {
         Object[][] data = new Object[getOrdersTableSize()][6];
         int rowIndex = 0;
-        for (int i = 0; i < orders.size(); i++){
-            if (orders.get(i).getOrderLines().size() == 1){
+        for (int i = 0; i < orders.size(); i++) {
+            if (orders.get(i).getOrderLines().size() == 1) {
                 data[rowIndex] = orders.get(i).getDataline();
                 rowIndex++;
             } else {
