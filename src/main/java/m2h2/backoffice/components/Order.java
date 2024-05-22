@@ -34,7 +34,8 @@ public class Order {
     private boolean opVoorraad;
 
     //Algoritme
-    public Order(String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer, String toevoeging, String order, Boolean bezorgd) {
+    public Order(String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer, String toevoeging, Boolean bezorgd) {
+        this.orderLines = new ArrayList<>();
         this.naam = naam;
         this.straatnaam = straatnaam;
         this.plaatsnaam = plaatsnaam;
@@ -63,7 +64,6 @@ public class Order {
         }
 
         this.huisnummer = huisnummer;
-        this.order = order;
     }
 
 
