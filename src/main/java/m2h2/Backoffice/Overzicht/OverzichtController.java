@@ -54,12 +54,12 @@ public class OverzichtController {
         mainPanel.setLayout(new GridLayout(5,1));
         mainPanel.setBorder(BorderFactory.createLineBorder(Color.white, 10));
 
-        JLabel ovRoutes = new JLabel("Onvoltooide routes");
+        JLabel ovRoutes = new JLabel("Niet volledige routes");
         ovRoutes.setFont(new Font("Segoe UI Semibold", 1, 20));
         mainPanel.add(ovRoutes);
         mainPanel.add(getOnvoltooideRoutesOverzicht());
 
-        JLabel vRoutes = new JLabel("Voltooide routes");
+        JLabel vRoutes = new JLabel("Volledige routes");
         vRoutes.setFont(new Font("Segoe UI Semibold", 1, 20));
         mainPanel.add(vRoutes);
         mainPanel.add(getVoltooideRoutesOverzicht());
@@ -93,7 +93,6 @@ public class OverzichtController {
                         id = -1;
                     }
                     MagazijnRouteController mRouteController = new MagazijnRouteController(voltooideRoutes.get(id).getID(), mainPanel);
-                    voltooideRoutes.get(id);
                 }
             });
 
@@ -138,7 +137,6 @@ public class OverzichtController {
 
             tableButton.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("klik!");
                     int id;
                     try{
                         id = Integer.parseInt(e.getActionCommand());

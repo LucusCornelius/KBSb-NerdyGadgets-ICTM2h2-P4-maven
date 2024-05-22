@@ -41,7 +41,10 @@ public class OverzichtRouteController {
         mainPanel.removeAll();
         mainPanel.setLayout(new GridLayout(8,1));
 
-        mainPanel.add(overzichtLabel = new JLabel("Niet volledige route"));
+        JLabel Titel = new JLabel("Niet volledige routes");
+        Titel.setFont(new Font("Segoe UI Semibold", 1, 20));
+        mainPanel.add(Titel);
+
         JScrollPane sp = getTable();
         mainPanel.add(sp);
 
@@ -49,7 +52,10 @@ public class OverzichtRouteController {
         selectedBus = this.route.getBus();
 
         if (selectedKoerier == null){
-            mainPanel.add(overzichtLabel = new JLabel("Selecteer koerier"));
+            JLabel koerierL = new JLabel("Selecteer koerier");
+            koerierL.setFont(new Font("Segoe UI Semibold", 1, 20));
+            mainPanel.add(koerierL);
+
             JComboBox jcbK = getKoerierDropdown();
             mainPanel.add(jcbK);
 
@@ -64,7 +70,10 @@ public class OverzichtRouteController {
         }
 
         if (selectedBus == null) {
-            mainPanel.add(overzichtLabel = new JLabel("Selecteer bus"));
+            JLabel busL = new JLabel("Selecteer bus");
+            busL.setFont(new Font("Segoe UI Semibold", 1, 20));
+            mainPanel.add(busL);
+
             JComboBox jcbB = getBusDropdown();
             mainPanel.add(jcbB);
 
