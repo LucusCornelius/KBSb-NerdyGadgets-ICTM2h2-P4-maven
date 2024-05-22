@@ -15,6 +15,23 @@ public class Route {
         }
         return r;
     }
+    //Return alle koeriers
+    public static ArrayList<Koerier> getRoutesKoerier(){
+        ArrayList<Koerier> r = new ArrayList<>();
+        for (Route route : routes) {
+            r.add(route.getKoerier());
+        }
+        return r;
+    }
+    //Return alle bussen
+    public static ArrayList<Bus> getRoutesBus(){
+        ArrayList<Bus> r = new ArrayList<>();
+        for (Route route : routes) {
+            r.add(route.getBus());
+        }
+        return r;
+    }
+
     public static Route getRoute(Integer id){
         for(Route route: routes){
             if (route.getID().equals(id)) {

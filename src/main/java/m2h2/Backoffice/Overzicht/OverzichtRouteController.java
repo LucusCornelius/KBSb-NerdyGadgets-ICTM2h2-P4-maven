@@ -13,6 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class OverzichtRouteController {
     private JPanel mainPanel;
@@ -50,6 +53,7 @@ public class OverzichtRouteController {
             JComboBox jcbK = getKoerierDropdown();
             mainPanel.add(jcbK);
 
+            selectedKoerier = (Koerier) jcbK.getSelectedItem();
             jcbK.addItemListener( new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -64,8 +68,10 @@ public class OverzichtRouteController {
             JComboBox jcbB = getBusDropdown();
             mainPanel.add(jcbB);
 
+            selectedBus = (Bus) jcbB.getSelectedItem();
             jcbB.addItemListener( new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
+                    selectedBus = (Bus) e.getItem();
                     if (e.getStateChange() == ItemEvent.SELECTED) {
                         selectedBus = (Bus) e.getItem();
                     }
@@ -117,13 +123,22 @@ public class OverzichtRouteController {
      */
 
     public JComboBox getKoerierDropdown(){
-        Object koeriersString[] = new Koerier[Koerier.getInstances().size()];
-        koeriersString[0] = null;
-        for (int i = 1; i < Koerier.getInstances().size(); i++){
-            koeriersString[i] = Koerier.getInstances().get(i);
+        ArrayList<Object> koeriers = new ArrayList<>();
+        ArrayList<Koerier> routes = Route.getRoutesKoerier();
+
+        for (int i = 0; i < Koerier.getInstances().size(); i++){
+            koeriers.add(Koerier.getInstances().get(i));
+        }
+        //Filteren om alleen koeriers te krijgen die nog geen route hebben
+        for(int i = 0; i<routes.size(); i++){
+            if (koeriers.contains(routes.get(i))){
+                for (int x = 0; x < koeriers.size(); x++ ){
+                koeriers.remove(routes.get(i));
+                }
+            }
         }
 
-        JComboBox comboBox = new JComboBox(koeriersString);
+        JComboBox comboBox = new JComboBox(koeriers.toArray());
         return comboBox;
     }
 
@@ -138,12 +153,22 @@ public class OverzichtRouteController {
      */
 
     public JComboBox getBusDropdown(){
-        Object bussen[] = new Bus[Bus.getInstances().size()];
-        bussen[0] = null;
-        for (int i = 1; i < Bus.getInstances().size(); i++){
-            bussen[i] = Bus.getInstances().get(i);
+        ArrayList<Object> bussen = new ArrayList<>();
+        ArrayList<Bus> routes = Route.getRoutesBus();
+
+        for (int i = 0; i < Koerier.getInstances().size(); i++){
+            bussen.add(Bus.getInstances().get(i));
         }
-        JComboBox comboBox = new JComboBox(bussen);
+        //Filteren om alleen koeriers te krijgen die nog geen route hebben
+        for(int i = 0; i<routes.size(); i++){
+            if (bussen.contains(routes.get(i))){
+                for (int x = 0; x < bussen.size(); x++ ){
+                    bussen.remove(routes.get(i));
+                }
+            }
+        }
+
+        JComboBox comboBox = new JComboBox(bussen.toArray());
         return comboBox;
     }
 

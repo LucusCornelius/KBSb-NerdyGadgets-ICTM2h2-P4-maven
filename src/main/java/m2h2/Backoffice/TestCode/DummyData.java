@@ -13,6 +13,8 @@ public class DummyData {
         Koerier k2 = new Koerier("Willem B.");
         Koerier k3 = new Koerier("Willem C.");
         Koerier k4 = new Koerier("Willem D.");
+        Koerier k5 = new Koerier("Willem E.");
+
 
         Bus b1 = new m2h2.Backoffice.Components.Bus("67-jh-kk");
         Route r1 = new Route(b1 , "west" , "klaar voor picken", k3);
