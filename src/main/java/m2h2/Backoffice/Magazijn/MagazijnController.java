@@ -35,8 +35,6 @@ public class MagazijnController {
         kvpLabel = new JLabel();
         bmpLabel = new JLabel();
         kvvLabel = new JLabel();
-
-
     }
 
     public MagazijnController(JPanel mainPanel){
@@ -157,27 +155,29 @@ public class MagazijnController {
         return data;
     }
 
-    public void setMagazijnPanel(){
+    public void setMagazijnPanel() {
         updateStatus();
-        mainPanel.setLayout(new GridLayout(7,1));
+        mainPanel.setLayout(new GridLayout(7, 1));
 
-        jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
+        jLabel1.setFont(new Font("Segoe UI Semibold", Font.BOLD, 24));
         jLabel1.setForeground(new Color(51, 51, 51));
         jLabel1.setText("Magazijn");
 
         mainPanel.setForeground(new Color(51, 51, 51));
-        mainPanel.add(jLabel1, BorderLayout.NORTH);
-        mainPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE,20));
+        mainPanel.add(jLabel1);
+        mainPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 20));
 
+        kvpLabel.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
+        kvpLabel.setForeground(new Color(51, 51, 51));
         kvpLabel.setText("Klaar voor picken");
-        jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
-        jLabel1.setForeground(new Color(51, 51, 51));
+
+        bmpLabel.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
+        bmpLabel.setForeground(new Color(51, 51, 51));
         bmpLabel.setText("Bezig met picken");
-        jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
-        jLabel1.setForeground(new Color(51, 51, 51));
+
+        kvvLabel.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
+        kvvLabel.setForeground(new Color(51, 51, 51));
         kvvLabel.setText("Klaar voor versturen");
-        jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
-        jLabel1.setForeground(new Color(51, 51, 51));
 
         mainPanel.add(kvpLabel);
         mainPanel.add(getTable(this, kvp));
@@ -185,9 +185,10 @@ public class MagazijnController {
         mainPanel.add(bmpLabel);
         mainPanel.add(getTable(this, bmp));
 
-        mainPanel.add(kvpLabel);
+        mainPanel.add(kvvLabel);
         mainPanel.add(getTable(this, kvv));
     }
+
 
     @Override
     public String toString() {
