@@ -4,7 +4,6 @@ public class Order {
 
     private int orderID;
 
-
     private String naam;
 
     private String straatnaam;
@@ -15,9 +14,13 @@ public class Order {
 
     private int huisnummer;
 
+    private String toevoeging = null;
+
+    private String huisletter = null;
+
     private String order;
 
-    public Order(int orderID, String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer, String order) {
+    public Order(int orderID, String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer, String toevoeging, String order) {
         this.orderID = orderID;
         this.naam = naam;
         this.straatnaam = straatnaam;
@@ -30,8 +33,35 @@ public class Order {
             System.out.println("ongeldige postcode");
         }
 
+        if(!toevoeging.isEmpty()) {
+            boolean isInteger = false;
+            isInteger = isInteger(toevoeging);
+
+            if(isInteger) {
+                this.toevoeging = toevoeging;
+            } else {
+                this.huisletter = toevoeging.toUpperCase();
+            }
+
+        } else {
+            this.toevoeging = null;
+        }
+
         this.huisnummer = huisnummer;
         this.order = order;
+    }
+
+
+    private boolean isInteger(String toevoeging) {
+        try {
+            int toevoeging_number = Integer.parseInt(toevoeging);
+            System.out.println("Toevoeging is een nummer");
+            return true;
+
+        } catch (NumberFormatException e) {
+            System.out.println("Toevoeging is geen nummer");
+            return false;
+        }
     }
 
 
@@ -50,6 +80,14 @@ public class Order {
 
     public int getHuisnummer() {
         return huisnummer;
+    }
+
+    public String getToevoeging() {
+        return toevoeging;
+    }
+
+    public String getHuisletter() {
+        return huisletter;
     }
 
     public String getOrder() {
@@ -72,6 +110,8 @@ public class Order {
                 ", straatnaam='" + straatnaam + '\'' +
                 ", postcode='" + postcode + '\'' +
                 ", huisnummer=" + huisnummer +
+                ", huisletter=" + huisletter +
+                ", toevoeging=" + toevoeging +
                 ", order='" + order + '\'' +
                 ", plaatsnaam='" + plaatsnaam + '\'' +
                 '}';
