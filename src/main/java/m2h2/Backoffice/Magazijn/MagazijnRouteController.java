@@ -5,6 +5,7 @@ import m2h2.Backoffice.Components.Tables.*;
 import m2h2.Backoffice.Koerier.KoerierTableModel;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -162,13 +163,67 @@ public class MagazijnRouteController implements ActionListener {
             mainPanel.repaint();
         }
         if (e.getSource() == doorsturenButton){
+//            route.setStatus("klaar voor versturen");
+//            mainPanel.removeAll();
+            showRouteCompleteDialog();
+//            MagazijnController mController = new MagazijnController(mainPanel);
+//            mController.setMagazijnPanel();
+//
+//            mainPanel.revalidate();
+//            mainPanel.repaint();
+        }
+    }
+
+    private void showRouteCompleteDialog() {
+        JDialog dialog = new JDialog((Frame) null, "Order voltooien", true);
+        dialog.setUndecorated(true);
+        dialog.setLayout(new GridBagLayout());
+        dialog.getRootPane().setBorder(new LineBorder(Color.BLACK, 2));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        JLabel messageLabel = new JLabel("<html><div style='text-align: center;'>Als u op ‘Doorsturen’ klikt wordt deze route in klaar voor versturen gezet zodat de koerier deze route kan aannemen.</div></html>");
+        messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JButton terugButton = new JButton("Ga Terug");
+        terugButton.setOpaque(true);
+        terugButton.setBorderPainted(false);
+        terugButton.addActionListener(event -> dialog.dispose());
+
+        JButton doorsturenButton = new JButton("Doorsturen");
+        doorsturenButton.setOpaque(true);
+        doorsturenButton.setBorderPainted(false);
+        doorsturenButton.addActionListener(event -> {
             route.setStatus("klaar voor versturen");
             mainPanel.removeAll();
             MagazijnController mController = new MagazijnController(mainPanel);
             mController.setMagazijnPanel();
-
             mainPanel.revalidate();
             mainPanel.repaint();
-        }
+
+            dialog.dispose();
+        });
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        dialog.add(messageLabel, gbc);
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
+        buttonPanel.add(terugButton);
+        buttonPanel.add(doorsturenButton);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        dialog.add(buttonPanel, gbc);
+
+        dialog.setSize(400, 200);
+        dialog.setLocationRelativeTo(mainPanel);
+        dialog.setVisible(true);
     }
 }
