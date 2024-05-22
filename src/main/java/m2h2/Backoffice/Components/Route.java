@@ -111,6 +111,9 @@ public class Route {
         }
         return koerier.getName();
     }
+    public Koerier getKoerierObj(){
+        return koerier;
+    }
 
     public void setKoerier(Koerier koerier) {
         this.koerier = koerier;
@@ -138,6 +141,9 @@ public class Route {
             return "-";
         }
         return bus.getKenteken();
+    }
+    public Bus getBusObj(){
+        return bus;
     }
 
     public void setRegio(String regio) {

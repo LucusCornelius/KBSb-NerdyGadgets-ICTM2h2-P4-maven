@@ -102,8 +102,8 @@ public class DummyData {
          */
 
 
-        Bus bus = new Bus("GH-75-PL");
-        Koerier koerier = new Koerier("Rick");
+        Bus bus = new Bus("GH-75-PL", 5);
+        Koerier koerier = new Koerier("Rick", 6);
         Route route = new Route(bus, "west", "", koerier, orders);
 
         Adressen_GEO_Data_Filter AdressenObject1 = new Adressen_GEO_Data_Filter(orders);

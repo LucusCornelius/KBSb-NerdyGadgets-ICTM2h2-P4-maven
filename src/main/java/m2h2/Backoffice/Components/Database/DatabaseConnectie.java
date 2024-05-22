@@ -22,6 +22,7 @@ public class DatabaseConnectie {
     private int customerID = 1;
     private  int contactPersonID = 1234;
     private int packageTypeID = 7;
+    private int testStockItemID = 1;
 
 
     String pattern = "yyyy-MM-dd";
@@ -81,7 +82,7 @@ public class DatabaseConnectie {
             ResultSet rs = pQuery.executeQuery();
             int maxID = -1;
             while (rs.next()){
-                maxID = rs.getInt(customerID) + 1;
+                maxID = rs.getInt(1) + 1;
             }
             pQuery.close();
             return maxID;
@@ -99,7 +100,7 @@ public class DatabaseConnectie {
             int maxID = -1;
             while (rs.next()){
                 try {
-                    maxID = rs.getInt(OrderID) + 1;
+                    maxID = rs.getInt(1) + 1;
                 } catch (SQLException e) {
                     maxID = 1;
                 }
@@ -120,7 +121,7 @@ public class DatabaseConnectie {
             int maxID = -1;
             while (rs.next()){
                 try {
-                    maxID = rs.getInt(OrderID) + 1;
+                    maxID = rs.getInt(1) + 1;
                 } catch (SQLException e) {
                     maxID = 1;
                 }
@@ -132,17 +133,41 @@ public class DatabaseConnectie {
             return -1;
         }
     }
+    public int getNewRouteID(){
+        try {
+            String query = "SELECT max(RouteID) FROM route";
+            PreparedStatement pQuery = con.prepareStatement(query);
+
+            ResultSet rs = pQuery.executeQuery();
+            int maxID = -1;
+            rs.next();
+                try {
+                    maxID = rs.getInt(1) + 1;
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                    maxID = -1;
+                }
+            pQuery.close();
+            return maxID;
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+            return -1;
+        }
+    }
     public int customerExists(Order order){
         try {
-            String query = "SELECT CustomerID FROM customers WHERE CustomerName = ?";
+            String query = "SELECT CustomerID FROM customers WHERE CustomerName = ? AND DeliveryAddressLine1 = ? AND DeliveryPostalCode = ?";
             PreparedStatement pQuery = con.prepareStatement(query);
 
             pQuery.setString(1, order.getNaam());
+            pQuery.setString(2, order.getStraatnaam());
+            pQuery.setString(3, order.getPostcode());
+
 
             ResultSet rs = pQuery.executeQuery();
 
             while (rs.next()){
-                return rs.getInt("CustomerID");
+                return rs.getInt(1);
             }
             pQuery.close();
             return -1;
@@ -159,7 +184,8 @@ public class DatabaseConnectie {
             customerID = getNewCustomerID();
             try {if (customerID != -1) {
                 //dummy customer, werk met de aangeleverde sql scripts. volledige implementatie binnen nerdygadgets omgeving nogsteeds mogelijk.
-                String query = "INSERT INTO customers( CustomerID," +
+                String query = "INSERT INTO customers( " +
+                        "CustomerID," +
                         "CustomerName," +
                         "BillToCustomerID," +
                         "CustomerCategoryID ," +
@@ -185,11 +211,11 @@ public class DatabaseConnectie {
                         "ValidFrom , " +
                         "ValidTo" +
                         ")" +
-                        "        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 PreparedStatement pQuery = con.prepareStatement(query);
                 pQuery.setInt(1, customerID);
                 pQuery.setString(2, order.getNaam());
-                pQuery.setInt(3, customerIDCounter);
+                pQuery.setInt(3, customerID);
                 pQuery.setInt(4, 1);
                 pQuery.setInt(5, contactPersonID);
                 pQuery.setInt(6, contactPersonID);
@@ -224,15 +250,15 @@ public class DatabaseConnectie {
             }
             } catch (SQLException e){
                 System.out.println(e.getMessage());
+                System.out.println("customer: " + customerID);
             }
         } else {
             customerID = cExitst;
         }
         return customerID;
     }
-    public void insertOrderLine(OrderLine orderLine){
+    public void insertOrderLine(OrderLine orderLine, int orderID){
         try {
-            Statement stmt = con.createStatement();
             String query = "INSERT INTO orderlines(" +
                     "OrderLineID, " +
                     "StockItemID, " +
@@ -242,13 +268,13 @@ public class DatabaseConnectie {
                     "Quantity, " +
                     "TaxRate, " +
                     "LastEditedBy, " +
-                    "ValidFrom, " +
-                    "ValidTo" +
+                    "LastEditedWhen, " +
+                    "OrderID" +
                     ")" +
                     "VALUES(?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pQuery = con.prepareStatement(query);
             pQuery.setInt(1, getNewOrderLineID());
-            pQuery.setInt(2,);
+            pQuery.setInt(2, testStockItemID);
             pQuery.setInt(3, 0);
             pQuery.setInt(4, packageTypeID);
             pQuery.setString(5,orderLine.getBeschrijving());
@@ -256,82 +282,105 @@ public class DatabaseConnectie {
             pQuery.setDouble(7,0);
             pQuery.setInt(8,contactPersonID);
             pQuery.setString(9,date);
-            pQuery.setString(10,validTo);
-            int result = stmt.executeUpdate(query);
+            pQuery.setInt(10, orderID);
+            int result = pQuery.executeUpdate();
 
             if (result > 0) {
                 System.out.println("successfully executed query!");
             }
-            stmt.close();
+            pQuery.close();
         } catch (SQLException e){
             System.out.println(e.getMessage());
+            System.out.println("orderline:" + orderLine);
         }
     }
-    public void insertOrder(Order order){
+    public void insertOrder(Order order, int routeID){
         int customerID = insertCustomer(order);
         int orderID = getNewOrderID();
 
         try {
-        String query = "INSERT INTO orders (" +
+            String query = "INSERT INTO orders (" +
                 "OrderID, " +
                 "CustomerID, " +
-                "SalepersonPersonID, " +
+                "SalespersonPersonID, " +
                 "ContactPersonID, " +
                 "OrderDate, " +
                 "ExpectedDeliveryDate, " +
                 "isUndersupplyBackordered, " +
                 "LastEditedBy, " +
-                "LastEditedWhen)" +
-                "VALUES (" +
-                "?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement pQuery = con.prepareStatement(query);
-        pQuery.setInt(1 , orderID);
-        pQuery.setInt(2, customerID);
-        pQuery.setInt(3, contactPersonID); //salesperson
-        pQuery.setInt(4, contactPersonID); // contactperson
-        pQuery.setString(5, date);
-        pQuery.setString(6, date);
-        pQuery.setBoolean(7, false);
-        pQuery.setInt(8, contactPersonID);
-        pQuery.setString(9, date);
+                "LastEditedWhen, " +
+                "RouteID)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement pQuery = con.prepareStatement(query);
+            pQuery.setInt(1 , orderID);
+            pQuery.setInt(2, customerID);
+            pQuery.setInt(3, contactPersonID); //salesperson
+            pQuery.setInt(4, contactPersonID); // contactperson
+            pQuery.setString(5, date);
+            pQuery.setString(6, date);
+            pQuery.setBoolean(7, false);
+            pQuery.setInt(8, contactPersonID);
+            pQuery.setString(9, date);
+            pQuery.setInt(10, routeID);
 
-        int result = pQuery.executeUpdate();
+            int result = pQuery.executeUpdate();
             if (result > 0) {
                 System.out.println("successfully inserted order");
             }
+            if (order.getOrderLines() != null) {
+                for (OrderLine orderLine : order.getOrderLines()) {
+                    insertOrderLine(orderLine, orderID);
+                }
+            }
         } catch (SQLException e){
             System.out.println(e.getMessage());
+            System.out.println("order:" + order);
         }
-        if (order.getOrderLines() != null) {
-            for (OrderLine orderLine : order.getOrderLines()) {
-                insertOrderLine(orderLine);
-            }
-        }
+
     }
     public void insertRoute(Route route){
-        try {
-            Statement stmt = con.createStatement();
-            String query = "";
-            int result = stmt.executeUpdate(query);
+        int routeID = getNewRouteID();
+        if (routeID != -1) {
+            try {
+                String query = "INSERT INTO route (" +
+                        "RouteID , " +
+                        "koerierID , " +
+                        "DeliveryVanID , " +
+                        "status " +
+                        ") " +
+                        "VALUES (?,?,?,?)";
+                PreparedStatement pQuery = con.prepareStatement(query);
+                pQuery.setInt(1, routeID);
+                pQuery.setInt(2, route.getKoerierObj().getKoerierID());
+                pQuery.setInt(3, route.getBusObj().getBusID());
+                pQuery.setString(4, route.getStatus());
 
-            if (result > 0) {
-                System.out.println("successfully executed query!");
+                int result = pQuery.executeUpdate();
+
+                if (result > 0) {
+                    System.out.println("successfully executed query!");
+                }
+
+                pQuery.close();
+                for (Order order : route.getOrders()) {
+                    insertOrder(order, routeID);
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+                System.out.println("route:" + route);
             }
+        } else {
+            System.out.println("oeps");
+        }
 
-            stmt.close();
-        } catch (SQLException e){
-            System.out.println(e.getMessage());
-        }
-        for (Order order : route.getOrders()) {
-            insertOrder(order);
-        }
     }
     public ResultSet getRoutes(Route route){
         try {
+
             String query = "";
             PreparedStatement pQuery = con.prepareStatement(query);
 
-            pQuery.setString();
+            //pQuery.setString();
 
             ResultSet rs = pQuery.executeQuery();
 
@@ -342,6 +391,6 @@ public class DatabaseConnectie {
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
-
+        return null;
     }
 }
