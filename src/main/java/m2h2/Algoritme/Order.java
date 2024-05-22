@@ -29,8 +29,9 @@ public class Order {
         if(postcode.length() == 6) {
             this.postcode = postcode;
         } else {
-            this.postcode = "0001XX";
-            System.out.println("ongeldige postcode");
+            System.out.println("ongeldige postcode..., Breaking...");
+            System.exit(1);
+
         }
 
         if(!toevoeging.isEmpty()) {

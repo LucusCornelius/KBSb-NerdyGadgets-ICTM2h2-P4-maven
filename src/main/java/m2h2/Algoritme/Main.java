@@ -14,6 +14,7 @@ public static void main(String[] args) {
     int i = 0;
 
     // orders.add(new Order(i++, "lucas", "Ambonplein", "1094PW", "Amsterdam", 59, "usb"));
+    orders.add(new m2h2.Backoffice.Components.Order("Dazingerkade", "16", "1013AP"));
      orders.add(new Order(i++, "lucas", "Danzigerkade", "1013AP", "Amsterdam", 16, "p", "usb"));
      orders.add(new Order(i++, "lucas", "Danzigerkade", "1013AP", "Amsterdam", 16, "p", "usb"));
     // orders.add(new Order(i++, "lucas", "Minahassastraat", "1094RV", "Amsterdam", 145, "usb"));
