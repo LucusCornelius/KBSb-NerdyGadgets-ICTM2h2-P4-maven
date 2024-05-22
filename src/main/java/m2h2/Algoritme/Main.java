@@ -2,7 +2,7 @@ package m2h2.Algoritme;
 
 import m2h2.Algoritme.Adressen_GEO_Data_Filter;
 //import m2h2.DataExtractor.Postcode_GEO_Data_WGS;
-import m2h2.Algoritme.Order;
+import m2h2.Backoffice.Components.Order;
 
 import java.util.ArrayList;
 
@@ -14,9 +14,8 @@ public static void main(String[] args) {
     int i = 0;
 
     // orders.add(new Order(i++, "lucas", "Ambonplein", "1094PW", "Amsterdam", 59, "usb"));
-    orders.add(new m2h2.Backoffice.Components.Order("Dazingerkade", "16", "1013AP"));
-     orders.add(new Order(i++, "lucas", "Danzigerkade", "1013AP", "Amsterdam", 16, "p", "usb"));
-     orders.add(new Order(i++, "lucas", "Danzigerkade", "1013AP", "Amsterdam", 16, "p", "usb"));
+     orders.add(new Order( "lucas", "Danzigerkade", "1013AP", "Amsterdam", 16, "p", "usb", false));
+     orders.add(new Order("lucas", "Danzigerkade", "1013AP", "Amsterdam", 16, "p", "usb", false));
     // orders.add(new Order(i++, "lucas", "Minahassastraat", "1094RV", "Amsterdam", 145, "usb"));
     // orders.add(new Order(i++, "lucas", "Eerste Atjehstraat", "1094KL", "Amsterdam", 2, "usb"));
     // orders.add(new Order(i++, "lucas", "Reinwardtstraat", "1093LA", "Amsterdam", 344, "usb"));

@@ -1,7 +1,12 @@
 //package m2h2.Algoritme;
 //
-//public class Order {
+//import m2h2.Backoffice.Components.OrderLine;
 //
+//import java.util.ArrayList;
+//
+//public class Order2 {
+//
+//    //Algoritme
 //    private int orderID;
 //
 //    private String naam;
@@ -20,11 +25,21 @@
 //
 //    private String order;
 //
-//    public Order(int orderID, String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer, String toevoeging, String order) {
+//
+//    //Backoffice
+//    private static int IDCounter;
+//    private int ID;
+//    private ArrayList<OrderLine> orderLines;
+//    private boolean bezorgd;
+//    private boolean opVoorraad;
+//
+//    //Algoritme
+//    public Order2(int orderID, String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer, String toevoeging, String order, Boolean bezorgd) {
 //        this.orderID = orderID;
 //        this.naam = naam;
 //        this.straatnaam = straatnaam;
 //        this.plaatsnaam = plaatsnaam;
+//        setBezorgd(bezorgd);
 //
 //        if(postcode.length() == 6) {
 //            this.postcode = postcode;
@@ -101,6 +116,80 @@
 //
 //    public String getPlaatsnaam() {
 //        return plaatsnaam;
+//    }
+//
+//
+//
+//    //Backoffice
+//
+//
+//
+//    public void setID() {
+//        if (ID == 0) {
+//            IDCounter++;
+//            ID = IDCounter;
+//        } else {
+//            System.out.println("## ID al gezet! ##");
+//        }
+//    }
+//    public int getID() {
+//        return ID;
+//    }
+//    public void setStraatnaam(String straatnaam) {
+//        this.straatnaam = straatnaam;
+//    }
+//    public void setHuisnummer(int huisnummer) {
+//        this.huisnummer = huisnummer;
+//    }
+//    public void setPostcode(String postcode) {
+//        if(postcode.length() == 6) {
+//            this.postcode = postcode;
+//        } else {
+//            this.postcode = "0001XX";
+//            System.out.println("ongeldige postcode");
+//        }
+//    }
+//    public String getBeschrijving(){
+//        if (orderLines.size() == 1) {
+//            return orderLines.get(0).getBeschrijving();
+//        }
+//        //meerdere toevoegen
+//        return "meerdere";
+//    }
+//    public Object[] getDataline(){
+//        return getDataline(0);
+//    }
+//    public Object[] getDataline(int index){
+//        OrderLine product = orderLines.get(index);
+//        Object[] dataline = {ID, getOpVoorraad(), product.getID(), product.getAantal(), product.getSectie(), product.getBeschrijving()};
+//        return dataline;
+//    }
+//
+//    public Boolean getOpVoorraad(){
+//        if (opVoorraad){
+//            return Boolean.TRUE;
+//        }
+//        return Boolean.FALSE;
+//    }
+//
+//
+//    public int getPostcodeNummers(){
+//        String nummerString = postcode.substring(0, 4);
+//        try {
+//            return Integer.parseInt(nummerString);
+//        } catch (NumberFormatException e) {
+//            System.out.println("### verkeerde postcodeformat! - getPostcodeNummers Order ###");
+//            return -1;
+//        }
+//    }
+//    public void setBezorgd(boolean bezorgd) {
+//        this.bezorgd = bezorgd;
+//    }
+//    public boolean getBezorgd(){
+//        return bezorgd;
+//    }
+//    public void addOrderline(OrderLine orderline){
+//        orderLines.add(orderline);
 //    }
 //
 //    @Override

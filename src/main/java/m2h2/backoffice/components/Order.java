@@ -1,25 +1,127 @@
 package m2h2.Backoffice.Components;
 
-import java.util.*;
+import m2h2.Backoffice.Components.OrderLine;
+
+import java.util.ArrayList;
 
 public class Order {
+
+    //Algoritme
+    private int orderID;
+
+    private String naam;
+
+    private String straatnaam;
+
+    private String postcode;
+
+    private String plaatsnaam;
+
+    private int huisnummer;
+
+    private String toevoeging = null;
+
+    private String huisletter = null;
+
+    private String order;
+
+
+    //Backoffice
     private static int IDCounter;
     private int ID;
-    private String straatnaam;
-    private int huisnummer;
-    private String postcode;
     private ArrayList<OrderLine> orderLines;
     private boolean bezorgd;
     private boolean opVoorraad;
 
-    public Order(String straatnaam, int huisnummer, String postcode, boolean bezorgd){
-        orderLines = new ArrayList<>();
-        setID();
-        setStraatnaam(straatnaam);
-        setHuisnummer(huisnummer);
-        setPostcode(postcode);
+    //Algoritme
+    public Order(String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer, String toevoeging, String order, Boolean bezorgd) {
+        this.naam = naam;
+        this.straatnaam = straatnaam;
+        this.plaatsnaam = plaatsnaam;
         setBezorgd(bezorgd);
+
+        if(postcode.length() == 6) {
+            this.postcode = postcode;
+        } else {
+            System.out.println("ongeldige postcode..., Breaking...");
+            System.exit(1);
+
+        }
+
+        if(!toevoeging.isEmpty()) {
+            boolean isInteger = false;
+            isInteger = isInteger(toevoeging);
+
+            if(isInteger) {
+                this.toevoeging = toevoeging;
+            } else {
+                this.huisletter = toevoeging.toUpperCase();
+            }
+
+        } else {
+            this.toevoeging = null;
+        }
+
+        this.huisnummer = huisnummer;
+        this.order = order;
     }
+
+
+    private boolean isInteger(String toevoeging) {
+        try {
+            int toevoeging_number = Integer.parseInt(toevoeging);
+            System.out.println("Toevoeging is een nummer");
+            return true;
+
+        } catch (NumberFormatException e) {
+            System.out.println("Toevoeging is geen nummer");
+            return false;
+        }
+    }
+
+
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public String getNaam() {
+        return naam;
+    }
+
+    public String getStraatnaam() {
+        return straatnaam;
+    }
+
+    public int getHuisnummer() {
+        return huisnummer;
+    }
+
+    public String getToevoeging() {
+        return toevoeging;
+    }
+
+    public String getHuisletter() {
+        return huisletter;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public String getPlaatsnaam() {
+        return plaatsnaam;
+    }
+
+
+
+    //Backoffice
+
+
 
     public void setID() {
         if (ID == 0) {
@@ -35,14 +137,8 @@ public class Order {
     public void setStraatnaam(String straatnaam) {
         this.straatnaam = straatnaam;
     }
-    public String getStraatnaam() {
-        return straatnaam;
-    }
     public void setHuisnummer(int huisnummer) {
         this.huisnummer = huisnummer;
-    }
-    public int getHuisnummer() {
-        return huisnummer;
     }
     public void setPostcode(String postcode) {
         if(postcode.length() == 6) {
@@ -59,6 +155,10 @@ public class Order {
         //meerdere toevoegen
         return "meerdere";
     }
+
+    public ArrayList<OrderLine> getOrderLines() {
+        return orderLines;
+    }
     public Object[] getDataline(){
         return getDataline(0);
     }
@@ -74,25 +174,8 @@ public class Order {
         }
         return Boolean.FALSE;
     }
-    /*
-    public String getSectie(){
-        return orderLines.get(0).getSectie();
-    }
-    public Integer getProuctId(){
-        return (Integer) orderLines.get(0).getID();
-    }
-    public Integer getProductAantal(){
-        return (Integer) orderLines.get(0).getAantal();
-    }
-    */
-    public ArrayList<OrderLine> getOrderLines(){
-        return orderLines;
-    }
-    /*
-    public String getPostcode() {
-        return postcode;
-    }
-    */
+
+
     public int getPostcodeNummers(){
         String nummerString = postcode.substring(0, 4);
         try {
@@ -111,17 +194,19 @@ public class Order {
     public void addOrderline(OrderLine orderline){
         orderLines.add(orderline);
     }
+
     @Override
     public String toString() {
-        String s = (
-            "order-ID: " + ID + "\n" +
-            "adres: " + straatnaam + " " + huisnummer + " " + postcode + "\n"
-        );
-        if (orderLines.size() != 0) {
-            for(OrderLine orderLine: orderLines){
-                s = s + orderLine + "\n";
-            }
-        }
-        return s;
+        return "Order{" +
+                ", orderID=" + orderID +
+                "naam='" + naam + '\'' +
+                ", straatnaam='" + straatnaam + '\'' +
+                ", postcode='" + postcode + '\'' +
+                ", huisnummer=" + huisnummer +
+                ", huisletter=" + huisletter +
+                ", toevoeging=" + toevoeging +
+                ", order='" + order + '\'' +
+                ", plaatsnaam='" + plaatsnaam + '\'' +
+                '}';
     }
 }
