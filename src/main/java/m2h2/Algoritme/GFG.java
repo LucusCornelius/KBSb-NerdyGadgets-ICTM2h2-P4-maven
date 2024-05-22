@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class GFG {
-
-//    private static ArrayList<Orders_Met_Coordinaten> route = new ArrayList<>();
-
     private static String route;
 
     private static ArrayList<Orders_Met_Coordinaten> regio_West = new ArrayList<>();
