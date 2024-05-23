@@ -7,6 +7,7 @@ import m2h2.Backoffice.Magazijn.MagazijnRouteController;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -28,9 +29,11 @@ public class OverzichtController {
         routes = Route.getRoutes();
         for (Route route : routes) {
             try {
-                if (route.getKoerier() == "-" || route.getBus() == null) {
+                if (route.getKoerier() == null || route.getBus() == null) {
+
                     nVoltooideRoutes.add(route);
                 } else  {
+
                     voltooideRoutes.add(route);
                 }
             } catch (NullPointerException e) {
@@ -38,6 +41,29 @@ public class OverzichtController {
                 System.out.println(error);
             }
         }
+    }
+
+    public void setOverzichtPanel(){
+        mainPanel.removeAll();
+        mainPanel.setBackground(new Color(255, 255, 255));
+
+        JLabel Titel = new JLabel("Overzicht routes");
+        Titel.setFont(new Font("Segoe UI Semibold", 1, 24));
+        mainPanel.add(Titel);
+
+        mainPanel.setLayout(new GridLayout(5,1));
+        mainPanel.setBorder(BorderFactory.createLineBorder(Color.white, 10));
+
+        JLabel ovRoutes = new JLabel("Niet volledige routes");
+        ovRoutes.setFont(new Font("Segoe UI Semibold", 1, 20));
+        mainPanel.add(ovRoutes);
+        mainPanel.add(getOnvoltooideRoutesOverzicht());
+
+        JLabel vRoutes = new JLabel("Volledige routes");
+        vRoutes.setFont(new Font("Segoe UI Semibold", 1, 20));
+        mainPanel.add(vRoutes);
+        mainPanel.add(getVoltooideRoutesOverzicht());
+
     }
 
     public ArrayList<Route> getVoltooideRoutes() {
@@ -59,7 +85,6 @@ public class OverzichtController {
             tableButton.setActionCommand(i+"");
             tableButton.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("klik!");
                     int id;
                     try{
                         id = Integer.parseInt(e.getActionCommand());
@@ -68,14 +93,13 @@ public class OverzichtController {
                         id = -1;
                     }
                     MagazijnRouteController mRouteController = new MagazijnRouteController(voltooideRoutes.get(id).getID(), mainPanel);
-                    voltooideRoutes.get(id);
                 }
             });
 
             Object[] row = {
                     voltooideRoutes.get(i).getID(),
                     voltooideRoutes.get(i).getRegio(),
-                    voltooideRoutes.get(i).getKoerier(),
+                    voltooideRoutes.get(i).getKoerier().getName(),
                     voltooideRoutes.get(i).getBus(),
                     tableButton
 
@@ -108,14 +132,11 @@ public class OverzichtController {
 
         for (int i = 0; i < nVoltooideRoutes.size(); i++) {
             JButton tableButton = new JButton("Route bekijken");
-            JButton doorstuurButton = new JButton("Doorsturen");
 
             tableButton.setActionCommand(i+"");
-            doorstuurButton.setActionCommand(i+"");
 
             tableButton.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("klik!");
                     int id;
                     try{
                         id = Integer.parseInt(e.getActionCommand());
@@ -123,40 +144,49 @@ public class OverzichtController {
                         System.out.println("### hele gekke dingen - buttonAction getTableDate MagazijnController ###");
                         id = -1;
                     }
-                    System.out.println(id);
                     OverzichtRouteController overzichtRouteController = new OverzichtRouteController(nVoltooideRoutes.get(id), mainPanel);
                 }
             });
 
-            doorstuurButton.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e) {
-                    int id;
-                    try{
-                        id = Integer.parseInt(e.getActionCommand());
-                    } catch (NumberFormatException ex){
-                        System.out.println("### hele gekke dingen - buttonAction getTableDate MagazijnController ###");
-                        id = -1;
-                    }
-                    if (nVoltooideRoutes.get(id).getKoerier() == "-" || nVoltooideRoutes.get(id).getBus() == null) {
-                        System.out.println("Selecteer eerst een koerier/bus!");
-                    } else {
-                        nVoltooideRoutes.get(id).setStatus("klaar voor picken");
-                        System.out.println("Status veranderd naar '" + nVoltooideRoutes.get(id).getStatus() + "'");
-                    }
-                }
-            });
-
-            Object[] row = {
-                    nVoltooideRoutes.get(i).getID(),
-                    nVoltooideRoutes.get(i).getRegio(),
-                    nVoltooideRoutes.get(i).getKoerier(),
-                    nVoltooideRoutes.get(i).getBus(),
-                    tableButton,
-                    doorstuurButton
-            };
-            nVoltooideData[i] = row;
+            if (nVoltooideRoutes.get(i).getKoerier() == null && nVoltooideRoutes.get(i).getBus() != null) {
+                Object[] row = {
+                        nVoltooideRoutes.get(i).getID(),
+                        nVoltooideRoutes.get(i).getRegio(),
+                        "-",
+                        nVoltooideRoutes.get(i).getBus(),
+                        tableButton
+                };
+                nVoltooideData[i] = row;
+            } else if (nVoltooideRoutes.get(i).getBus() == null && nVoltooideRoutes.get(i).getKoerier() != null) {
+                Object[] row = {
+                        nVoltooideRoutes.get(i).getID(),
+                        nVoltooideRoutes.get(i).getRegio(),
+                        nVoltooideRoutes.get(i).getKoerier().getName(),
+                        "-",
+                        tableButton
+                };
+                nVoltooideData[i] = row;
+            } else if (nVoltooideRoutes.get(i).getKoerier() == null || nVoltooideRoutes.get(i).getBus() == null ) {
+                Object[] row = {
+                        nVoltooideRoutes.get(i).getID(),
+                        nVoltooideRoutes.get(i).getRegio(),
+                        "-",
+                        "-",
+                        tableButton
+                };
+                nVoltooideData[i] = row;
+            } else {
+                Object[] row = {
+                        nVoltooideRoutes.get(i).getID(),
+                        nVoltooideRoutes.get(i).getRegio(),
+                        nVoltooideRoutes.get(i).getKoerier().getName(),
+                        nVoltooideRoutes.get(i).getBus().getKenteken(),
+                        tableButton
+                };
+                nVoltooideData[i] = row;
+            }
         }
-        String[] columns = {"Route nr.", "Regio", "Koerier", "Bus", "Route", "Doorsturen"};
+        String[] columns = {"Route nr.", "Regio", "Koerier", "Bus", "Route"};
 
         JTable oVTable = new JTable(new OverzichtTableModel(columns, nVoltooideData));
         oVTable.setBounds(30, 40, 200, 300);
