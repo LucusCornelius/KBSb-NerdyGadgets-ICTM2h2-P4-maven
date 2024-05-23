@@ -30,7 +30,7 @@ public class OverzichtController {
         for (Route route : routes) {
             try {
                 if (route.getKoerier() == null || route.getBus() == null) {
-                    
+
                     nVoltooideRoutes.add(route);
                 } else  {
 
