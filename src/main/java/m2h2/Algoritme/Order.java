@@ -1,4 +1,4 @@
-package m2h2.Orders;
+package m2h2.Algoritme;
 
 public class Order {
 

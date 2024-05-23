@@ -21,7 +21,6 @@ public class Main extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JButton Menu;
     private javax.swing.JButton OrderPicker;
     private javax.swing.JButton Koerier;
-    private javax.swing.JButton Login;
     private javax.swing.JPanel sidebar;
     private JScrollPane jScrollPane;
 
@@ -48,7 +47,6 @@ public class Main extends javax.swing.JFrame implements ActionListener{
         Koerier = new JButton();
         Route = new JButton();
         Menu = new JButton();
-        Login = new JButton();
         jLabel13 = new JLabel();
         mainPanel = new JPanel();
         jLabel1 = new JLabel();
@@ -57,22 +55,6 @@ public class Main extends javax.swing.JFrame implements ActionListener{
 
         sidebar.setBackground(new Color(0, 64, 138));
         sidebar.setPreferredSize(new Dimension(90, 32));
-
-        Login.setFont(new Font("Microsoft PhagsPa", 0, 14));
-        Login.setForeground(new Color(255, 255, 255));
-        Login.setIcon(new ImageIcon("src/main/java/m2h2/Navigation/Icon/Login.png"));
-        Login.setText("Login");
-        Login.setBorderPainted(false);
-        Login.setContentAreaFilled(false);
-        Login.setFocusPainted(false);
-        Login.setHideActionText(true);
-        Login.setHorizontalAlignment(SwingConstants.LEADING);
-        Login.setHorizontalTextPosition(SwingConstants.RIGHT);
-        Login.setIconTextGap(20);
-        Login.setMargin(new Insets(2, 0, 2, 14));
-        Login.setMinimumSize(new Dimension(200, 35));
-        Login.setPreferredSize(new Dimension(50, 574));
-        Login.addActionListener(this);
 
         Koerier.setFont(new Font("Microsoft PhagsPa", 0, 14));
         Koerier.setForeground(new Color(255, 255, 255));
@@ -158,8 +140,7 @@ public class Main extends javax.swing.JFrame implements ActionListener{
                                 .addGroup(sidebarLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addComponent(Menu, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(OrderPicker, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Koerier, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Login, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE))
+                                .addComponent(Koerier, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))
                         .addGroup(sidebarLayout.createSequentialGroup()
                                 .addGap(55, 55, 55)
@@ -179,7 +160,6 @@ public class Main extends javax.swing.JFrame implements ActionListener{
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(Koerier, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Login, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel13, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18))
@@ -281,33 +261,9 @@ public class Main extends javax.swing.JFrame implements ActionListener{
         if (e.getSource() == Koerier){
             mainPanel.removeAll();
 
-            jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
-            jLabel1.setForeground(new Color(51, 51, 51));
-            jLabel1.setText("Koerier");
-
-//            JLabel jLabel4 = new JLabel("Bekijk mijn route(s)");
-//            jLabel4.setFont(new Font("Segoe UI Semibold",1,14));
-//            jLabel4.setForeground(new Color(51,51,51));
-
             KoerierController kController = new KoerierController(mainPanel);
-            JScrollPane sp = kController.getTable(kController, "Aannemen order");
-
-            mainPanel.setLayout(new GridLayout(5,1));
-            mainPanel.add(jLabel1, BorderLayout.NORTH);
-//            mainPanel.add(jLabel4, BorderLayout.NORTH);
-            mainPanel.add(sp, BorderLayout.CENTER);
-            mainPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE,20));
-
-            mainPanel.revalidate();
-            mainPanel.repaint();
-        }
-
-        if (e.getSource() == Login){
-            mainPanel.setBackground(new Color(255, 255, 255));
-            jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
-            jLabel1.setForeground(new Color(51, 51, 51));
-            jLabel1.setText("Login");
-
+            kController.setKoerierPanel();
+            
             mainPanel.revalidate();
             mainPanel.repaint();
         }
