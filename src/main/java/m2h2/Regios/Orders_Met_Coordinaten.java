@@ -4,8 +4,8 @@ import m2h2.Backoffice.Components.*;
 
 public class Orders_Met_Coordinaten extends Order {
 
-    public Orders_Met_Coordinaten(String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer) {
-        super(naam, straatnaam, postcode, plaatsnaam, huisnummer);
+    public Orders_Met_Coordinaten(int ID, String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer) {
+        super(ID, naam, straatnaam, postcode, plaatsnaam, huisnummer);
     }
 
     private int orderID;

@@ -12,6 +12,7 @@ public class DummyData {
 
 
     public void setDummyData(){
+        /*
         ArrayList<Orders_Met_Coordinaten> orders = new ArrayList<Orders_Met_Coordinaten>();
         Orders_Met_Coordinaten O = new Orders_Met_Coordinaten("lus", "Ambonplein", "1094PW", "Amsterdam", 59);
         OrderLine OL = new OrderLine("B", 2, "usb");
@@ -25,7 +26,7 @@ public class DummyData {
         orders.add(new Orders_Met_Coordinaten("lucas", "Reinwardtstraat", "1093LA", "Amsterdam", 344));
         orders.add(new Orders_Met_Coordinaten("lucas", "Tweede van Swindenstraat", "1093VG", "Amsterdam", 31));
         orders.add(new Orders_Met_Coordinaten("lucas", "Eerste Van Swindenstraat", "1093XD", "Amsterdam", 44));
-        /*
+
         orders.add(new Orders_Met_Coordinaten("lucas", "Laing's Nekstraat", "1092GX", "Amsterdam", 44));
         orders.add(new Orders_Met_Coordinaten("lucas", "Tweede Constantijn Huygensstraat", "1054CP", "Amsterdam", 41));
         orders.add(new Orders_Met_Coordinaten("lucas", "Valeriusplein", "1075BJ", "Amsterdam", 15));
@@ -101,7 +102,7 @@ public class DummyData {
 
          */
 
-
+        /*
         Bus bus = new Bus("GH-75-PL", 5);
         Koerier koerier = new Koerier("Rick", 6);
         Route route = new Route(bus, "west", "", koerier, orders);
@@ -110,7 +111,7 @@ public class DummyData {
 
 
         //Backoffice & Magazijn
-        /*
+
 
         Koerier k1 = new Koerier("Willem");
         Bus b1 = new m2h2.Backoffice.Components.Bus("67-jh-kk");

@@ -17,6 +17,14 @@ public class OrderLine {
         setOpVoorraad(true);
     }
 
+    public OrderLine(int ID, String sectie, int aantal, String beschrijving){
+        this.ID = ID;
+        setSectie(sectie);
+        setAantal(aantal);
+        setBeschrijving(beschrijving);
+        setOpVoorraad(true);
+    }
+
 
     public void setID() {
         if (ID == 0) {

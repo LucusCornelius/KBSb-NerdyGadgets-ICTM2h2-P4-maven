@@ -6,6 +6,7 @@ import m2h2.Regios.Orders_Met_Coordinaten;
 import javax.xml.transform.Result;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -20,7 +21,7 @@ public class DatabaseConnectie {
     private int OrderID;
 
     private int customerID = 1;
-    private  int contactPersonID = 1234;
+    private int contactPersonID = 1234;
     private int packageTypeID = 7;
     private int testStockItemID = 1;
 
@@ -43,6 +44,10 @@ public class DatabaseConnectie {
             System.out.println(e.getMessage());
         }
      */
+
+    public Connection getCon() {
+        return con;
+    }
 
     public DatabaseConnectie() {
         con = null;
@@ -156,12 +161,14 @@ public class DatabaseConnectie {
     }
     public int customerExists(Order order){
         try {
-            String query = "SELECT CustomerID FROM customers WHERE CustomerName = ? AND DeliveryAddressLine1 = ? AND DeliveryPostalCode = ?";
+            String query = "SELECT CustomerID FROM customers WHERE CustomerName = ? AND DeliveryAddressLine1 = ? AND DeliveryAddressLine2 = ? AND DeliveryPostalCode = ? AND DeliveryLocation = ?";
             PreparedStatement pQuery = con.prepareStatement(query);
 
             pQuery.setString(1, order.getNaam());
             pQuery.setString(2, order.getStraatnaam());
-            pQuery.setString(3, order.getPostcode());
+            pQuery.setString(3, order.getHuisnummer()+"");
+            pQuery.setString(4, order.getPostcode());
+            pQuery.setString(5, order.getPlaatsnaam());
 
 
             ResultSet rs = pQuery.executeQuery();
@@ -204,18 +211,20 @@ public class DatabaseConnectie {
                         "FaxNumber , " +
                         "WebsiteURL , " +
                         "DeliveryAddressLine1 , " +
+                        "DeliveryAddressLine2, " +
                         "DeliveryPostalCode , " +
+                        "DeliveryLocation , " +
                         "PostalAddressLine1 , " +
                         "PostalPostalCode , " +
                         "LastEditedBy , " +
                         "ValidFrom , " +
                         "ValidTo" +
                         ")" +
-                        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 PreparedStatement pQuery = con.prepareStatement(query);
                 pQuery.setInt(1, customerID);
                 pQuery.setString(2, order.getNaam());
-                pQuery.setInt(3, customerID);
+                pQuery.setInt(3, 1);
                 pQuery.setInt(4, 1);
                 pQuery.setInt(5, contactPersonID);
                 pQuery.setInt(6, contactPersonID);
@@ -232,12 +241,14 @@ public class DatabaseConnectie {
                 pQuery.setString(17, "1234567890");
                 pQuery.setString(18, "tempurl");
                 pQuery.setString(19, order.getStraatnaam());
-                pQuery.setString(20, order.getPostcode());
-                pQuery.setString(21, order.getStraatnaam());
-                pQuery.setString(22, order.getPostcode());
-                pQuery.setInt(23, contactPersonID);
-                pQuery.setString(24, date);
-                pQuery.setString(25, this.validTo);
+                pQuery.setString(20, order.getHuisnummer()+"");
+                pQuery.setString(21, order.getPostcode());
+                pQuery.setString(22, order.getPlaatsnaam());
+                pQuery.setString(23, order.getStraatnaam());
+                pQuery.setString(24, order.getPostcode());
+                pQuery.setInt(25, contactPersonID);
+                pQuery.setString(26, date);
+                pQuery.setString(27, this.validTo);
 
                 int result = pQuery.executeUpdate();
 
@@ -269,9 +280,11 @@ public class DatabaseConnectie {
                     "TaxRate, " +
                     "LastEditedBy, " +
                     "LastEditedWhen, " +
-                    "OrderID" +
+                    "OrderID , " +
+                    "sectie , " +
+                    "opVoorraad" +
                     ")" +
-                    "VALUES(?,?,?,?,?,?,?,?,?,?)";
+                    "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pQuery = con.prepareStatement(query);
             pQuery.setInt(1, getNewOrderLineID());
             pQuery.setInt(2, testStockItemID);
@@ -283,6 +296,8 @@ public class DatabaseConnectie {
             pQuery.setInt(8,contactPersonID);
             pQuery.setString(9,date);
             pQuery.setInt(10, orderID);
+            pQuery.setString(11, orderLine.getSectie());
+            pQuery.setBoolean(12, orderLine.getOpVoorraad());
             int result = pQuery.executeUpdate();
 
             if (result > 0) {
@@ -374,23 +389,109 @@ public class DatabaseConnectie {
         }
 
     }
-    public ResultSet getRoutes(Route route){
+    public Route getRoute(int routeID){
+        Route route = null;
         try {
 
-            String query = "";
+            String query = "select R.routeID, R.DeliveryVanID, R.status, R.koerierID, O.OrderID, CustomerName, C.DeliveryAddressLine1, C.DeliveryAddressLine2, C.DeliveryPostalCode, C.DeliveryLocation, description, orderlineID, Quantity, sectie, opvoorraad " +
+                    "from route R " +
+                    "left join orders O on o.routeID = R.routeID " +
+                    "left join customers C on O.CustomerID = C.CustomerID " +
+                    "left join orderlines OL on O.OrderID = OL.OrderID " +
+                    "where R.routeID = ?";
             PreparedStatement pQuery = con.prepareStatement(query);
 
-            //pQuery.setString();
+            pQuery.setInt(1, routeID);
 
             ResultSet rs = pQuery.executeQuery();
-
-            while (rs.next()){
-
+            boolean routeIsSet = false;
+            int prevOrderID = -1;
+            Orders_Met_Coordinaten prevOrder = null;
+            while (rs.next()) {
+                try{
+                    System.out.println(rs.getInt(12)); // wot :o
+                    if (!routeIsSet) {
+                        route = new Route(
+                                rs.getInt("R.routeID"),
+                                new Bus("test", rs.getInt("R.DeliveryVanID")),
+                                "test",
+                                rs.getString("status"),
+                                new Koerier("test", rs.getInt("R.koerierID"))
+                                );
+                        routeIsSet = true;
+                    }
+                    if (rs.getInt(5) != prevOrderID ){
+                        int huisnummer;
+                        try{
+                            huisnummer = Integer.parseInt(rs.getString("C.DeliveryAddressLine2"));
+                        } catch (NumberFormatException e){
+                            System.out.println(e.getMessage());
+                            huisnummer = -1;
+                        }
+                        Orders_Met_Coordinaten order = new Orders_Met_Coordinaten(
+                                rs.getInt("O.OrderID"),
+                                rs.getString("CustomerName"),
+                                rs.getString("C.DeliveryAddressLine1"),
+                                rs.getString("C.DeliveryPostalCode"),
+                                rs.getString("C.DeliveryLocation"),
+                                huisnummer
+                        );
+                        prevOrder = order;
+                        route.addOrder(order);
+                    }
+                    int aantal;
+                    try{
+                        aantal = Integer.parseInt(rs.getString("Quantity"));
+                    } catch (NumberFormatException e){
+                        System.out.println(e.getMessage());
+                        aantal = -1;
+                    }
+                    OrderLine orderLine = new OrderLine(
+                        rs.getInt("orderlineID") ,
+                        rs.getString("sectie"),
+                        aantal,
+                        rs.getString("description")
+                    );
+                    try {
+                        prevOrder.addOrderline(orderLine);
+                    } catch (NumberFormatException e){
+                        System.out.println(e.getMessage());
+                    }
+                    prevOrderID = rs.getInt(5);
+                } catch (SQLException e){
+                    System.out.println(e.getMessage());
+                }
+                System.out.println(rs.getString("CustomerName"));
             }
             pQuery.close();
+            //return rs;
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
-        return null;
+        return route;
+    }
+    public ArrayList<Integer> getRouteIDs(){
+        try {
+            String query = "SELECT RouteID FROM route WHERE RouteID IN (SELECT RouteID FROM orders where ExpectedDeliveryDate = ?)";
+            PreparedStatement pQuery = con.prepareStatement(query);
+
+            pQuery.setString(1, date);
+
+            ResultSet rs = pQuery.executeQuery();
+            ArrayList IDs = new ArrayList();
+            while(rs.next()) {
+                try {
+                    IDs.add(rs.getInt(1));
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                    IDs.add(null);
+                }
+            }
+            pQuery.close();
+            return IDs;
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+            return new ArrayList<>();
+        }
     }
 }

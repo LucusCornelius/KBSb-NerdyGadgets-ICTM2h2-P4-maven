@@ -33,6 +33,16 @@ public class Order {
         setPlaatsnaam(plaatsnaam);
         setBezorgd(false);
     }
+    public Order(int ID, String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer){
+        orderLines = new ArrayList<>();
+        this.ID = ID;
+        setNaam(naam);
+        setStraatnaam(straatnaam);
+        setHuisnummer(huisnummer);
+        setPostcode(postcode);
+        setPlaatsnaam(plaatsnaam);
+        setBezorgd(false);
+    }
 
     public void setID() {
         if (ID == 0) {

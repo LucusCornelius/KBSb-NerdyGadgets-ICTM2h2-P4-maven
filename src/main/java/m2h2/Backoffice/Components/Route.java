@@ -56,6 +56,16 @@ public class Route {
     public Route(Bus bus, String regio, String status) {
         this(bus, regio, status, null, null);
     }
+    public Route(int ID, Bus bus, String regio, String status, Koerier koerier) {
+        this.ID = ID;
+        orders = new ArrayList<>();
+        setKoerier(koerier);
+        setBus(bus);
+        setRegio(regio);
+        setStatus(status);
+
+        routes.add(this);
+    }
     public Route(Bus bus, String regio, String status, Koerier koerier, ArrayList<Orders_Met_Coordinaten> orders) {
         setID();
         if (orders == null) {
