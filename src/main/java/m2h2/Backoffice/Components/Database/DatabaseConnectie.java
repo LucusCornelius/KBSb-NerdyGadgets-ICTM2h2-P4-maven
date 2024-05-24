@@ -173,11 +173,11 @@ public class DatabaseConnectie {
 
             ResultSet rs = pQuery.executeQuery();
 
-            while (rs.next()){
-                return rs.getInt(1);
-            }
+            rs.next();
+            int x = rs.getInt(1);
+
             pQuery.close();
-            return -1;
+            return x;
         } catch (SQLException e){
             System.out.println(e.getMessage());
             return -1;
