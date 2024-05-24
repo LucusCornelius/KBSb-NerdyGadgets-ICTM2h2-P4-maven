@@ -4,7 +4,7 @@ import m2h2.Backoffice.Components.Bus;
 import m2h2.Backoffice.Components.Koerier;
 import m2h2.Backoffice.Components.OrderLine;
 import m2h2.Backoffice.Components.Route;
-import m2h2.Regios.Orders_Met_Coordinaten;
+import m2h2.Algoritme.Orders_Met_Coordinaten;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

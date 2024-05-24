@@ -17,7 +17,7 @@ public class Order {
 
     private String order;
 
-    public Order(int orderID, String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer, String order) {
+    public Order(int orderID, String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer) {
         this.orderID = orderID;
         this.naam = naam;
         this.straatnaam = straatnaam;
