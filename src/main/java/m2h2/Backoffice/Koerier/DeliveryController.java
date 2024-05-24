@@ -5,6 +5,7 @@ import m2h2.Backoffice.Components.Route;
 import m2h2.Backoffice.Components.Tables.JTableButtonMouseListener;
 import m2h2.Backoffice.Components.Tables.JTableButtonRenderer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -12,6 +13,9 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class DeliveryController implements ActionListener {
@@ -26,6 +30,7 @@ public class DeliveryController implements ActionListener {
     private int returnedCount = 0;
     private JTextField ordersBezorgd;
     private JTextField ordersTerug;
+    DeliveryController deliveryController;
 
     private void initComponents() {
         jLabel1 = new JLabel();
@@ -197,6 +202,8 @@ public class DeliveryController implements ActionListener {
             mainPanel.repaint();
         } else if (e.getSource() == routeVoltooien) {
             showRouteCompleteDialog();
+        } else if (e.getSource() == uitprinten) {
+            printTableAsImage();
         }
     }
 
@@ -276,6 +283,41 @@ public class DeliveryController implements ActionListener {
         dialog.setSize(400,200);
         dialog.setLocationRelativeTo(mainPanel);
         dialog.setVisible(true);
+    }
+
+    private void printTableAsImage() {
+        JTable table = new JTable(new DeliveryTableModel(this));
+        JScrollPane scroll = new JScrollPane(table);
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(scroll, BorderLayout.CENTER);
+
+        //maakt n frame om de gegevens van de tabel in op te slaan
+        JFrame tempFrame = new JFrame();
+        tempFrame.setUndecorated(true);
+        tempFrame.add(panel);
+        tempFrame.pack();
+
+        // Nu word de size van de de tabel in de image gezet
+        Dimension d = panel.getPreferredSize();
+
+        // maken van de afbeelding met de grootte
+        BufferedImage bi = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_RGB);
+        Graphics g = bi.createGraphics();
+        panel.paint(g);
+        g.dispose();
+
+        //weggooien van het tijdelijke frame zodat alleen de tabel er in zit
+        tempFrame.dispose();
+
+        try {
+            // opslaan van de image
+            File outputfile = new File("routeID-" + route.getID() + ".png" );
+            ImageIO.write(bi, "png", outputfile);
+            JOptionPane.showMessageDialog(null, "De route is gedownload " + outputfile.getAbsolutePath());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Het is niet gelukt om de route te downloaden " + ex.getMessage());
+        }
     }
 }
 
