@@ -1,94 +1,108 @@
 package m2h2.Backoffice.TestCode;
 
+import m2h2.Algoritme.Adressen_GEO_Data_Extractor;
 import m2h2.Backoffice.Components.*;
-import m2h2.Backoffice.Magazijn.*;
+
+import java.util.ArrayList;
 
 public class DummyData {
 
 
     public void setDummyData(){
+        ArrayList<Order> orders = new ArrayList<Order>();
+        Order O = new Order("lucas", "Ambonplein", "1094PW", "Amsterdam", 59, "", false);
+        OrderLine OL = new OrderLine("B", 2, "usb");
+        O.addOrderline(OL);
+        orders.add(O);
+        O = new Order("lucas", "Minahassastraat", "1094RV", "Amsterdam", 145, "", false);
+        OL = new OrderLine("A", 3, "shirt");
+        O.addOrderline(OL);
+        orders.add(O);
+        orders.add(new Order("lucas", "Eerste Atjehstraat", "1094KL", "Amsterdam", 2, "", false));
+//        orders.add(new Order("lucas", "Reinwardtstraat", "1093LA", "Amsterdam", 344));
+//        orders.add(new Order("lucas", "Tweede van Swindenstraat", "1093VG", "Amsterdam", 31));
+//        orders.add(new Order("lucas", "Eerste Van Swindenstraat", "1093XD", "Amsterdam", 44));
+//        orders.add(new Order("lucas", "Laing's Nekstraat", "1092GX", "Amsterdam", 44));
+//        orders.add(new Order("lucas", "Tweede Constantijn Huygensstraat", "1054CP", "Amsterdam", 41));
+//        orders.add(new Order("lucas", "Valeriusplein", "1075BJ", "Amsterdam", 15));
+//        orders.add(new Order("lucas", "Wolfert van Borsselenweg", "1181PJ", "Amstelveen", 116));
+//        orders.add(new Order("lucas", "Gondel", "1186MJ", "Amstelveen", 1));
+//        orders.add(new Order("lucas", "Herman Gorterhof", "1422JP", "Uithoorn", 3));
+//        orders.add(new Order("lucas", "Eendracht", "1423ET", "Uithoorn", 8));
+//        orders.add(new Order("lucas", "Haven Westzijde", "1426AR", "De Hoef", 4));
+//        orders.add(new Order("lucas", "De Hoef Oostzijde", "1426AD", "De Hoef", 17));
+//        orders.add(new Order("lucas", "Hogedijk", "2435ND", "Zevenhoven", 19));
+//        orders.add(new Order("lucas", "Kousweg", "2435NK", "Zevenhoven", 9));
+//        orders.add(new Order("lucas", "Donkereind", "3645TE", "Vinkeveen", 46));
+//        orders.add(new Order("lucas", "Donkereind", "3645TD", "Vinkeveen", 24));
+//        orders.add(new Order("lucas", "C.J. van Houtenlaan", "1381CP", "Weesp", 36));
+//        orders.add(new Order("lucas", "Van Houten Industriepark", "1381MZ", "Weesp", 4));
+//        orders.add(new Order("lucas", "Pr. Beatrixlaan", "1381AJ", "Weesp", 44));
+//        orders.add(new Order("lucas", "Buitenveer", "1381AC", "Weesp", 69));
+//        orders.add(new Order("lucas", "Pr. Beatrixlaan", "1381AG", "Weesp", 21));
+//        orders.add(new Order("lucas", "Van Houten Industriepark", "1381MZ", "Weesp", 2));
+//        orders.add(new Order("lucas", "Van Houten Industriepark", "1381MZ", "Weesp", 22));
+//        orders.add(new Order("lucas", "C.J. van Houtenlaan", "1381CP", "Weesp", 36));
+//        orders.add(new Order("lucas", "Aetsveldseweg", "1383HS", "Weesp", 3));
+//        orders.add(new Order("lucas", "Lakenkopersweg", "1383CV", "Weesp", 62));
+//        orders.add(new Order("lucas", "Lakenkopersweg", "1383CV", "Weesp", 96));
+//        orders.add(new Order("lucas", "Chirurgijnsweg", "1383DX", "Weesp", 12));
+//        orders.add(new Order("lucas", "Chirurgijnsweg", "1383DX", "Weesp", 6));
+//        orders.add(new Order("lucas", "Chirurgijnsweg", "1383DW", "Weesp", 5));
+//        orders.add(new Order("lucas", "Chirurgijnsweg", "1383DZ", "Weesp", 72));
+//        orders.add(new Order("lucas", "Helmkruidstraat", "1121XM", "Landsmeer", 2));
+//        orders.add(new Order("lucas", "Wederikstraat", "1121XH", "Landsmeer", 25));
+//        orders.add(new Order("lucas", "Wederikstraat", "1121XH", "Landsmeer", 1));
+//        orders.add(new Order("lucas", "Noordeinde", "1121AM", "Landsmeer", 168));
+//        orders.add(new Order("lucas", "Noordeinde", "1121AM", "Landsmeer", 150));
+//        orders.add(new Order("lucas", "Noordeinde", "1121AM", "Landsmeer", 144));
+//        orders.add(new Order("lucas", "Noordeinde", "1121AJ", "Landsmeer", 117));
+//        orders.add(new Order("lucas", "Noordeinde", "1121AC", "Landsmeer", 91));
+//        orders.add(new Order("lucas", "Mercuriusweg", "1443VA", "Purmerend", 33));
+//        orders.add(new Order("lucas", "Juno", "1443BN", "Purmerend", 8));
+//        orders.add(new Order("lucas", "Jonkheer van Cittersplein", "1442XJ", "Purmerend", 214));
+//        orders.add(new Order("lucas", "Eemstraat", "1442SG", "Purmerend", 1));
+//        orders.add(new Order("lucas", "Scheldestraat", "1442SC", "Purmerend", 47));
+//        orders.add(new Order("lucas", "Flevostraat", "1442PV", "Purmerend", 59));
+//        orders.add(new Order("lucas", "Spuistraat", "1442PR", "Purmerend", 29));
+//        orders.add(new Order("lucas", "Rivierenlaan", "1442PE", "Purmerend", 167));
+//        orders.add(new Order("lucas", "Trimpad", "1443WB", "Purmerend", 14));
+//        orders.add(new Order("lucas", "Heiligeweg", "1561DG", "Krommenie", 73));
+//        orders.add(new Order("lucas", "Jan van Beaumontstraat", "1561VS", "Krommenie", 11));
+//        orders.add(new Order("lucas", "Volwerf", "1561VP", "Krommenie", 14));
+//        orders.add(new Order("lucas", "Volwerf", "1561VP", "Krommenie", 25));
+//        orders.add(new Order("lucas", "Josua Gekeerstraat", "1561DW", "Krommenie", 18));
+//        orders.add(new Order("lucas", "Heiligeweg", "1561DL", "Krommenie", 114));
+//        orders.add(new Order("lucas", "Heiligeweg", "1561DG", "Krommenie", 89));
+//        orders.add(new Order("lucas", "Heiligeweg", "1561DH", "Krommenie", 105));
+//        orders.add(new Order("lucas", "Van Bloisstraat", "1561DP", "Krommenie", 14));
+//        orders.add(new Order("lucas", "Deken Schmidtstraat", "1561DW", "Krommenie", 60));
+//        orders.add(new Order("lucas", "Heiligeweg", "1561DM", "Krommenie", 140));
+//        orders.add(new Order("lucas", "Burgemeester Waliglaan", "1561WT", "Krommenie", 19));
+//        orders.add(new Order("lucas", "Burgemeester Albertiplein", "1561WJ", "Krommenie", 18));
+//        orders.add(new Order("lucas", "Bilderdijkstraat", "1702AP", "Heerhugowaard", 93));
+//        orders.add(new Order("lucas", "Bilderdijkstraat", "1702AP", "Heerhugowaard", 89));
+//        orders.add(new Order("lucas", "Bilderdijkstraat", "1702AR", "Heerhugowaard", 22));
+//        orders.add(new Order("lucas", "Bilderdijkstraat", "1702AR", "Heerhugowaard", 22));
+//        orders.add(new Order("lucas", "Themislaan", "1702AV", "Heerhugowaard", 97));
+//        orders.add(new Order("lucas", "Themislaan", "1702AT", "Heerhugowaard", 65));
+//        orders.add(new Order("lucas", "Umbriellaan", "1702AJ", "Heerhugowaard", 9));
+//        orders.add(new Order("lucas", "Winterkoning", "1722CC", "Zuid-Scharwoude", 35));
+//        orders.add(new Order("lucas", "Winterkoning", "1722CA", "Zuid-Scharwoude", 1));
+//        orders.add(new Order("lucas", "Winterkoning", "1722CB", "Zuid-Scharwoude", 21));
+//        orders.add(new Order("lucas", "Langeweide", "1722WX", "Zuid-Scharwoude", 266));
+//        orders.add(new Order("lucas", "Langeweide", "1722WX", "Zuid-Scharwoude", 260));
+//        orders.add(new Order("lucas", "Langeweide", "1722WK", "Zuid-Scharwoude", 293));
+//        orders.add(new Order("lucas", "Frederik Hendrikstraat", "1723KD", "Noord-Scharwoude", 35));
+        /*
+        Bus bus = new Bus("GH-75-PL");
+        Koerier koerier = new Koerier("Rick");
+        Route route = new Route(bus, "west", "klaar voor picken", koerier, orders);
 
-        //Backoffice & Magazijn DummyData
-        Koerier k1 = new Koerier("Willem A.");
-        Koerier k2 = new Koerier("Willem B.");
-        Koerier k3 = new Koerier("Willem C.");
-        Koerier k4 = new Koerier("Willem D.");
-        Koerier k5 = new Koerier("Willem E.");
+         */
 
+        Adressen_GEO_Data_Extractor AdressenObject1 = new Adressen_GEO_Data_Extractor(orders);
 
-        Bus b1 = new m2h2.Backoffice.Components.Bus("67-jh-kk");
-        Route r1 = new Route(b1 , "west" , "klaar voor picken", k3);
-        Order o1 = new Order("kerkhofslaan", 7, "8479HH", false);
-        OrderLine ol1 = new OrderLine("A" , 2 , "USB");
-        o1.addOrderline(ol1);
-        OrderLine ol2 = new OrderLine("b" , 2 , "shirt");
-        o1.addOrderline(ol2);
-        r1.addOrder(o1);
-
-        Order o3 = new Order("kerkhofslaan", 7, "8479HH", false);
-        OrderLine ol4 = new OrderLine("A" , 2 , "USB");
-        o3.addOrderline(ol4);
-        OrderLine ol5 = new OrderLine("b" , 2 , "shirt");
-        o3.addOrderline(ol5);
-        r1.addOrder(o3);
-        Order o4 = new Order("kfslaan", 9, "7643HH", false);
-        OrderLine ol6 = new OrderLine("B" , 1 , "USB");
-        o4.addOrderline(ol6);
-        r1.addOrder(o4);
-
-
-        Bus b2 = new Bus("68-45-kk");
-        Route r2 = new Route("Oost" , "bezig met picken", k2);
-        Order o21 = new Order("kerkhofslaan", 7, "8479HH", false);
-        OrderLine ol21 = new OrderLine("A" , 2 , "USB");
-        o21.addOrderline(ol21);
-        OrderLine ol22 = new OrderLine("b" , 2 , "shirt");
-        o21.addOrderline(ol22);
-        r2.addOrder(o21);
-        Order o22 = new Order("kfslaan", 9, "8474HH", false);
-        OrderLine ol23 = new OrderLine("B" , 1 , "USB");
-        o22.addOrderline(ol23);
-        r2.addOrder(o22);
-
-        //koerier DummyData
-        Bus b5 = new Bus("68-45-kk");
-        Route r8 = new Route("Oost" , "Aannemen order", k1);
-        Order o25 = new Order("kerkhofslaan", 7, "8479HH", false);
-        OrderLine ol25 = new OrderLine("A" , 2 , "USB");
-        o21.addOrderline(ol25);
-        OrderLine ol26 = new OrderLine("b" , 2 , "shirt");
-        o21.addOrderline(ol26);
-        r8.addOrder(o25);
-        Order o27 = new Order("kfslaan", 9, "8474HH", false);
-        OrderLine ol27 = new OrderLine("B" , 1 , "USB");
-        o22.addOrderline(ol27);
-        r8.addOrder(o25);
-
-        Bus b6 = new Bus("34-67-mm");
-        Route r9 = new Route(b6, "West", "Aannemen order");
-        Order o28 = new Order("Stationstraat", 10, "8466KK", false);
-        OrderLine ol28 = new OrderLine("C", 3, "Headphones");
-        o28.addOrderline(ol28);
-        r9.addOrder(o28);
-        Order o29 = new Order("Hoofdweg", 12, "8499LL", false);
-        OrderLine ol29 = new OrderLine("D", 2, "Mouse");
-        o29.addOrderline(ol29);
-        OrderLine ol30 = new OrderLine("E", 1, "Keyboard");
-        o29.addOrderline(ol30);
-        r9.addOrder(o29);
-
-        Bus b7 = new Bus("12-34-pp");
-        Route r10 = new Route("Noord", "Aannemen order");
-        Order o30 = new Order("Dorpsstraat", 5, "8465JJ", false);
-        OrderLine ol31 = new OrderLine("F", 1, "Monitor");
-        o30.addOrderline(ol31);
-        r10.addOrder(o30);
-        Order o31 = new Order("Schoolweg", 8, "8455MM", false);
-        OrderLine ol32 = new OrderLine("G", 4, "Laptop");
-        o31.addOrderline(ol32);
-        r10.addOrder(o31);
-
-        //Delivery
 
     }
 }

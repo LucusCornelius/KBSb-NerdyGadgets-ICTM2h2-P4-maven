@@ -14,25 +14,25 @@ public class Orders_Met_Coordinaten {
 
     private int huisnummer;
 
+    String toevoeging;
+    private String huisletter;
     private String order;
-
     private String LatitudeGraden;
     private String LongitudeGraden;
     private String LatitudeMinuten;
     private String LongitudeMinuten;
-
     private double Coordinaten_RijksDriehoek_X, Coordinaten_RijksDriehoek_Y;
-
     private double Coordinaten_DecimalDegrees_X, Coordinaten_DecimalDegrees_Y;
 
 
-    public Orders_Met_Coordinaten (int orderID, String naam, String straatnaam, String postcode, int huisnummer, String order) {
+    public Orders_Met_Coordinaten (int orderID, String naam, String straatnaam, String postcode, int huisnummer, String toevoeging, String huisletter, String order) {
         this.orderID = orderID;
         this.naam = naam;
         this.straatnaam = straatnaam;
         this.postcode = postcode;
         this.huisnummer = huisnummer;
         this.order = order;
+        this.toevoeging = toevoeging;
     }
 
     public void setCoordinaten_DMS(
@@ -59,25 +59,12 @@ public class Orders_Met_Coordinaten {
     }
 
 
-
-    public int getOrderID() {
-        return orderID;
-    }
-
-    public String getNaam() {
-        return naam;
-    }
-
     public String getStraatnaam() {
         return straatnaam;
     }
 
     public String getPostcode() {
         return postcode;
-    }
-
-    public String getPlaatsnaam() {
-        return plaatsnaam;
     }
 
     public int getHuisnummer() {
@@ -91,11 +78,9 @@ public class Orders_Met_Coordinaten {
     public String getCoordinaten_DMS() {
         return LatitudeGraden + "° " + LatitudeMinuten + ", " + LongitudeGraden + "° " + LongitudeMinuten;
     }
-
     public String getCoordinaten_OSMR() {
         return Coordinaten_DecimalDegrees_Y + "," + Coordinaten_DecimalDegrees_X + ";";
     }
-
 
     public double getCoordinaten_RijksDriehoek_X() {
         return Coordinaten_RijksDriehoek_X;
@@ -104,11 +89,6 @@ public class Orders_Met_Coordinaten {
     public double getCoordinaten_RijksDriehoek_Y() {
         return Coordinaten_RijksDriehoek_Y;
     }
-
-    public double getCoordinaten_DecimalDegrees_X() {
-        return Coordinaten_DecimalDegrees_X;
-    }
-
 
 
     public String getWriteToFile() {
