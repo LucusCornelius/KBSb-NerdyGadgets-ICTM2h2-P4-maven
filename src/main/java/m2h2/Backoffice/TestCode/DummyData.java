@@ -113,9 +113,16 @@ public class DummyData {
         //Backoffice & Magazijn
 
 
-        Koerier k1 = new Koerier("Willem");
+        //Backoffice & Magazijn DummyData
+        Koerier k1 = new Koerier("Willem A.");
+        Koerier k2 = new Koerier("Willem B.");
+        Koerier k3 = new Koerier("Willem C.");
+        Koerier k4 = new Koerier("Willem D.");
+        Koerier k5 = new Koerier("Willem E.");
+
+
         Bus b1 = new m2h2.Backoffice.Components.Bus("67-jh-kk");
-        Route r1 = new Route(b1 , "west" , "klaar voor picken", k1);
+        Route r1 = new Route(b1 , "west" , "klaar voor picken", k3);
         Order o1 = new Order("kerkhofslaan", 7, "8479HH", false);
         OrderLine ol1 = new OrderLine("A" , 2 , "USB");
         o1.addOrderline(ol1);
@@ -126,7 +133,7 @@ public class DummyData {
 
 
         Bus b2 = new Bus("68-45-kk");
-        Route r2 = new Route(b2 , "Oost" , "bezig met picken", k1);
+        Route r2 = new Route("Oost" , "bezig met picken", k2);
         Order o21 = new Order("kerkhofslaan", 7, "8479HH", false);
         OrderLine ol21 = new OrderLine("A" , 2 , "USB");
         o21.addOrderline(ol21);

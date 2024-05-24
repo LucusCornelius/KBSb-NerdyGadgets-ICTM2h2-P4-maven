@@ -29,15 +29,27 @@ public class MagazijnRouteTableModel extends AbstractTableModel {
     public Object getValueAt(int row, int col) {
         return data[row][col];
     }
-    public Class getColumnClass(int column) {
-        try {
-            return getValueAt(0,column).getClass();
-        } catch (NullPointerException e){
-            return String.class;
+
+    @Override
+    public Class<?> getColumnClass(int column) {
+        switch (column) {
+            case 1:
+                return Boolean.class;
+            default:
+                return String.class;
         }
     }
-    public Class getCellClass(int row, int col) {
-        return getValueAt(row,col).getClass();
+
+    @Override
+    public boolean isCellEditable(int row, int col) {
+        return col == 1;
     }
 
+    @Override
+    public void setValueAt(Object aValue, int row, int col) {
+        if (col == 1 && aValue instanceof Boolean) {
+            data[row][col] = aValue;
+            fireTableCellUpdated(row, col);
+        }
+    }
 }

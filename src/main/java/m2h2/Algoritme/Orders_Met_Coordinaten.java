@@ -1,4 +1,4 @@
-package m2h2.Regios;
+package m2h2.Algoritme;
 
 import m2h2.Backoffice.Components.*;
 
