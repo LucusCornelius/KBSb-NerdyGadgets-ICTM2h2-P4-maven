@@ -14,14 +14,14 @@ public class KoerierTableModel extends AbstractTableModel {
 
     public KoerierTableModel(KoerierController kController, String status){
         super();
-        String[] tableHeader = {"ID-route", "Bus", "Aantal orders", "Regio", "Postcodes", ""};
+        String[] tableHeader = {"Route-ID", "Bus", "Totaal aantal orders", "Regio", "Postcodes", ""};
         cols = tableHeader;
         data = kController.getTableData(status);
     }
 
     public KoerierTableModel(Route route){
         super();
-        String[] tableHeader = {"ID-Route" , "Bus" , "Aantal orders" , "Postcodes"};
+        String[] tableHeader = {"Route-ID" , "Bus" , "Totaal aantal orders" , "Postcodes"};
         cols = tableHeader;
         data = route.getDescriptionTableData();
     }

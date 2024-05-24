@@ -1,13 +1,21 @@
 package m2h2.Backoffice.Components;
 
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bus {
     private  int busID;
     private String kenteken;
+    private static List instances = new ArrayList();
 
     public Bus(String kenteken){
         setKenteken(kenteken);
+        instances.add(this);
+    }
+
+    public static List getInstances() {
+        return instances;
     }
 
     public Bus(String kenteken, int busID){

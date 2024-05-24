@@ -18,17 +18,27 @@ public class MagazijnController {
     private ArrayList<Route> klaarVoorPicken;
     private ArrayList<Route> bezigMetPicken;
     private ArrayList<Route> klaarVoorversturen;
-
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel kvpLabel;
+    private javax.swing.JLabel bmpLabel;
+    private javax.swing.JLabel kvvLabel;
     private String kvp = "klaar voor picken";
     private String bmp = "bezig met picken";
     private String kvv = "klaar voor versturen";
+//    private JLabel magazijnLabel = new JLabel("Magazijn");
+//    private JLabel kvpLabel = new JLabel("klaar voor picken");
+//    private JLabel bmpLabel = new JLabel("bezig met picken");
+//    private JLabel kvvLabel = new JLabel("klaar voor versturen");
 
-    private JLabel magazijnLabel = new JLabel("Magazijn");
-    private JLabel kvpLabel = new JLabel("klaar voor picken");
-    private JLabel bmpLabel = new JLabel("bezig met picken");
-    private JLabel kvvLabel = new JLabel("klaar voor versturen");
+    private void initComponents() {
+        jLabel1 = new JLabel();
+        kvpLabel = new JLabel();
+        bmpLabel = new JLabel();
+        kvvLabel = new JLabel();
+    }
 
     public MagazijnController(JPanel mainPanel){
+        initComponents();
         this.mainPanel = mainPanel;
         updateStatus();
     }
@@ -145,12 +155,29 @@ public class MagazijnController {
         return data;
     }
 
-    public void setMagazijnPanel(){
+    public void setMagazijnPanel() {
         updateStatus();
-        mainPanel.setLayout(new GridLayout(7,1));
-        mainPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE,10));
+        mainPanel.setLayout(new GridLayout(7, 1));
 
-        mainPanel.add(magazijnLabel);
+        jLabel1.setFont(new Font("Segoe UI Semibold", Font.BOLD, 24));
+        jLabel1.setForeground(new Color(51, 51, 51));
+        jLabel1.setText("Magazijn");
+
+        mainPanel.setForeground(new Color(51, 51, 51));
+        mainPanel.add(jLabel1);
+        mainPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 20));
+
+        kvpLabel.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
+        kvpLabel.setForeground(new Color(51, 51, 51));
+        kvpLabel.setText("Klaar voor picken");
+
+        bmpLabel.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
+        bmpLabel.setForeground(new Color(51, 51, 51));
+        bmpLabel.setText("Bezig met picken");
+
+        kvvLabel.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
+        kvvLabel.setForeground(new Color(51, 51, 51));
+        kvvLabel.setText("Klaar voor versturen");
 
         mainPanel.add(kvpLabel);
         mainPanel.add(getTable(this, kvp));
@@ -160,8 +187,8 @@ public class MagazijnController {
 
         mainPanel.add(kvvLabel);
         mainPanel.add(getTable(this, kvv));
-
     }
+
 
     @Override
     public String toString() {

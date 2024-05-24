@@ -7,6 +7,7 @@ import m2h2.Backoffice.Components.Tables.JTableButtonRenderer;
 import m2h2.Backoffice.Magazijn.MagazijnRouteTableModel;
 import m2h2.Regios.Orders_Met_Coordinaten;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -14,6 +15,9 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class DeliveryController implements ActionListener {
@@ -24,6 +28,11 @@ public class DeliveryController implements ActionListener {
     private javax.swing.JLabel jLabel1;
     private ArrayList<Orders_Met_Coordinaten> orders;
     private Integer id;
+    private int deliveredCount = 0;
+    private int returnedCount = 0;
+    private JTextField ordersBezorgd;
+    private JTextField ordersTerug;
+    DeliveryController deliveryController;
 
     private void initComponents() {
         jLabel1 = new JLabel();
@@ -40,7 +49,6 @@ public class DeliveryController implements ActionListener {
 
     public void setDeliveryPanel() {
         mainPanel.removeAll();
-//        mainPanel.setBackground(new Color(0,0,0, 100));
         mainPanel.setLayout(new GridLayout(5, 1));
 
         jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
@@ -56,7 +64,6 @@ public class DeliveryController implements ActionListener {
         JScrollPane sp = getTable();
         mainPanel.add(sp);
 
-        //toevoeging buttons
         terugButton = new JButton("Ga Terug");
         terugButton.addActionListener(this);
 
@@ -103,10 +110,8 @@ public class DeliveryController implements ActionListener {
 
     public JScrollPane getTable() {
         JTable table = new JTable(new DeliveryTableModel(this)) {
-
             @Override
             public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
-
                 JComponent component = (JComponent) super.prepareRenderer(renderer, row, col);
                 return component;
             }
@@ -116,8 +121,12 @@ public class DeliveryController implements ActionListener {
         tableRenderer = table.getDefaultRenderer(JButton.class);
         table.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tableRenderer));
 
+        table.setDefaultEditor(Boolean.class, table.getDefaultEditor(Boolean.class));
+        table.setDefaultRenderer(Boolean.class, table.getDefaultRenderer(Boolean.class));
+
         table.setBounds(0, 0, 600, 400);
         table.setRowHeight(table.getRowHeight() + 15);
+        table.addMouseListener(new JTableButtonMouseListener(table));
 
         table.addMouseListener(new JTableButtonMouseListener(table));
 
@@ -132,15 +141,22 @@ public class DeliveryController implements ActionListener {
         for (int i = 0; i < orders.size(); i++) {
             if (orders.get(i).getOrderLines().size() == 1) {
                 data[rowIndex] = orders.get(i).getDatalineRoute();
-                System.out.println(data);
+                if ((Boolean) data[rowIndex][4]) {
+                    deliveredCount++;
+                } else {
+                    returnedCount++;
+                }
                 rowIndex++;
             } else {
                 for (int j = 0; j < orders.get(i).getOrderLines().size(); j++) {
                     data[rowIndex] = orders.get(i).getDatalineRoute(j);
+                    if ((Boolean) data[rowIndex][4]) {
+                        deliveredCount++;
+                    } else {
+                        returnedCount++;
+                    }
                     rowIndex++;
                 }
-                System.out.println("extra datalines routes");
-                System.out.println(data);
             }
         }
         return data;
@@ -156,6 +172,26 @@ public class DeliveryController implements ActionListener {
         return size;
     }
 
+    public void updateCounters(boolean newValue, boolean oldValue) {
+        if (newValue != oldValue) {
+            if (newValue) {
+                deliveredCount++;
+                returnedCount--;
+            } else {
+                deliveredCount--;
+                returnedCount++;
+            }
+            updateDialog();
+        }
+    }
+
+    private void updateDialog() {
+        if (ordersBezorgd != null && ordersTerug != null) {
+            ordersBezorgd.setText(String.valueOf(deliveredCount));
+            ordersTerug.setText(String.valueOf(returnedCount));
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == terugButton) {
@@ -168,8 +204,9 @@ public class DeliveryController implements ActionListener {
             mainPanel.repaint();
         } else if (e.getSource() == routeVoltooien) {
             showRouteCompleteDialog();
+        } else if (e.getSource() == uitprinten) {
+            printTableAsImage();
         }
-
     }
 
     private void showRouteCompleteDialog() {
@@ -183,14 +220,16 @@ public class DeliveryController implements ActionListener {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel label1 = new JLabel("Aantal orders bezorgd: ");
-        JTextField ordersBezorgd = new JTextField("175");
+        ordersBezorgd = new JTextField();
         ordersBezorgd.setEditable(false);
         ordersBezorgd.setBackground(Color.WHITE);
+        ordersBezorgd.setText(String.valueOf(deliveredCount));
 
         JLabel label2 = new JLabel("Aantal orders terug naar magazijn: ");
-        JTextField ordersTerug = new JTextField("5");
+        ordersTerug = new JTextField();
         ordersTerug.setEditable(false);
         ordersTerug.setBackground(Color.WHITE);
+        ordersTerug.setText(String.valueOf(returnedCount));
 
         JPanel panel1 = new JPanel(new BorderLayout());
         panel1.add(label1, BorderLayout.NORTH);
@@ -204,13 +243,13 @@ public class DeliveryController implements ActionListener {
         dialog.add(panel2);
 
         JButton terugButton = new JButton("Ga Terug");
-        terugButton.setBackground(new Color(255,204,204));
+//        terugButton.setBackground(new Color(255,204,204));
         terugButton.setOpaque(true);
         terugButton.setBorderPainted(false);
         terugButton.addActionListener(event -> dialog.dispose());
 
         JButton doorsturenButton = new JButton("Doorsturen");
-        doorsturenButton.setBackground(new Color(204,255,204));
+//        doorsturenButton.setBackground(new Color(204,255,204));
         doorsturenButton.setOpaque(true);
         doorsturenButton.setBorderPainted(false);
         doorsturenButton.addActionListener(event -> {
@@ -246,6 +285,41 @@ public class DeliveryController implements ActionListener {
         dialog.setSize(400,200);
         dialog.setLocationRelativeTo(mainPanel);
         dialog.setVisible(true);
+    }
+
+    private void printTableAsImage() {
+        JTable table = new JTable(new DeliveryTableModel(this));
+        JScrollPane scroll = new JScrollPane(table);
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(scroll, BorderLayout.CENTER);
+
+        //maakt n frame om de gegevens van de tabel in op te slaan
+        JFrame tempFrame = new JFrame();
+        tempFrame.setUndecorated(true);
+        tempFrame.add(panel);
+        tempFrame.pack();
+
+        // Nu word de size van de de tabel in de image gezet
+        Dimension d = panel.getPreferredSize();
+
+        // maken van de afbeelding met de grootte
+        BufferedImage bi = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_RGB);
+        Graphics g = bi.createGraphics();
+        panel.paint(g);
+        g.dispose();
+
+        //weggooien van het tijdelijke frame zodat alleen de tabel er in zit
+        tempFrame.dispose();
+
+        try {
+            // opslaan van de image
+            File outputfile = new File("routeID-" + route.getID() + ".png" );
+            ImageIO.write(bi, "png", outputfile);
+            JOptionPane.showMessageDialog(null, "De route is gedownload " + outputfile.getAbsolutePath());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Het is niet gelukt om de route te downloaden " + ex.getMessage());
+        }
     }
 }
 
