@@ -17,23 +17,6 @@ public class Route {
         }
         return r;
     }
-    //Return alle koeriers
-    public static ArrayList<Koerier> getRoutesKoerier(){
-        ArrayList<Koerier> r = new ArrayList<>();
-        for (Route route : routes) {
-            r.add(route.getKoerier());
-        }
-        return r;
-    }
-    //Return alle bussen
-    public static ArrayList<Bus> getRoutesBus(){
-        ArrayList<Bus> r = new ArrayList<>();
-        for (Route route : routes) {
-            r.add(route.getBus());
-        }
-        return r;
-    }
-
     public static Route getRoute(Integer id){
         for(Route route: routes){
             if (route.getID().equals(id)) {
@@ -98,7 +81,7 @@ public class Route {
 
         setBus(bus);
         setRegio(regio);
-        setStatus("onvoltooide route");
+        setStatus(status);
 
         routes.add(this);
     }
@@ -113,7 +96,7 @@ public class Route {
 
         setID();
         setRegio(regio);
-        setStatus("onvoltooide route");
+        setStatus(status);
 
         routes.add(this);
     }
@@ -125,18 +108,18 @@ public class Route {
         setID();
         setBus(bus);
         setRegio(regio);
-        setStatus("onvoltooide route");
+        setStatus(status);
         setKoerier(koerier);
 
         routes.add(this);
     }
 
 
-    public Koerier getKoerier() {
+    public String getKoerier() {
         if (this.koerier == null) {
-            return null;
+            return "-";
         }
-        return koerier;
+        return koerier.getName();
     }
     public Koerier getKoerierObj(){
         return koerier;
@@ -163,11 +146,11 @@ public class Route {
         this.bus = bus;
     }
 
-    public Bus getBus() {
+    public String getBus() {
         if (bus == null){
-            return null ;
+            return "-";
         }
-        return bus;
+        return bus.getKenteken();
     }
     public Bus getBusObj(){
         return bus;
