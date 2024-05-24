@@ -49,7 +49,7 @@ public class Order {
             System.exit(1);
         }
 
-        if(!toevoeging.isEmpty()) {
+        if(toevoeging != null && !toevoeging.isEmpty()) {
             boolean isInteger = false;
             isInteger = isInteger(toevoeging);
 

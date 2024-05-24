@@ -26,7 +26,7 @@ public class OverzichtController {
         voltooideRoutes = new ArrayList<>();
         nVoltooideRoutes = new ArrayList<>();
         ArrayList<Route> routes = new ArrayList<>();
-        routes = Route.getRoutes();
+        routes = Route.getRoutes("nieuw");
         for (Route route : routes) {
             try {
                 if (route.getKoerier() == null || route.getBus() == null) {

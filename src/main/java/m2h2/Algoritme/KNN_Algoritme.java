@@ -95,8 +95,6 @@ public class KNN_Algoritme {
 
                 try {
 
-
-
                     int batch_count = 0;
                     int sortedOrders_size = sortedOrders.size();
                     double maxOrders = 200;
@@ -115,7 +113,7 @@ public class KNN_Algoritme {
                     int startIndex = 0;
                     int endIndex = 199;
 
-                    String start_url = "http://127.0.0.1:5000/route/v1/driving/5.0651060782846375,52.10576529347831;";
+                    String start_url = "http://0.0.0.0:5000/route/v1/driving/5.0651060782846375,52.10576529347831;";
 
                     StringBuilder route_URL = new StringBuilder(start_url);
 
@@ -155,7 +153,6 @@ public class KNN_Algoritme {
                             }
 
                         }
-
 
                     if (restwaarde == 0) {
                         System.out.println(startIndex);
@@ -249,7 +246,7 @@ public class KNN_Algoritme {
         double distance; // Distance from test point
 
         String osmr;
-
+        int routeIndex;
 
     }
 

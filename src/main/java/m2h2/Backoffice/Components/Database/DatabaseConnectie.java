@@ -353,6 +353,9 @@ public class DatabaseConnectie {
         }
 
     }
+    public void insertOrder(Order order){
+        insertOrder(order, 0);
+    }
     public void insertRoute(Route route){
         int routeID = getNewRouteID();
         if (routeID != -1) {
@@ -494,6 +497,25 @@ public class DatabaseConnectie {
             return new ArrayList<>();
         }
     }
+    public void updateStatus(int routeID, String status){
+        try {
+            String query = "update route set status = ?" +
+                    "where RouteID = ?;";
+            PreparedStatement pQuery = con.prepareStatement(query);
+
+            pQuery.setString(1, status);
+            pQuery.setInt(2, routeID);
+
+            int result = pQuery.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("successfully updated status!");
+            }
+            pQuery.close();
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
     public ArrayList<Order> getOrdersToday() {
         ArrayList<Order> orders = new ArrayList<>();
         try {
@@ -501,7 +523,7 @@ public class DatabaseConnectie {
                     "from orders O " +
                     "left join customers C on O.CustomerID = C.CustomerID " +
                     "left join orderlines OL on O.OrderID = OL.OrderID " +
-                    "where O.ExpectedDeliveryDate = ?";
+                    "where O.ExpectedDeliveryDate = ? AND O.routeID = 0";
             PreparedStatement pQuery = con.prepareStatement(query);
 
             pQuery.setString(1, date);

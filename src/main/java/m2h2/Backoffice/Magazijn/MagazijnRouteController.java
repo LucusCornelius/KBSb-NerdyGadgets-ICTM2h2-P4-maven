@@ -1,6 +1,8 @@
 package m2h2.Backoffice.Magazijn;
 
 import m2h2.Backoffice.Components.*;
+import m2h2.Backoffice.Components.Database.DatabaseConnectie;
+import m2h2.Backoffice.Components.Database.DatabaseRouteImport;
 import m2h2.Backoffice.Components.Tables.*;
 import m2h2.Algoritme.Orders_Met_Coordinaten;
 import m2h2.Backoffice.Koerier.DeliveryTableModel;
@@ -16,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MagazijnRouteController implements ActionListener {
@@ -161,6 +164,13 @@ public class MagazijnRouteController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == terugButton){
             route.setStatus("klaar voor picken");
+            DatabaseConnectie dbcon = new DatabaseConnectie();
+            dbcon.updateStatus(route.getID(), "klaar voor picken");
+            try {
+                dbcon.getCon().close();
+            } catch (SQLException ex){
+                System.out.println(ex.getMessage());
+            }
             mainPanel.removeAll();
             MagazijnController mController = new MagazijnController(mainPanel);
             mController.setMagazijnPanel();
@@ -169,7 +179,7 @@ public class MagazijnRouteController implements ActionListener {
             mainPanel.repaint();
         }
         if (e.getSource() == doorsturenButton){
-//            route.setStatus("klaar voor versturen");
+           //route.setStatus("klaar voor versturen");
 //            mainPanel.removeAll();
             showRouteCompleteDialog();
 //            MagazijnController mController = new MagazijnController(mainPanel);
@@ -206,6 +216,13 @@ public class MagazijnRouteController implements ActionListener {
         doorsturenButton.setBorderPainted(false);
         doorsturenButton.addActionListener(event -> {
             route.setStatus("klaar voor versturen");
+            DatabaseConnectie dbcon = new DatabaseConnectie();
+            dbcon.updateStatus(route.getID(), "klaar voor versturen");
+            try {
+                dbcon.getCon().close();
+            } catch (SQLException ex){
+                System.out.println(ex.getMessage());
+            }
             mainPanel.removeAll();
             MagazijnController mController = new MagazijnController(mainPanel);
             mController.setMagazijnPanel();

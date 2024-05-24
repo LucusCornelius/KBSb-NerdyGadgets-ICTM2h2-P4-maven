@@ -38,15 +38,27 @@ public class DatabaseTestFile {
         OL = new OrderLine(dbCon.getNewOrderLineID(),"A3", 1, "chocolade");
         O.addOrderline(OL);
         orders.add(O);
+        O = new Orders_Met_Coordinaten(dbCon.getNewOrderID(),"Rick", "kerkhofslaan", "8479HH", "Oldetrijne", 26, "");
+        OL = new OrderLine(dbCon.getNewOrderLineID(),"F", 2, "stuff");
+        O.addOrderline(OL);
+        orders.add(O);
 
         Bus bus = new Bus("GH-75-PL", 3);
         Koerier koerier = new Koerier("Rick", 6);
         Route route = new Route(dbCon.getNewRouteID() ,bus, "west", "nieuw", koerier);
+
         for (Orders_Met_Coordinaten order : orders) {
             route.addOrder(order);
         }
 
+
         dbCon.insertRoute(route);
+
+        O = new Orders_Met_Coordinaten(dbCon.getNewOrderID(),"jemoeder", "Doctor H.A.W. van der Vechtlaan", "8061HK", "Hasselt", 34, "");
+        OL = new OrderLine(dbCon.getNewOrderLineID(),"F", 2, "stuff");
+        O.addOrderline(OL);
+
+        dbCon.insertOrder(O);
 
         DatabaseRouteImport dbRoute = new DatabaseRouteImport(dbCon);
         dbRoute.prepRoutesToday();

@@ -1,6 +1,7 @@
 package m2h2.Backoffice.Magazijn;
 
 import m2h2.Backoffice.Components.*;
+import m2h2.Backoffice.Components.Database.DatabaseConnectie;
 import m2h2.Backoffice.Components.Tables.JTableButtonMouseListener;
 import m2h2.Backoffice.Components.Tables.JTableButtonRenderer;
 
@@ -8,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
@@ -91,6 +93,13 @@ public class MagazijnController {
                         }
                         MagazijnRouteController mRouteController = new MagazijnRouteController(klaarVoorPicken.get(id).getID(), mainPanel);
                         klaarVoorPicken.get(id).setStatus(bmp);
+                        DatabaseConnectie dbcon = new DatabaseConnectie();
+                        dbcon.updateStatus(klaarVoorPicken.get(id).getID(), bmp);
+                        try {
+                            dbcon.getCon().close();
+                        } catch (SQLException ex){
+                            System.out.println(ex.getMessage());
+                        }
                     }
                 });
 

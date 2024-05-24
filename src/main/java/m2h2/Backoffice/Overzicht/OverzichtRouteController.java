@@ -1,6 +1,7 @@
 package m2h2.Backoffice.Overzicht;
 
 import m2h2.Backoffice.Components.Bus;
+import m2h2.Backoffice.Components.Database.DatabaseConnectie;
 import m2h2.Backoffice.Components.Koerier;
 import m2h2.Backoffice.Components.Route;
 import m2h2.Backoffice.Components.Tables.JTableButtonMouseListener;
@@ -13,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -203,6 +205,13 @@ public class OverzichtRouteController {
                     route.setKoerier(getSelectedKoerier());
                     route.setBus(getSelectedBus());
                     route.setStatus("klaar voor picken");
+                    DatabaseConnectie dbcon = new DatabaseConnectie();
+                    dbcon.updateStatus(route.getID(), "klaar voor picken");
+                    try {
+                        dbcon.getCon().close();
+                    } catch (SQLException ex){
+                        System.out.println(ex.getMessage());
+                    }
                     OverzichtController overzichtController = new OverzichtController(mainPanel);
                     overzichtController.setOverzichtPanel();
 

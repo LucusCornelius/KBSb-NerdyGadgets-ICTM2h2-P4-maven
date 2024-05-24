@@ -14,7 +14,7 @@ public class Adressen_GEO_Data_Extractor {
 
     private String GPX_SourcePad = "src/main/java/m2h2/DataFiles/GPX";
 
-    private String bag_light_GPKG_URL = "jdbc:sqlite:/KBSb-NerdyGadgets-ICTM2h2-P4-maven/src/main/java/m2h2/Nederland_Geografische_Data/bag-light.gpkg";
+    private String bag_light_GPKG_URL = "jdbc:sqlite:src/main/java/m2h2/Nederland_Geografische_Data/bag-light.gpkg";
 
     private String sql_query = "SELECT r.*, v.feature_id, v.openbare_ruimte_naam, v.huisnummer, v.woonplaats_naam, v.postcode, v.huisletter, v.toevoeging " + "FROM rtree_verblijfsobject_geom r " + "INNER JOIN ( " + "    SELECT feature_id, openbare_ruimte_naam, huisnummer, postcode, woonplaats_naam, huisletter, toevoeging " + "    FROM verblijfsobject " + "    WHERE postcode LIKE ? " + "    AND huisnummer = ? " + "    AND woonplaats_naam LIKE ? " + "    AND (huisletter = ? OR ? IS NULL) " + "    AND (toevoeging = ? OR ? IS NULL) " + ") v ON r.id = v.feature_id";
 
@@ -71,9 +71,8 @@ public class Adressen_GEO_Data_Extractor {
 
                 Orders_Met_Coordinaten ordersMetCoordinaten = new Orders_Met_Coordinaten(orders.get(i).getOrderID(), orders.get(i).getNaam(), orders.get(i).getStraatnaam(), orders.get(i).getPostcode(), orders.get(i).getPlaatsnaam(), orders.get(i).getHuisnummer(), orders.get(1).getToevoeging());
 
-
                 int progress = (i + 1) * 100 / orders.size();
-                System.out.print("\r[" + "=".repeat(progress) + " ".repeat(100 - progress) + "] " + progress + "%");
+                System.out.print("\r[" + "=".repeat(progress) + " ".repeat(100 - progress) + "] " + progress + "%" +"\n");
 
 
                 statement.setQueryTimeout(query_timout);
@@ -106,13 +105,14 @@ public class Adressen_GEO_Data_Extractor {
 
                 ResultSet rs = preparedStatement.executeQuery();
 
+
                 try {
                     ordersMetCoordinaten.setCoordinaten_RijksDriehoek(Double.parseDouble(rs.getString(2)), Double.parseDouble(rs.getString(4)));
                     RDtoDegrees(Double.parseDouble(rs.getString(2)), Double.parseDouble(rs.getString(4)), ordersMetCoordinaten);
                 } catch (NullPointerException e) {
                     FileWriter.WriteToFile(e.getMessage(), "src/main/java/m2h2/LogFiles/Adressen_GEO_Data_Extractor_Log.txt", true);
                 }
-
+                System.out.println(ordersMetCoordinaten);
                 rs.close();
                 preparedStatement.close();
 
