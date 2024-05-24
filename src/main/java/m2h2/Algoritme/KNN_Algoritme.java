@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class GFG {
+public class KNN_Algoritme {
     private static String route;
 
     private static ArrayList<Orders_Met_Coordinaten> regio_West = new ArrayList<>();
@@ -82,14 +82,14 @@ public class GFG {
 
             if(regio.size() == i + 1) {
 
-                Point testPoint = new Point();
-                testPoint.x = 136215; //Startpunt is Utrecht
-                testPoint.y = 455886;
+                Point startPoint = new Point();
+                startPoint.x = 136215; //Startpunt is Utrecht
+                startPoint.y = 455886;
 
                 //K NN
                 int k = 1;
 
-                ArrayList<Point> sortedOrders = findClosestCity(arr, n, k, testPoint);
+                ArrayList<Point> sortedOrders = sortOrders(arr, n, k, startPoint);
 
                 System.out.println("\n" + ConsoleColorCodes.ANSI_YELLOW + "Het dichtstbijzijnde punt vanaf het startpunt UTRECHT is "  + "\n" + ConsoleColorCodes.ANSI_RESET);
 
@@ -146,7 +146,7 @@ public class GFG {
                                 route_URL.replace(0, route_URL.length(), start_url);
 
 
-                                CompletableFuture<Void> future = CompletableFuture.runAsync(() -> RouteBuilder.setRoutes(route_osmr_complete_URL, regio_letter, batchCount));
+                                CompletableFuture<Void> future = CompletableFuture.runAsync(() -> RouteBuilder_OSRM.setRoutes(route_osmr_complete_URL, regio_letter, batchCount));
 
                                 future.thenRun(() -> System.out.println("setRoutes is klaar"));
 
@@ -187,7 +187,7 @@ public class GFG {
 
                             CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
                                 try {
-                                    RouteBuilder.setRoutes(route_URL.toString(), regio_letter, batchCount);
+                                    RouteBuilder_OSRM.setRoutes(route_URL.toString(), regio_letter, batchCount);
                                 } catch (Exception e) {
                                     e.printStackTrace(); // Handle the exception appropriately
                                 }
@@ -217,7 +217,7 @@ public class GFG {
     }
 
 
-    static ArrayList<Point> findClosestCity(Point arr[], int n, int k, Point p) {
+    static ArrayList<Point> sortOrders(Point arr[], int n, int k, Point p) {
         try {
             // Fill distances of all arr from p
             for (int i = 0; i < n; i++)

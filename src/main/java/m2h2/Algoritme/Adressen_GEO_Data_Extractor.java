@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class Adressen_GEO_Data_Filter {
+public class Adressen_GEO_Data_Extractor {
 
     private String GPX_SourcePad = "src/main/java/m2h2/DataFiles/GPX";
 
@@ -18,14 +18,14 @@ public class Adressen_GEO_Data_Filter {
 
     private String sql_query = "SELECT r.*, v.feature_id, v.openbare_ruimte_naam, v.huisnummer, v.woonplaats_naam, v.postcode, v.huisletter, v.toevoeging " + "FROM rtree_verblijfsobject_geom r " + "INNER JOIN ( " + "    SELECT feature_id, openbare_ruimte_naam, huisnummer, postcode, woonplaats_naam, huisletter, toevoeging " + "    FROM verblijfsobject " + "    WHERE postcode LIKE ? " + "    AND huisnummer = ? " + "    AND woonplaats_naam LIKE ? " + "    AND (huisletter = ? OR ? IS NULL) " + "    AND (toevoeging = ? OR ? IS NULL) " + ") v ON r.id = v.feature_id";
 
-    int query_timout = 30; //30 seconds
+    private int query_timout = 30; //30 seconds
 
     private ArrayList<Order> orders;
 
     private ArrayList<Orders_Met_Coordinaten> orders_met_coordinaten = new ArrayList<>();
 
 
-    public Adressen_GEO_Data_Filter(ArrayList<Order> orders) {
+    public Adressen_GEO_Data_Extractor(ArrayList<Order> orders) {
         this.orders = orders;
 
         try {
@@ -109,7 +109,9 @@ public class Adressen_GEO_Data_Filter {
                 try {
                     ordersMetCoordinaten.setCoordinaten_RijksDriehoek(Double.parseDouble(rs.getString(2)), Double.parseDouble(rs.getString(4)));
                     RDtoDegrees(Double.parseDouble(rs.getString(2)), Double.parseDouble(rs.getString(4)), ordersMetCoordinaten);
-                } catch (NullPointerException e) {/*Empty by design*/}
+                } catch (NullPointerException e) {
+                    FileWriter.WriteToFile(e.getMessage(), "src/main/java/m2h2/LogFiles/Adressen_GEO_Data_Extractor_Log.txt", true);
+                }
 
                 rs.close();
                 preparedStatement.close();
@@ -128,7 +130,7 @@ public class Adressen_GEO_Data_Filter {
             System.out.println(ConsoleColorCodes.ANSI_PURPLE + "\nProcessed orders\n\n" + orders_met_coordinaten + "\n" + ConsoleColorCodes.ANSI_RESET);
 
             Regios regios = new Regios(orders_met_coordinaten);
-            GFG.setOrders(regios);
+            KNN_Algoritme.setOrders(regios);
         }
         catch (NullPointerException N) {
             System.out.println(ConsoleColorCodes.ANSI_RED + "\n\n###-----> NullPointerException bij het invoegen van de 'Orders_Met_Coordinaten' object in het 'Regios' object" + ConsoleColorCodes.ANSI_RESET);

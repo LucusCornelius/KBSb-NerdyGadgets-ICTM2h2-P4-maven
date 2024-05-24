@@ -1,9 +1,7 @@
 package m2h2.Backoffice.TestCode;
 
-import m2h2.Algoritme.Adressen_GEO_Data_Filter;
+import m2h2.Algoritme.Adressen_GEO_Data_Extractor;
 import m2h2.Backoffice.Components.*;
-import m2h2.Backoffice.Magazijn.*;
-import m2h2.Algoritme.RouteBuilder;
 
 import java.util.ArrayList;
 
@@ -103,7 +101,7 @@ public class DummyData {
 
          */
 
-        Adressen_GEO_Data_Filter AdressenObject1 = new Adressen_GEO_Data_Filter(orders);
+        Adressen_GEO_Data_Extractor AdressenObject1 = new Adressen_GEO_Data_Extractor(orders);
 
 
     }
