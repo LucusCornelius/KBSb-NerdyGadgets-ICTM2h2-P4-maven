@@ -1,17 +1,29 @@
 package m2h2.Backoffice.Koerier;
 
+import m2h2.Backoffice.Components.Route;
+
+import javax.print.DocFlavor;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 public class KoerierTableModel extends AbstractTableModel {
 
-    private final String[] cols = {"ID-route", "Bus", "Aantal orders", "Regio", "Postcodes", ""};
+    private String[] cols;
 
-    private final Object[][] data;
+    private Object[][] data;
 
     public KoerierTableModel(KoerierController kController, String status){
         super();
+        String[] tableHeader = {"Route-ID", "Bus", "Totaal aantal orders", "Regio", "Postcodes", ""};
+        cols = tableHeader;
         data = kController.getTableData(status);
+    }
+
+    public KoerierTableModel(Route route){
+        super();
+        String[] tableHeader = {"Route-ID" , "Bus" , "Totaal aantal orders" , "Postcodes"};
+        cols = tableHeader;
+        data = route.getDescriptionTableData();
     }
 
     public int getColumnCount() {
@@ -31,7 +43,11 @@ public class KoerierTableModel extends AbstractTableModel {
     }
 
     public Class getColumnClass(int column) {
-        return getValueAt(0, column).getClass();
+        try {
+            return getValueAt(0, column).getClass();
+        } catch (NullPointerException e){
+            return String.class;
+        }
     }
 
 }

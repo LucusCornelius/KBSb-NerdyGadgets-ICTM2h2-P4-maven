@@ -14,10 +14,11 @@ import java.util.ArrayList;
 public class OverzichtController {
     //In controller alle routes ophalen
     //Voltooide routes en niet voltooide routes
-    //niet voltooid is als geen bus en koerier is toegewezen
+    //niet voltooid is als geen bus of koerier is toegewezen
     private ArrayList<Route> voltooideRoutes;
     private ArrayList<Route> nVoltooideRoutes;
     private JPanel mainPanel;
+
 
     public OverzichtController(JPanel mainPanel) {
         this.mainPanel = mainPanel;
@@ -27,10 +28,10 @@ public class OverzichtController {
         routes = Route.getRoutes();
         for (Route route : routes) {
             try {
-                if (route.getKoerier() != "-") {
-                    voltooideRoutes.add(route);
-                } else {
+                if (route.getKoerier() == "-" || route.getBus() == null) {
                     nVoltooideRoutes.add(route);
+                } else  {
+                    voltooideRoutes.add(route);
                 }
             } catch (NullPointerException e) {
                 String error = e.getMessage();
@@ -49,6 +50,7 @@ public class OverzichtController {
 
     public JScrollPane getVoltooideRoutesOverzicht() {
         TableCellRenderer tableRenderer;
+
         Object[][] voltooideData = new Object[voltooideRoutes.size()][5];
 
         for (int i = 0; i < voltooideRoutes.size(); i++) {
@@ -89,10 +91,15 @@ public class OverzichtController {
         tableRenderer = table.getDefaultRenderer(JButton.class);
         table.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tableRenderer));
         table.addMouseListener(new JTableButtonMouseListener(table));
+        table.setRowHeight(table.getRowHeight() + 10);
 
         JScrollPane scrollPane = new JScrollPane(table);
         return scrollPane;
     }
+
+    /*
+    ---------------- VANAF HIER ONVOLTOOIDE DEEL -----------------
+     */
 
     public JScrollPane getOnvoltooideRoutesOverzicht(){
         TableCellRenderer tableRenderer;
@@ -101,8 +108,11 @@ public class OverzichtController {
 
         for (int i = 0; i < nVoltooideRoutes.size(); i++) {
             JButton tableButton = new JButton("Route bekijken");
+            JButton doorstuurButton = new JButton("Doorsturen");
 
             tableButton.setActionCommand(i+"");
+            doorstuurButton.setActionCommand(i+"");
+
             tableButton.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("klik!");
@@ -113,28 +123,49 @@ public class OverzichtController {
                         System.out.println("### hele gekke dingen - buttonAction getTableDate MagazijnController ###");
                         id = -1;
                     }
-                    MagazijnRouteController mRouteController = new MagazijnRouteController(nVoltooideRoutes.get(id).getID(), mainPanel);
-                    nVoltooideRoutes.get(id);
+                    System.out.println(id);
+                    OverzichtRouteController overzichtRouteController = new OverzichtRouteController(nVoltooideRoutes.get(id), mainPanel);
+                }
+            });
+
+            doorstuurButton.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e) {
+                    int id;
+                    try{
+                        id = Integer.parseInt(e.getActionCommand());
+                    } catch (NumberFormatException ex){
+                        System.out.println("### hele gekke dingen - buttonAction getTableDate MagazijnController ###");
+                        id = -1;
+                    }
+                    if (nVoltooideRoutes.get(id).getKoerier() == "-" || nVoltooideRoutes.get(id).getBus() == null) {
+                        System.out.println("Selecteer eerst een koerier/bus!");
+                    } else {
+                        nVoltooideRoutes.get(id).setStatus("klaar voor picken");
+                        System.out.println("Status veranderd naar '" + nVoltooideRoutes.get(id).getStatus() + "'");
+                    }
                 }
             });
 
             Object[] row = {
                     nVoltooideRoutes.get(i).getID(),
                     nVoltooideRoutes.get(i).getRegio(),
-                    " - ",
+                    nVoltooideRoutes.get(i).getKoerier(),
                     nVoltooideRoutes.get(i).getBus(),
-                    tableButton
+                    tableButton,
+                    doorstuurButton
             };
             nVoltooideData[i] = row;
         }
-        String[] columns = {"Route nr.", "Regio", "Koerier", "Bus", "Route"};
+        String[] columns = {"Route nr.", "Regio", "Koerier", "Bus", "Route", "Doorsturen"};
 
         JTable oVTable = new JTable(new OverzichtTableModel(columns, nVoltooideData));
         oVTable.setBounds(30, 40, 200, 300);
 
         tableRenderer = oVTable.getDefaultRenderer(JButton.class);
         oVTable.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tableRenderer));
+
         oVTable.addMouseListener(new JTableButtonMouseListener(oVTable));
+        oVTable.setRowHeight(oVTable.getRowHeight() + 10);
 
         JScrollPane oVScrollPane = new JScrollPane(oVTable);
         return oVScrollPane;

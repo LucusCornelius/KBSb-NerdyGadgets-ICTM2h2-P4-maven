@@ -1,23 +1,36 @@
 package m2h2.Backoffice.Koerier;
 
 import m2h2.Backoffice.Components.Route;
+import m2h2.Backoffice.Components.Tables.JTableButtonMouseListener;
 import m2h2.Backoffice.Components.Tables.JTableButtonRenderer;
+import m2h2.Backoffice.Magazijn.MagazijnRouteController;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class KoerierController {
 
     private ArrayList<Route> AannemenRoute;
-    private String Aar = "Bekijk mijn order(s)";
+    private String Aar = "Aannemen order";
+    private javax.swing.JLabel jLabel1;
+    private JPanel mainPanel;
 
-    public KoerierController() {
-        AannemenRoute = Route.getRoutes("Bekijk mijn order(s)");
+    private void initComponents() {
+        jLabel1 = new JLabel();
+    }
+
+    public KoerierController(JPanel mainPanel) {
+        initComponents();
+        AannemenRoute = Route.getRoutes("Aannemen order");
+        this.mainPanel = mainPanel;
     }
 
     public ArrayList<Route> getAannemenRoute() {
@@ -31,6 +44,7 @@ public class KoerierController {
         table.setDefaultRenderer(JButton.class, new JTableButtonRenderer(tableRenderer));
         table.setBounds(0, 0 , 600, 300);
         table.setRowHeight(table.getRowHeight() + 10);
+        table.addMouseListener(new JTableButtonMouseListener(table));
 
         JScrollPane sp = new JScrollPane(table);
         sp.setBounds(0,0, 600,300);
@@ -43,12 +57,25 @@ public class KoerierController {
             for (int i = 0; i < AannemenRoute.size(); i++) {
                 JButton tableButton = new JButton("Aannemen");
 
+                tableButton.setActionCommand(i+"");
                 //border moet kleur krijgen nu krijgt de cell de bordercolor
-                tableButton.setBackground(new Color(250,250 ,140));
-                tableButton.setBorder(new LineBorder(new Color(250,250,0)));
+//                tableButton.setBackground(new Color(250,250 ,140));
+//                tableButton.setBorder(new LineBorder(new Color(250,250,0)));
 
-//                tableButton.setBorder(BorderFactory.createLineBorder(Color.green, 1,true));
-//                tableButton.setFocusBorder();
+                tableButton.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("klik!");
+                        int id;
+                        try{
+                            id = Integer.parseInt(e.getActionCommand());
+                        } catch (NumberFormatException ex){
+                            System.out.println("### buttonAction getTableDate KoerierController ###");
+                            id = -1;
+                        }
+                        DeliveryController deliveryController = new DeliveryController(AannemenRoute.get(id).getID(), mainPanel);
+                        AannemenRoute.get(id);
+                    }
+                });
 
                 Object[] dataline = {
                         AannemenRoute.get(i).getID(),
@@ -64,5 +91,20 @@ public class KoerierController {
         }
         System.out.println("### Er is geen Route beschikbaar ###");
         return null;
+    }
+
+    public void setKoerierPanel(){
+
+        jLabel1.setFont(new Font("Segoe UI Semibold", 1, 24));
+        jLabel1.setForeground(new Color(51, 51, 51));
+        jLabel1.setText("Koerier");
+
+        mainPanel.setForeground(new Color(51, 51, 51));
+        mainPanel.add(jLabel1, BorderLayout.NORTH);
+
+        mainPanel.setLayout(new GridLayout(5,1));
+        mainPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE,20));
+
+        mainPanel.add(getTable(this, Aar));
     }
 }
