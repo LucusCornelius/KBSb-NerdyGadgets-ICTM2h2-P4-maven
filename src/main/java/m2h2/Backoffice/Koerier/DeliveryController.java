@@ -5,7 +5,7 @@ import m2h2.Backoffice.Components.Route;
 import m2h2.Backoffice.Components.Tables.JTableButtonMouseListener;
 import m2h2.Backoffice.Components.Tables.JTableButtonRenderer;
 import m2h2.Backoffice.Magazijn.MagazijnRouteTableModel;
-import m2h2.Regios.Orders_Met_Coordinaten;
+import m2h2.Algoritme.Orders_Met_Coordinaten;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

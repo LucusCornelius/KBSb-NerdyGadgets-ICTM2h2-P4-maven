@@ -48,8 +48,8 @@ public class OverzichtRouteController {
         JScrollPane sp = getTable();
         mainPanel.add(sp);
 
-        selectedKoerier = this.route.getKoerier();
-        selectedBus = this.route.getBus();
+        selectedKoerier = this.route.getKoerierObj();
+        selectedBus = this.route.getBusObj();
 
         if (selectedKoerier == null){
             JLabel koerierL = new JLabel("Selecteer koerier");

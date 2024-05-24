@@ -6,21 +6,23 @@ import java.util.List;
 public class Koerier {
     private int koerierID;
     private String name;
-    private static List instances = new ArrayList();
+    private static ArrayList<Koerier> instances = new ArrayList();
 
     public Koerier(String name) {
         setName(name);
         instances.add(this);
     }
 
-    public static List getInstances() {
+    public static ArrayList<Koerier> getInstances() {
         return instances;
     }
     public Koerier(String name, int koerierID) {
         this(name);
         setKoerierID(koerierID);
     }
-
+    public Koerier getKoerier(){
+        return this;
+    }
     public String getName() {
         return name;
     }

@@ -1,5 +1,8 @@
 package m2h2.Algoritme;
 
+import m2h2.Backoffice.Components.Database.DatabaseConnectie;
+import m2h2.Backoffice.Components.Order;
+
 import java.util.ArrayList;
 //package m2h2.Algoritme;
 //
@@ -13,11 +16,12 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-        ArrayList<String> orders = new ArrayList<>();
-        orders.add("test");
-        ArrayList<String> orders2 = orders;
+        ArrayList<Order> orders = new ArrayList<>();
 
-        System.out.println(orders);
+        DatabaseConnectie dbcon = new DatabaseConnectie();
+        orders = dbcon.getOrdersToday();
+
+        Adressen_GEO_Data_Extractor GeoExtractor = new Adressen_GEO_Data_Extractor(orders);
     }
 }
 //public static void main(String[] args) {

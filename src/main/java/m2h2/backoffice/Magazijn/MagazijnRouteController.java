@@ -2,7 +2,7 @@ package m2h2.Backoffice.Magazijn;
 
 import m2h2.Backoffice.Components.*;
 import m2h2.Backoffice.Components.Tables.*;
-import m2h2.Regios.Orders_Met_Coordinaten;
+import m2h2.Algoritme.Orders_Met_Coordinaten;
 import m2h2.Backoffice.Koerier.DeliveryTableModel;
 import m2h2.Backoffice.Koerier.KoerierTableModel;
 

@@ -13,7 +13,9 @@ public class Bus {
         setKenteken(kenteken);
         instances.add(this);
     }
-
+    public Bus getBus(){
+        return this;
+    }
     public static List getInstances() {
         return instances;
     }

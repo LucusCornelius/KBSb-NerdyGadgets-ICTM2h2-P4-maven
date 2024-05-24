@@ -99,7 +99,7 @@ public class OverzichtController {
             Object[] row = {
                     voltooideRoutes.get(i).getID(),
                     voltooideRoutes.get(i).getRegio(),
-                    voltooideRoutes.get(i).getKoerier().getName(),
+                    voltooideRoutes.get(i).getKoerier(),
                     voltooideRoutes.get(i).getBus(),
                     tableButton
 
@@ -161,7 +161,7 @@ public class OverzichtController {
                 Object[] row = {
                         nVoltooideRoutes.get(i).getID(),
                         nVoltooideRoutes.get(i).getRegio(),
-                        nVoltooideRoutes.get(i).getKoerier().getName(),
+                        nVoltooideRoutes.get(i).getKoerier(),
                         "-",
                         tableButton
                 };
@@ -179,8 +179,8 @@ public class OverzichtController {
                 Object[] row = {
                         nVoltooideRoutes.get(i).getID(),
                         nVoltooideRoutes.get(i).getRegio(),
-                        nVoltooideRoutes.get(i).getKoerier().getName(),
-                        nVoltooideRoutes.get(i).getBus().getKenteken(),
+                        nVoltooideRoutes.get(i).getKoerier(),
+                        nVoltooideRoutes.get(i).getBus(),
                         tableButton
                 };
                 nVoltooideData[i] = row;

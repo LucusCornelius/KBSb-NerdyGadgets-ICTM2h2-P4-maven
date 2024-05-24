@@ -377,7 +377,7 @@ public class DatabaseConnectie {
                 }
 
                 pQuery.close();
-                for (Order order : route.getOrders()) {
+                for (Orders_Met_Coordinaten order : route.getOrders()) {
                     insertOrder(order, routeID);
                 }
             } catch (SQLException e) {
@@ -409,7 +409,6 @@ public class DatabaseConnectie {
             Orders_Met_Coordinaten prevOrder = null;
             while (rs.next()) {
                 try{
-                    System.out.println(rs.getInt(12)); // wot :o
                     if (!routeIsSet) {
                         route = new Route(
                                 rs.getInt("R.routeID"),
@@ -434,7 +433,8 @@ public class DatabaseConnectie {
                                 rs.getString("C.DeliveryAddressLine1"),
                                 rs.getString("C.DeliveryPostalCode"),
                                 rs.getString("C.DeliveryLocation"),
-                                huisnummer
+                                huisnummer,
+                                ""
                         );
                         prevOrder = order;
                         route.addOrder(order);
@@ -493,5 +493,75 @@ public class DatabaseConnectie {
             System.out.println(e.getMessage());
             return new ArrayList<>();
         }
+    }
+    public ArrayList<Order> getOrdersToday() {
+        ArrayList<Order> orders = new ArrayList<>();
+        try {
+            String query = "select O.OrderID, CustomerName, C.DeliveryAddressLine1, C.DeliveryAddressLine2, C.DeliveryPostalCode, C.DeliveryLocation, description, orderlineID, Quantity, sectie, opvoorraad " +
+                    "from orders O " +
+                    "left join customers C on O.CustomerID = C.CustomerID " +
+                    "left join orderlines OL on O.OrderID = OL.OrderID " +
+                    "where O.ExpectedDeliveryDate = ?";
+            PreparedStatement pQuery = con.prepareStatement(query);
+
+            pQuery.setString(1, date);
+
+            ResultSet rs = pQuery.executeQuery();
+            int prevOrderID = -1;
+            Order prevOrder = null;
+            while (rs.next()) {
+
+                try {
+
+                    if (rs.getInt("O.OrderID") != prevOrderID) {
+                        int huisnummer;
+                        try {
+                            huisnummer = Integer.parseInt(rs.getString("C.DeliveryAddressLine2"));
+                        } catch (NumberFormatException e) {
+                            System.out.println(e.getMessage());
+                            huisnummer = -1;
+                        }
+                        Order order = new Order(
+                                rs.getInt("O.OrderID"),
+                                rs.getString("CustomerName"),
+                                rs.getString("C.DeliveryAddressLine1"),
+                                rs.getString("C.DeliveryPostalCode"),
+                                rs.getString("C.DeliveryLocation"),
+                                huisnummer,
+                                "",
+                                false
+                        );
+                        prevOrder = order;
+                        orders.add(order);
+                    }
+                    int aantal;
+                    try {
+                        aantal = Integer.parseInt(rs.getString("Quantity"));
+                    } catch (NumberFormatException e) {
+                        System.out.println(e.getMessage());
+                        aantal = -1;
+                    }
+                    OrderLine orderLine = new OrderLine(
+                            rs.getInt("orderlineID"),
+                            rs.getString("sectie"),
+                            aantal,
+                            rs.getString("description")
+                    );
+                    try {
+                        prevOrder.addOrderline(orderLine);
+                    } catch (NullPointerException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    prevOrderID = rs.getInt("O.OrderID");
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            pQuery.close();
+            //return rs;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return orders;
     }
 }

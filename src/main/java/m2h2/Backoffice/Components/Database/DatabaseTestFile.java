@@ -4,7 +4,7 @@ import m2h2.Backoffice.Components.Bus;
 import m2h2.Backoffice.Components.Koerier;
 import m2h2.Backoffice.Components.OrderLine;
 import m2h2.Backoffice.Components.Route;
-import m2h2.Regios.Orders_Met_Coordinaten;
+import m2h2.Algoritme.Orders_Met_Coordinaten;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,17 +24,17 @@ public class DatabaseTestFile {
 
 
         ArrayList<Orders_Met_Coordinaten> orders = new ArrayList<Orders_Met_Coordinaten>();
-        Orders_Met_Coordinaten O = new Orders_Met_Coordinaten(dbCon.getNewOrderID(),"lus", "Ambonplein", "1094PW", "Amsterdam", 59);
+        Orders_Met_Coordinaten O = new Orders_Met_Coordinaten(dbCon.getNewOrderID(),"lus", "Ambonplein", "1094PW", "Amsterdam", 59, "");
         OrderLine OL = new OrderLine(dbCon.getNewOrderLineID(),"B", 2, "usb");
         O.addOrderline(OL);
         orders.add(O);
-        O = new Orders_Met_Coordinaten(dbCon.getNewOrderID(),"lucas", "Minahassastraat", "1094RV", "Amsterdam", 145);
+        O = new Orders_Met_Coordinaten(dbCon.getNewOrderID(),"lucas", "Minahassastraat", "1094RV", "Amsterdam", 145, "");
         OL = new OrderLine(dbCon.getNewOrderLineID(),"A", 3, "shirt");
         O.addOrderline(OL);
         OL = new OrderLine(dbCon.getNewOrderLineID(),"C", 2, "bal");
         O.addOrderline(OL);
         orders.add(O);
-        O = new Orders_Met_Coordinaten(dbCon.getNewOrderID(),"Rick", "kerkhofslaan", "8479HH", "Oldetrijne", 7);
+        O = new Orders_Met_Coordinaten(dbCon.getNewOrderID(),"Rick", "kerkhofslaan", "8479HH", "Oldetrijne", 7, "");
         OL = new OrderLine(dbCon.getNewOrderLineID(),"A3", 1, "chocolade");
         O.addOrderline(OL);
         orders.add(O);

@@ -34,19 +34,19 @@ public class Order {
     private boolean opVoorraad;
 
     //Algoritme
-    public Order(String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer, String toevoeging, Boolean bezorgd) {
+    public Order(int ID, String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer, String toevoeging, Boolean bezorgd) {
+        this.ID = ID;
         this.orderLines = new ArrayList<>();
         this.naam = naam;
         this.straatnaam = straatnaam;
         this.plaatsnaam = plaatsnaam;
         setBezorgd(bezorgd);
 
-        if(postcode.length() == 6) {
+        if((postcode != null) && postcode.length() == 6) {
             this.postcode = postcode;
         } else {
             System.out.println("ongeldige postcode..., Breaking...");
             System.exit(1);
-
         }
 
         if(!toevoeging.isEmpty()) {

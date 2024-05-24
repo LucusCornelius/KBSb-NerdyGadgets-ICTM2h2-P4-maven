@@ -1,6 +1,6 @@
 package m2h2.Backoffice.Components;
 
-import m2h2.Regios.Orders_Met_Coordinaten;
+import m2h2.Algoritme.Orders_Met_Coordinaten;
 
 import java.util.ArrayList;
 
@@ -36,6 +36,22 @@ public class Route {
             } else {
                 oR.add(route);
             }
+        }
+        return r;
+    }
+
+    public static ArrayList<Koerier> getRoutesKoerier(){
+        ArrayList<Koerier> r = new ArrayList<>();
+        for (Route route : routes) {
+            r.add(route.getKoerierObj());
+        }
+        return r;
+    }
+    //Return alle bussen
+    public static ArrayList<Bus> getRoutesBus(){
+        ArrayList<Bus> r = new ArrayList<>();
+        for (Route route : routes) {
+            r.add(route.getBusObj());
         }
         return r;
     }
