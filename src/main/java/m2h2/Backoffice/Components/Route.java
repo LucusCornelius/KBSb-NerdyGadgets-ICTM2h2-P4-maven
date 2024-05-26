@@ -15,6 +15,23 @@ public class Route {
         }
         return r;
     }
+    //Return alle koeriers
+    public static ArrayList<Koerier> getRoutesKoerier(){
+        ArrayList<Koerier> r = new ArrayList<>();
+        for (Route route : routes) {
+            r.add(route.getKoerier());
+        }
+        return r;
+    }
+    //Return alle bussen
+    public static ArrayList<Bus> getRoutesBus(){
+        ArrayList<Bus> r = new ArrayList<>();
+        for (Route route : routes) {
+            r.add(route.getBus());
+        }
+        return r;
+    }
+
     public static Route getRoute(Integer id){
         for(Route route: routes){
             if (route.getID().equals(id)) {
@@ -65,7 +82,7 @@ public class Route {
         setID();
         setBus(bus);
         setRegio(regio);
-        setStatus(status);
+        setStatus("onvoltooide route");
 
         routes.add(this);
     }
@@ -80,7 +97,7 @@ public class Route {
 
         setID();
         setRegio(regio);
-        setStatus(status);
+        setStatus("onvoltooide route");
 
         routes.add(this);
     }
@@ -92,18 +109,18 @@ public class Route {
         setID();
         setBus(bus);
         setRegio(regio);
-        setStatus(status);
+        setStatus("onvoltooide route");
         setKoerier(koerier);
 
         routes.add(this);
     }
 
 
-    public String getKoerier() {
+    public Koerier getKoerier() {
         if (this.koerier == null) {
-            return "-";
+            return null;
         }
-        return koerier.getName();
+        return koerier;
     }
 
     public void setKoerier(Koerier koerier) {
@@ -129,7 +146,7 @@ public class Route {
 
     public Bus getBus() {
         if (bus == null){
-            return null;
+            return null ;
         }
         return bus;
     }
@@ -185,14 +202,14 @@ public class Route {
                 "route-ID: " + ID + "\n" +
                         "Bus: " + bus + "\n" +
                         "regio: " + regio + "\n" +
-                        "Koerier: Geen \n"
+                        "Koerier: " + koerier +"\n"
         );
         if (koerier != null) {
             s = (
                     "route-ID: " + ID + "\n" +
                             "Bus: " + bus + "\n" +
                             "regio: " + regio + "\n" +
-                            "koerier: " + koerier + "\n"
+                            "koerier: " + koerier.getName() + "\n"
             );
 
             if (orders.isEmpty()) {

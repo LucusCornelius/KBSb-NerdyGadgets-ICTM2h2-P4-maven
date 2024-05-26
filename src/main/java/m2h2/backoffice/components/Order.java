@@ -120,9 +120,6 @@ public class Order {
 
 
     //Backoffice
-
-
-
     public void setID() {
         if (ID == 0) {
             IDCounter++;
@@ -195,6 +192,21 @@ public class Order {
     }
     public void addOrderline(OrderLine orderline){
         orderLines.add(orderline);
+    }
+
+
+    public String getAdres() {
+        return straatnaam + huisnummer;
+    }
+
+    public Object[] getDatalineRoute(){
+        return getDatalineRoute(0);
+    }
+
+    public Object[] getDatalineRoute(int index){
+        OrderLine route = orderLines.get(index);
+        Object[] datalineroute = {ID, getAdres(), getPostcode(), route.getAantal(), getBezorgd()};
+        return datalineroute;
     }
 
     @Override
