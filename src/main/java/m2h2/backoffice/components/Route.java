@@ -64,37 +64,10 @@ public class Route {
     private Koerier koerier;
 
     //Routes met koerier (voltooide routes)
-    public Route(Bus bus, String regio, String status, Koerier koerier) {
-        this(bus, regio, status, koerier, null);
-    }
-
-    //Route aanmaken zonder koerier (onvoltooide routes)
-    public Route(Bus bus, String regio, String status) {
-        this(bus, regio, status, null, null);
-    }
     public Route(int ID, Bus bus, String regio, String status, Koerier koerier) {
         this.ID = ID;
         orders = new ArrayList<>();
         setKoerier(koerier);
-        setBus(bus);
-        setRegio(regio);
-        setStatus(status);
-
-        routes.add(this);
-    }
-    public Route(Bus bus, String regio, String status, Koerier koerier, ArrayList<Orders_Met_Coordinaten> orders) {
-        setID();
-        if (orders == null) {
-            orders = new ArrayList<>();
-        } else {
-            this.orders = orders;
-        }
-        if (koerier == null) {
-            setKoerier(null);
-        } else {
-            setKoerier(koerier);
-        }
-
         setBus(bus);
         setRegio(regio);
         setStatus(status);
@@ -110,22 +83,8 @@ public class Route {
     public Route(String regio, String status) {
         orders = new ArrayList<>();
 
-        setID();
         setRegio(regio);
         setStatus(status);
-
-        routes.add(this);
-    }
-
-    //Route met koerier zonder bus
-    public Route(String regio, String status, Koerier koerier) {
-        orders = new ArrayList<>();
-
-        setID();
-        setBus(bus);
-        setRegio(regio);
-        setStatus(status);
-        setKoerier(koerier);
 
         routes.add(this);
     }

@@ -1,6 +1,7 @@
 package m2h2.Backoffice.Overzicht;
 
 import m2h2.Backoffice.Components.*;
+import m2h2.Backoffice.Components.Database.DatabaseConnectie;
 import m2h2.Backoffice.Components.Tables.JTableButtonMouseListener;
 import m2h2.Backoffice.Components.Tables.JTableButtonRenderer;
 import m2h2.Backoffice.Magazijn.MagazijnRouteController;
@@ -10,6 +11,7 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class OverzichtController {
@@ -25,16 +27,21 @@ public class OverzichtController {
         this.mainPanel = mainPanel;
         voltooideRoutes = new ArrayList<>();
         nVoltooideRoutes = new ArrayList<>();
-        ArrayList<Route> routes = new ArrayList<>();
-        routes = Route.getRoutes("nieuw");
-        for (Route route : routes) {
+
+        nVoltooideRoutes = Route.getRoutes("nieuw");
+        voltooideRoutes = Route.getRoutes("klaar voor picken");
+        for (Route route : nVoltooideRoutes) {
             try {
-                if (route.getKoerier() == null || route.getBus() == null) {
-
-                    nVoltooideRoutes.add(route);
-                } else  {
-
+                if (route.getKoerierObj() != null && route.getBusObj() != null) {
                     voltooideRoutes.add(route);
+                    route.setStatus("klaar voor picken");
+                    DatabaseConnectie dbcon = new DatabaseConnectie();
+                    dbcon.updateStatus(route.getID(), "klaar voor picken");
+                    try {
+                        dbcon.getCon().close();
+                    } catch (SQLException ex){
+                        System.out.println(ex.getMessage());
+                    }
                 }
             } catch (NullPointerException e) {
                 String error = e.getMessage();

@@ -88,7 +88,7 @@ public class OverzichtRouteController {
                     }
                 }
             });
-        }
+                    }
 
         JButton terug = terugKnop();
         mainPanel.add(terug);
@@ -167,7 +167,7 @@ public class OverzichtRouteController {
         ArrayList<Object> bussen = new ArrayList<>();
         ArrayList<Bus> routes = Route.getRoutesBus();
 
-        for (int i = 0; i < Koerier.getInstances().size(); i++){
+        for (int i = 0; i < Bus.getInstances().size(); i++){
             bussen.add(Bus.getInstances().get(i));
         }
         //Filteren om alleen koeriers te krijgen die nog geen route hebben
@@ -185,6 +185,9 @@ public class OverzichtRouteController {
 
     public Bus getSelectedBus() {
         return selectedBus;
+    }
+    public Route getOverzichtRoute() {
+        return route;
     }
 
     /****
@@ -204,8 +207,11 @@ public class OverzichtRouteController {
                 } else {
                     route.setKoerier(getSelectedKoerier());
                     route.setBus(getSelectedBus());
-                    route.setStatus("klaar voor picken");
+                    System.out.println(getSelectedBus());
                     DatabaseConnectie dbcon = new DatabaseConnectie();
+                    dbcon.updateBusKoerier(getSelectedBus(), null, getOverzichtRoute());
+
+                    route.setStatus("klaar voor picken");
                     dbcon.updateStatus(route.getID(), "klaar voor picken");
                     try {
                         dbcon.getCon().close();

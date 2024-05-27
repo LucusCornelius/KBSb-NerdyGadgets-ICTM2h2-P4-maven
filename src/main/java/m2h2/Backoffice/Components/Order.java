@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class Order {
 
     //Algoritme
-    private int orderID;
 
     private String naam;
 
@@ -114,7 +113,7 @@ public class Order {
     }
 
     public int getOrderID() {
-        return orderID;
+        return ID;
     }
 
     public String getPlaatsnaam() {
@@ -215,8 +214,8 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
-                ", orderID=" + orderID +
+        String s = "Order{" +
+                ", orderID=" + ID +
                 "naam='" + naam + '\'' +
                 ", straatnaam='" + straatnaam + '\'' +
                 ", postcode='" + postcode + '\'' +
@@ -226,5 +225,9 @@ public class Order {
                 ", order='" + order + '\'' +
                 ", plaatsnaam='" + plaatsnaam + '\'' +
                 '}';
+        for (OrderLine orderLine: orderLines){
+            s = s + orderLine.toString();
+        }
+        return s;
     }
 }

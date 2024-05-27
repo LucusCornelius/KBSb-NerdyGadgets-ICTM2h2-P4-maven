@@ -98,6 +98,7 @@ public class Orders_Met_Coordinaten extends Order {
                 ", Coordinaten_DMS='" + getCoordinaten_DMS() + '\'' +
                 ", Coordinaten_DECIMAL_RIJKSDRIEHOEK='" + "X= " + Coordinaten_RijksDriehoek_X + " ||| " + "Y= " + Coordinaten_RijksDriehoek_Y + '\'' +
                 ", Coordinaten_DECIMAL='" + "X= " + Coordinaten_DecimalDegrees_X + " ||| " + "Y= " + Coordinaten_DecimalDegrees_Y + '\'' +
+                super.toString() +
                 '}';
     }
 }

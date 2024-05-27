@@ -306,6 +306,7 @@ public class DatabaseConnectie {
             pQuery.close();
         } catch (SQLException e){
             System.out.println(e.getMessage());
+
             System.out.println("orderline:" + orderLine);
         }
     }
@@ -319,7 +320,7 @@ public class DatabaseConnectie {
             ResultSet rs = pQuery.executeQuery();
 
             rs.next();
-            int x = rs.getInt(1);
+            rs.getInt(1);
 
             pQuery.close();
             return true;
@@ -375,6 +376,7 @@ public class DatabaseConnectie {
             }
         } else {
             try {
+                System.out.println("###");
                 String query = "Update orders " +
                         "SET " +
                         "ExpectedDeliveryDate = ?, " +
@@ -416,9 +418,10 @@ public class DatabaseConnectie {
                         "RouteID , " +
                         "koerierID , " +
                         "DeliveryVanID , " +
-                        "status " +
+                        "status , " +
+                        "regio " +
                         ") " +
-                        "VALUES (?,?,?,?)";
+                        "VALUES (?,?,?,?,?)";
                 PreparedStatement pQuery = con.prepareStatement(query);
                 pQuery.setInt(1, routeID);
                 if (route.getKoerierObj() != null) {
@@ -432,6 +435,7 @@ public class DatabaseConnectie {
                     pQuery.setInt(3, 0);
                 }
                 pQuery.setString(4, route.getStatus());
+                pQuery.setString(5, route.getRegio());
 
                 int result = pQuery.executeUpdate();
 
@@ -457,7 +461,7 @@ public class DatabaseConnectie {
         Route route = null;
         try {
 
-            String query = "select R.routeID, R.DeliveryVanID, D.kenteken, R.status, R.koerierID, O.OrderID, O.routeIndex, CustomerName, C.DeliveryAddressLine1, C.DeliveryAddressLine2, C.DeliveryPostalCode, C.DeliveryLocation, description, orderlineID, Quantity, sectie, opvoorraad " +
+            String query = "select R.routeID, R.DeliveryVanID, D.kenteken, R.status, R.koerierID, R.regio, O.OrderID, O.routeIndex, CustomerName, C.DeliveryAddressLine1, C.DeliveryAddressLine2, C.DeliveryPostalCode, C.DeliveryLocation, description, orderlineID, Quantity, sectie, opvoorraad " +
                     "from route R " +
                     "LEFT JOIN DeliveryVans D on R.DeliveryVanID = D.DeliveryVanID " +
                     "LEFT JOIN orders O on o.routeID = R.routeID " +
@@ -476,10 +480,14 @@ public class DatabaseConnectie {
                 try{
                     if (!routeIsSet) {
                         Bus bus;
-                        if (rs.getString("kenteken") == null){
+                        try {
+                            if (!rs.getString("kenteken").isEmpty()) {
+                                bus = new Bus(rs.getString("kenteken"), rs.getInt("R.DeliveryVanID"));
+                            } else {
+                                bus = null;
+                            }
+                        }catch (NullPointerException e){
                             bus = null;
-                        } else {
-                            bus = new Bus(rs.getString("kenteken"), rs.getInt("R.DeliveryVanID"));
                         }
                         Koerier koerier;
                         if (rs.getInt("R.koerierID") == 0){
@@ -490,13 +498,13 @@ public class DatabaseConnectie {
                         route = new Route(
                                 rs.getInt("R.routeID"),
                                 bus,
-                                "test",
+                                rs.getString("regio"),
                                 rs.getString("status"),
                                 koerier
                                 );
                         routeIsSet = true;
                     }
-                    if (rs.getInt(5) != prevOrderID ){
+                    if (rs.getInt("O.OrderID") != prevOrderID ){
                         int huisnummer;
                         try{
                             huisnummer = Integer.parseInt(rs.getString("C.DeliveryAddressLine2"));
@@ -514,6 +522,7 @@ public class DatabaseConnectie {
                                 "",
                                 rs.getInt("O.routeIndex")
                         );
+                        System.out.println(rs.getInt("O.OrderID"));
                         prevOrder = order;
                         route.addOrder(order);
                     }
@@ -591,8 +600,71 @@ public class DatabaseConnectie {
             System.out.println(e.getMessage());
         }
     }
-    public void updateBusKoerier(Bus bus, Koerier koerier){
+    public boolean BusExixtst(Bus bus){
+        try {
+            String query = "SELECT DeliveryVanID FROM DeliveryVans WHERE DeliveryVanID = ? AND kenteken = ?";
+            PreparedStatement pQuery = con.prepareStatement(query);
 
+            pQuery.setInt(1, bus.getBusID());
+            pQuery.setString(2, bus.getKenteken());
+
+            ResultSet rs = pQuery.executeQuery();
+
+            rs.next();
+            rs.getInt(1);
+
+            pQuery.close();
+            return true;
+        } catch (SQLException e){
+            return false;
+        }
+    }
+    public void updateBusKoerier(Bus bus, Koerier koerier, Route route){
+        if (bus != null){
+            try {
+                if (!BusExixtst(bus)){
+                    try {
+                        String query = "INSERT INTO DeliveryVans (" +
+                                "DeliveryVanID , " +
+                                "kenteken " +
+                                ") " +
+                                "VALUES (?,?)";
+                        PreparedStatement pQuery = con.prepareStatement(query);
+
+                        pQuery.setInt(1, bus.getBusID());
+                        pQuery.setString(2, bus.getKenteken());
+
+                        int result = pQuery.executeUpdate();
+
+                        if (result > 0) {
+                            System.out.println("successfully executed query!");
+                        }
+
+                        pQuery.close();
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                String query = "update route set DeliveryVanID = ? " +
+                        "where RouteID = ?;";
+                PreparedStatement pQuery = con.prepareStatement(query);
+
+                pQuery.setInt(1, bus.getBusID());
+                pQuery.setInt(2, route.getID());
+
+                int result = pQuery.executeUpdate();
+
+                if (result > 0) {
+                    System.out.println("successfully updated status!");
+                }
+                pQuery.close();
+            } catch (SQLException e){
+                System.out.println(e.getMessage());
+            }
+        }
+        if (koerier != null){
+
+        }
     }
     public ArrayList<Order> getOrdersToday() {
         ArrayList<Order> orders = new ArrayList<>();

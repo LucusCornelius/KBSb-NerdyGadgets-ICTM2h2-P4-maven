@@ -7,7 +7,7 @@ import java.util.List;
 public class Bus {
     private  int busID;
     private String kenteken;
-    private static List instances = new ArrayList();
+    private static List instances = new ArrayList<>();
 
     public Bus(String kenteken){
         setKenteken(kenteken);

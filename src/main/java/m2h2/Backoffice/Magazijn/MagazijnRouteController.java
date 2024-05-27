@@ -137,12 +137,12 @@ public class MagazijnRouteController implements ActionListener {
     public Object[][] getTableData() {
         Object[][] data = new Object[getOrdersTableSize()][6];
         int rowIndex = 0;
-        for (int i = 0; i < orders.size(); i++) {
+        for (int i = orders.size()-1; i >= 0 ; i--) {
             if (orders.get(i).getOrderLines().size() == 1) {
                 data[rowIndex] = orders.get(i).getDataline();
                 rowIndex++;
             } else {
-                for (int j = 0; j < orders.get(i).getOrderLines().size(); j++) {
+                for (int j = orders.get(i).getOrderLines().size()-1; j >= 0 ; j--) {
                     data[rowIndex] = orders.get(i).getDataline(j);
                     rowIndex++;
                 }
