@@ -1,12 +1,14 @@
 package m2h2.Backoffice.TestCode;
 
 import m2h2.Backoffice.Components.*;
+import m2h2.Backoffice.Components.Database.DatabaseConnectie;
 import m2h2.Backoffice.Magazijn.*;
 import m2h2.Algoritme.Orders_Met_Coordinaten;
 import m2h2.Algoritme.RouteBuilder_OSRM;
 import m2h2.Algoritme.Adressen_GEO_Data_Extractor;
 import m2h2.Backoffice.Components.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DummyData {
@@ -23,11 +25,7 @@ public class DummyData {
         koerier = new Koerier("Justin", 9878);
         koerier = new Koerier("Billy", 5843);
 
-        Bus bus;
-        bus = new Bus("54-KJ-90", 457);
-        bus = new Bus("GD-785-P", 457);
-        bus = new Bus("XZ-24-HG", 457);
-        bus = new Bus("W-869-SX", 457);
+
         //bus = new Bus("N-99-GSD", 457);
 
 

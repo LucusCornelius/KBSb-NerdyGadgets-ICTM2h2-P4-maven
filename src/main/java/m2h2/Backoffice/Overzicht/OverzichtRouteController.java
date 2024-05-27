@@ -165,8 +165,10 @@ public class OverzichtRouteController {
 
     public JComboBox getBusDropdown(){
         ArrayList<Object> bussen = new ArrayList<>();
-        ArrayList<Bus> routes = Route.getRoutesBus();
+        //uit db halen
 
+        ArrayList<Bus> routes = Route.getRoutesBus();
+/*
         for (int i = 0; i < Bus.getInstances().size(); i++){
             bussen.add(Bus.getInstances().get(i));
         }
@@ -178,8 +180,8 @@ public class OverzichtRouteController {
                 }
             }
         }
-
-        JComboBox comboBox = new JComboBox(bussen.toArray());
+*/
+        JComboBox comboBox = new JComboBox(routes.toArray());
         return comboBox;
     }
 

@@ -1,7 +1,9 @@
 package m2h2.Backoffice.Components;
 
 import m2h2.Algoritme.Orders_Met_Coordinaten;
+import m2h2.Backoffice.Components.Database.DatabaseConnectie;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Route {
@@ -49,11 +51,14 @@ public class Route {
     }
     //Return alle bussen
     public static ArrayList<Bus> getRoutesBus(){
-        ArrayList<Bus> r = new ArrayList<>();
-        for (Route route : routes) {
-            r.add(route.getBusObj());
+        DatabaseConnectie dbcon = new DatabaseConnectie();
+        ArrayList<Bus> bussen = dbcon.getBeschikbareBussen();
+        try{
+            dbcon.getCon().close();
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
         }
-        return r;
+        return bussen;
     }
 
     private Integer ID;

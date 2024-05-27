@@ -619,31 +619,58 @@ public class DatabaseConnectie {
             return false;
         }
     }
+    public ArrayList<Bus> getBeschikbareBussen(){
+        try {
+            String query = "SELECT DeliveryVanID, kenteken FROM DeliveryVans  WHERE DeliveryVanID NOT IN (" +
+                    "SELECT R.DeliveryVanID from route R  " +
+                    "LEFT JOIN DeliveryVans V on V.DeliveryVanID = R.DeliveryVanID " +
+                    ")";
+            PreparedStatement pQuery = con.prepareStatement(query);
+
+            ResultSet rs = pQuery.executeQuery();
+            ArrayList<Bus> bussen = new ArrayList<>();
+            while (rs.next()){
+                try{
+                    bussen.add(new Bus (rs.getString("kenteken"), rs.getInt("DeliveryVanID")));
+                } catch (SQLException e){
+                    System.out.println(e.getMessage());
+                }
+            }
+            pQuery.close();
+
+            return bussen;
+        } catch (SQLException e){
+            return new ArrayList<>();
+        }
+    }
+    public void insertBus(Bus bus){
+        try {
+            String query = "INSERT INTO DeliveryVans (" +
+                    "DeliveryVanID , " +
+                    "kenteken " +
+                    ") " +
+                    "VALUES (?,?)";
+            PreparedStatement pQuery = con.prepareStatement(query);
+
+            pQuery.setInt(1, bus.getBusID());
+            pQuery.setString(2, bus.getKenteken());
+
+            int result = pQuery.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("successfully executed query!");
+            }
+
+            pQuery.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
     public void updateBusKoerier(Bus bus, Koerier koerier, Route route){
         if (bus != null){
             try {
                 if (!BusExixtst(bus)){
-                    try {
-                        String query = "INSERT INTO DeliveryVans (" +
-                                "DeliveryVanID , " +
-                                "kenteken " +
-                                ") " +
-                                "VALUES (?,?)";
-                        PreparedStatement pQuery = con.prepareStatement(query);
-
-                        pQuery.setInt(1, bus.getBusID());
-                        pQuery.setString(2, bus.getKenteken());
-
-                        int result = pQuery.executeUpdate();
-
-                        if (result > 0) {
-                            System.out.println("successfully executed query!");
-                        }
-
-                        pQuery.close();
-                    } catch (SQLException e) {
-                        System.out.println(e.getMessage());
-                    }
+                    insertBus(bus);
                 }
                 String query = "update route set DeliveryVanID = ? " +
                         "where RouteID = ?;";

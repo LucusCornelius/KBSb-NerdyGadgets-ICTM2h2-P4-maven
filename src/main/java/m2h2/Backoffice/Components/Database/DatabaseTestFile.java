@@ -3,6 +3,7 @@ package m2h2.Backoffice.Components.Database;
 import m2h2.Backoffice.Components.*;
 import m2h2.Algoritme.Orders_Met_Coordinaten;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -131,9 +132,19 @@ public class DatabaseTestFile {
         }
 
 
+        dbCon.insertBus(new Bus("54-KJ-90", 457));
+        dbCon.insertBus(new Bus("GD-785-P", 462));
+        dbCon.insertBus(new Bus("XZ-24-HG", 873));
+        dbCon.insertBus(new Bus("W-869-SX", 437));
+
+
         DatabaseRouteImport dbRoute = new DatabaseRouteImport(dbCon);
         dbRoute.prepRoutesToday();
 
-
+        try{
+            dbCon.getCon().close();
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

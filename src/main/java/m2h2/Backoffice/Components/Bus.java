@@ -39,6 +39,6 @@ public class Bus {
     }
     @Override
     public String toString() {
-        return kenteken;
+        return kenteken + ' ' + busID;
     }
 }

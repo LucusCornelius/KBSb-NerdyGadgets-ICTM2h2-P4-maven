@@ -76,7 +76,7 @@ public class MagazijnController {
 
     public Object[][] getTableData(String status){
         if (status.equals(kvp)) {
-            Object[][] data = new Object[Route.getRoutes().size()][5];
+            Object[][] data = new Object[klaarVoorPicken.size()][5];
             for (int i = 0; i < klaarVoorPicken.size(); i++){
                 JButton tableButton = new JButton("bekijk route");
 
