@@ -25,6 +25,7 @@ public class Order {
 
     private String order;
 
+    private int routeIndex;
 
     //Backoffice
     private static int IDCounter;
@@ -65,7 +66,10 @@ public class Order {
 
         this.huisnummer = huisnummer;
     }
-
+    public Order(int ID, String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer, String toevoeging, Boolean bezorgd, int routeIndex) {
+        this(ID, naam, straatnaam, postcode, plaatsnaam, huisnummer, toevoeging, bezorgd);
+        this.routeIndex = routeIndex;
+    }
 
     private boolean isInteger(String toevoeging) {
         try {

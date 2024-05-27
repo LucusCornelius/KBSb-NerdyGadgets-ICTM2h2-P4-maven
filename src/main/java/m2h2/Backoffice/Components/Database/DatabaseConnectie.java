@@ -309,54 +309,106 @@ public class DatabaseConnectie {
             System.out.println("orderline:" + orderLine);
         }
     }
-    public void insertOrder(Order order, int routeID){
-        int customerID = insertCustomer(order);
-        int orderID = getNewOrderID();
-
+    public boolean orderExists(int orderID){
         try {
-            String query = "INSERT INTO orders (" +
-                "OrderID, " +
-                "CustomerID, " +
-                "SalespersonPersonID, " +
-                "ContactPersonID, " +
-                "OrderDate, " +
-                "ExpectedDeliveryDate, " +
-                "isUndersupplyBackordered, " +
-                "LastEditedBy, " +
-                "LastEditedWhen, " +
-                "RouteID)" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "SELECT OrderID FROM orders WHERE orderID = ?";
             PreparedStatement pQuery = con.prepareStatement(query);
-            pQuery.setInt(1 , orderID);
-            pQuery.setInt(2, customerID);
-            pQuery.setInt(3, contactPersonID); //salesperson
-            pQuery.setInt(4, contactPersonID); // contactperson
-            pQuery.setString(5, date);
-            pQuery.setString(6, date);
-            pQuery.setBoolean(7, false);
-            pQuery.setInt(8, contactPersonID);
-            pQuery.setString(9, date);
-            pQuery.setInt(10, routeID);
 
-            int result = pQuery.executeUpdate();
-            if (result > 0) {
-                System.out.println("successfully inserted order");
-            }
-            if (order.getOrderLines() != null) {
-                for (OrderLine orderLine : order.getOrderLines()) {
-                    insertOrderLine(orderLine, orderID);
-                }
-            }
+            pQuery.setInt(1, orderID);
+
+            ResultSet rs = pQuery.executeQuery();
+
+            rs.next();
+            int x = rs.getInt(1);
+
+            pQuery.close();
+            return true;
         } catch (SQLException e){
             System.out.println(e.getMessage());
-            System.out.println("order:" + order);
+            return false;
+        }
+    }
+    public void insertOrder(Order order, int routeID, int routeIndex){
+        if (!orderExists(order.getID())) {
+            int customerID = insertCustomer(order);
+            int orderID = getNewOrderID();
+
+            try {
+                String query = "INSERT INTO orders (" +
+                        "OrderID, " +
+                        "CustomerID, " +
+                        "SalespersonPersonID, " +
+                        "ContactPersonID, " +
+                        "OrderDate, " +
+                        "ExpectedDeliveryDate, " +
+                        "isUndersupplyBackordered, " +
+                        "LastEditedBy, " +
+                        "LastEditedWhen, " +
+                        "RouteID, " +
+                        "routeIndex)" +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+                PreparedStatement pQuery = con.prepareStatement(query);
+                pQuery.setInt(1, orderID);
+                pQuery.setInt(2, customerID);
+                pQuery.setInt(3, contactPersonID); //salesperson
+                pQuery.setInt(4, contactPersonID); // contactperson
+                pQuery.setString(5, date);
+                pQuery.setString(6, date);
+                pQuery.setBoolean(7, false);
+                pQuery.setInt(8, contactPersonID);
+                pQuery.setString(9, date);
+                pQuery.setInt(10, routeID);
+                pQuery.setInt(11, routeIndex);
+
+                int result = pQuery.executeUpdate();
+                if (result > 0) {
+                    System.out.println("successfully inserted order");
+                }
+                if (order.getOrderLines() != null) {
+                    for (OrderLine orderLine : order.getOrderLines()) {
+                        insertOrderLine(orderLine, orderID);
+                    }
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+                System.out.println("order:" + order);
+            }
+        } else {
+            try {
+                String query = "Update orders " +
+                        "SET " +
+                        "ExpectedDeliveryDate = ?, " +
+                        "LastEditedBy = ?, " +
+                        "LastEditedWhen = ?, " +
+                        "RouteID = ?, " +
+                        "routeIndex = ? " +
+                        "Where orderID = ?";
+                PreparedStatement pQuery = con.prepareStatement(query);
+                pQuery.setString(1, date);
+                pQuery.setInt(2, contactPersonID);
+                pQuery.setString(3, date);
+                pQuery.setInt(4, routeID);
+                pQuery.setInt(5, routeIndex);
+                pQuery.setInt(6, order.getOrderID());
+
+                int result = pQuery.executeUpdate();
+                if (result > 0) {
+                    System.out.println("successfully updated order");
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+                System.out.println("order:" + order);
+            }
         }
 
     }
     public void insertOrder(Order order){
-        insertOrder(order, 0);
+        insertOrder(order, 0, -1);
     }
-    public void insertRoute(Route route){
+    public void insertOrder(Order order, int routeID){
+        insertOrder(order, routeID, -1);
+    }
+    public int insertRoute(Route route){
         int routeID = getNewRouteID();
         if (routeID != -1) {
             try {
@@ -369,8 +421,16 @@ public class DatabaseConnectie {
                         "VALUES (?,?,?,?)";
                 PreparedStatement pQuery = con.prepareStatement(query);
                 pQuery.setInt(1, routeID);
-                pQuery.setInt(2, route.getKoerierObj().getKoerierID());
-                pQuery.setInt(3, route.getBusObj().getBusID());
+                if (route.getKoerierObj() != null) {
+                    pQuery.setInt(2, route.getKoerierObj().getKoerierID());
+                } else {
+                    pQuery.setInt(2, 0);
+                }
+                if (route.getBusObj() != null) {
+                    pQuery.setInt(3, route.getBusObj().getBusID());
+                } else {
+                    pQuery.setInt(3, 0);
+                }
                 pQuery.setString(4, route.getStatus());
 
                 int result = pQuery.executeUpdate();
@@ -390,15 +450,17 @@ public class DatabaseConnectie {
         } else {
             System.out.println("oeps");
         }
+        return routeID;
 
     }
     public Route getRoute(int routeID){
         Route route = null;
         try {
 
-            String query = "select R.routeID, R.DeliveryVanID, R.status, R.koerierID, O.OrderID, CustomerName, C.DeliveryAddressLine1, C.DeliveryAddressLine2, C.DeliveryPostalCode, C.DeliveryLocation, description, orderlineID, Quantity, sectie, opvoorraad " +
+            String query = "select R.routeID, R.DeliveryVanID, D.kenteken, R.status, R.koerierID, O.OrderID, O.routeIndex, CustomerName, C.DeliveryAddressLine1, C.DeliveryAddressLine2, C.DeliveryPostalCode, C.DeliveryLocation, description, orderlineID, Quantity, sectie, opvoorraad " +
                     "from route R " +
-                    "left join orders O on o.routeID = R.routeID " +
+                    "LEFT JOIN DeliveryVans D on R.DeliveryVanID = D.DeliveryVanID " +
+                    "LEFT JOIN orders O on o.routeID = R.routeID " +
                     "left join customers C on O.CustomerID = C.CustomerID " +
                     "left join orderlines OL on O.OrderID = OL.OrderID " +
                     "where R.routeID = ?";
@@ -413,12 +475,24 @@ public class DatabaseConnectie {
             while (rs.next()) {
                 try{
                     if (!routeIsSet) {
+                        Bus bus;
+                        if (rs.getString("kenteken") == null){
+                            bus = null;
+                        } else {
+                            bus = new Bus(rs.getString("kenteken"), rs.getInt("R.DeliveryVanID"));
+                        }
+                        Koerier koerier;
+                        if (rs.getInt("R.koerierID") == 0){
+                            koerier = null;
+                        } else {
+                            koerier = new Koerier("--naam koerier--", rs.getInt("R.koerierID"));
+                        }
                         route = new Route(
                                 rs.getInt("R.routeID"),
-                                new Bus("test", rs.getInt("R.DeliveryVanID")),
+                                bus,
                                 "test",
                                 rs.getString("status"),
-                                new Koerier("test", rs.getInt("R.koerierID"))
+                                koerier
                                 );
                         routeIsSet = true;
                     }
@@ -437,7 +511,8 @@ public class DatabaseConnectie {
                                 rs.getString("C.DeliveryPostalCode"),
                                 rs.getString("C.DeliveryLocation"),
                                 huisnummer,
-                                ""
+                                "",
+                                rs.getInt("O.routeIndex")
                         );
                         prevOrder = order;
                         route.addOrder(order);
@@ -499,7 +574,7 @@ public class DatabaseConnectie {
     }
     public void updateStatus(int routeID, String status){
         try {
-            String query = "update route set status = ?" +
+            String query = "update route set status = ? " +
                     "where RouteID = ?;";
             PreparedStatement pQuery = con.prepareStatement(query);
 
@@ -515,6 +590,9 @@ public class DatabaseConnectie {
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
+    }
+    public void updateBusKoerier(Bus bus, Koerier koerier){
+
     }
     public ArrayList<Order> getOrdersToday() {
         ArrayList<Order> orders = new ArrayList<>();

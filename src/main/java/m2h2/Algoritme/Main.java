@@ -3,6 +3,7 @@ package m2h2.Algoritme;
 import m2h2.Backoffice.Components.Database.DatabaseConnectie;
 import m2h2.Backoffice.Components.Order;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 //package m2h2.Algoritme;
 //
@@ -20,7 +21,11 @@ public class Main {
 
         DatabaseConnectie dbcon = new DatabaseConnectie();
         orders = dbcon.getOrdersToday();
-
+        try {
+            dbcon.getCon().close();
+        }catch (SQLException e){
+            e.getStackTrace();
+        }
         Adressen_GEO_Data_Extractor GeoExtractor = new Adressen_GEO_Data_Extractor(orders);
     }
 }

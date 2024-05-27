@@ -202,7 +202,6 @@ public class RouteBuilder_OSRM {
 
 
         try {
-            System.out.println("###");
             JSONObject geoJsonObject = new JSONObject(geoJSON);
 
             java.io.FileWriter gpxWriter = new java.io.FileWriter("src/main/java/m2h2/DataFiles/GPX/" + Regio + "_batch_" + batch_count + ".gpx");
