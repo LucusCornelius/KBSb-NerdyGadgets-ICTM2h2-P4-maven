@@ -175,7 +175,6 @@ public class Order {
         return Boolean.FALSE;
     }
 
-    //voor gitt
 
 
     public int getPostcodeNummers(){
