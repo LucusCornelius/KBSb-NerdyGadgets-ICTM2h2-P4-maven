@@ -9,6 +9,10 @@ public class DummyData {
 
 
     public void setDummyData(){
+
+        
+
+        /*
         ArrayList<Order> orders = new ArrayList<Order>();
         Order O = new Order("lucas", "Bloemberg", "7924PW", "Veeningen", 28, "", false);
         OrderLine OL = new OrderLine("Tc", 3, "Rice Cooker");
@@ -692,6 +696,8 @@ public class DummyData {
 
 
         Adressen_GEO_Data_Extractor AdressenObject1 = new Adressen_GEO_Data_Extractor(orders);
+
+         */
 
 
     }
