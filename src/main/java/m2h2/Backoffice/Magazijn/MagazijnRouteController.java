@@ -30,6 +30,9 @@ public class MagazijnRouteController implements ActionListener {
     private MagazijnController mController;
     private ArrayList<Orders_Met_Coordinaten> orders;
     private Integer id;
+
+    private int nietBeschikbaar;
+    private JLabel messageLabel;
     private void initComponents() {
         jLabel1 = new JLabel();
     }
@@ -150,6 +153,24 @@ public class MagazijnRouteController implements ActionListener {
         }
         return data;
     }
+
+    public void updateCounters(boolean newValue, boolean oldValue) {
+        if (newValue != oldValue) {
+            if (newValue) {
+                nietBeschikbaar++;
+            } else {
+                nietBeschikbaar--;
+            }
+            updateMessageLabel();
+        }
+    }
+
+    private void updateMessageLabel() {
+        if (messageLabel != null) {
+            messageLabel.setText(String.valueOf(nietBeschikbaar));
+        }
+    }
+
     private int getOrdersTableSize(){
         int size = orders.size();
         for (Order order : orders){
@@ -203,7 +224,15 @@ public class MagazijnRouteController implements ActionListener {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel messageLabel = new JLabel("<html><div style='text-align: center;'>Als u op ‘Doorsturen’ klikt wordt deze route in klaar voor versturen gezet zodat de koerier deze route kan aannemen.</div></html>");
+        JLabel messageLabel = null;
+
+        if (nietBeschikbaar == 0){
+            messageLabel = new JLabel( "<html><div style='text-align: center;'>Klik op 'Doorsturen' om deze route naar de koerier te sturen.</div></html>");
+        } else if (nietBeschikbaar == 1) {
+            messageLabel = new JLabel( "<html><div style='text-align: center;'>Klik op 'Doorsturen' om deze route naar de koerier te sturen en het missende product bij te bestellen.</div></html>");
+        } else {
+            messageLabel = new JLabel( "<html><div style='text-align: center;'>Klik op 'Doorsturen' om deze route naar de koerier te sturen en de missende "+ nietBeschikbaar +" producten bij te bestellen.</div></html>");
+        }
         messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         JButton terugButton = new JButton("Ga Terug");

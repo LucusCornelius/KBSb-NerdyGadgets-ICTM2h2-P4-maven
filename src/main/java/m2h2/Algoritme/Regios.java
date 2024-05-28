@@ -27,9 +27,9 @@ public class Regios {
                 regio_West_Postcodes.add(orders);
             }
 
-            if (postcodesInt >= 79 && postcodesInt <= 99) {
-                regio_Noord_Postcodes.add(orders);
-            }
+              if (postcodesInt == 78 || postcodesInt == 79 || postcodesInt >= 84 && postcodesInt <= 99) {
+                  regio_Noord_Postcodes.add(orders);
+              }
 
             if (postcodesInt >= 66 && postcodesInt <= 77 || postcodesInt >= 80 && postcodesInt <= 83 ) {
                 regio_Oost_Postcodes.add(orders);
@@ -42,6 +42,8 @@ public class Regios {
             if (postcodesInt >= 42 && postcodesInt <= 52) {
                 regio_Zuid_West_Postcodes.add(orders);
             }
+
+            //etc
 
       } catch (Exception e) {
           System.out.println(e);

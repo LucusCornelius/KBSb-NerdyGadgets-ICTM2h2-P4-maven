@@ -17,6 +17,7 @@ public class Orders_Met_Coordinaten extends Order {
 
     private String straatnaam;
 
+
     private String postcode;
 
     private String plaatsnaam;
