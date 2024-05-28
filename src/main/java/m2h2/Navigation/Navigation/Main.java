@@ -1,17 +1,22 @@
 package m2h2.Navigation.Navigation;
 
+import m2h2.Backoffice.Components.Database.DatabaseConnectie;
+import m2h2.Backoffice.Components.Database.DatabaseRouteImport;
 import m2h2.Backoffice.Koerier.KoerierController;
-import m2h2.Backoffice.TestCode.DummyData;
+//import m2h2.Backoffice.TestCode.DummyData;
 import m2h2.Backoffice.Magazijn.MagazijnController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import m2h2.Backoffice.Overzicht.OverzichtController;
+import m2h2.Backoffice.TestCode.DummyData;
 
 public class Main extends javax.swing.JFrame implements ActionListener{
+
 
     private javax.swing.JButton Route;
     private javax.swing.JLabel jLabel1;
@@ -27,8 +32,21 @@ public class Main extends javax.swing.JFrame implements ActionListener{
     SideMenuPanel sp;
 
     public Main() {
-        DummyData Ddata = new DummyData();
-        Ddata.setDummyData();
+        //DummyData Ddata = new DummyData();
+        //Ddata.setDummyData();
+
+        //import routes vandaag
+        DatabaseConnectie dbcon = new DatabaseConnectie();
+        DatabaseRouteImport dbri = new DatabaseRouteImport(dbcon);
+        dbri.prepRoutesToday();
+        try {
+            dbcon.getCon().close();
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+
+
+
         initComponents();
         sp = new SideMenuPanel(this);
         sp.setMain(mainPanel);
@@ -213,6 +231,7 @@ public class Main extends javax.swing.JFrame implements ActionListener{
     }
 
     public static void main(String args[]) {
+        DummyData DD = new DummyData();
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
