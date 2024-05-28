@@ -109,8 +109,17 @@ public class Adressen_GEO_Data_Extractor {
                 try {
                     ordersMetCoordinaten.setCoordinaten_RijksDriehoek(Double.parseDouble(rs.getString(2)), Double.parseDouble(rs.getString(4)));
                     RDtoDegrees(Double.parseDouble(rs.getString(2)), Double.parseDouble(rs.getString(4)), ordersMetCoordinaten);
+
+
+                    String data = "  O = new Order(\"lucas\", \""+ orders.get(i).getStraatnaam() +"\", \"" + postcode + "\", \"" + woonplaats + "\", " + huisnummer + ", \"\", false);\n" +
+                            "                OL = new OrderLine(\"e\", 5, \"Juicer\");\n" +
+                            "                O.addOrderline(OL);\n" +
+                            "                orders.add(O);\n";
+
+                    FileWriter.WriteToFile(data, "src/main/java/m2h2/Backoffice/TestCode/orders", false);
+
                 } catch (NullPointerException e) {
-                    FileWriter.WriteToFile(e.getMessage(), "src/main/java/m2h2/LogFiles/Adressen_GEO_Data_Extractor_Log.txt", true);
+                    FileWriter.WriteToFile(e.getMessage(), "src/main/java/m2h2/DataFiles/Errors/GEO_Data_Fetch_Errors.txt", true);
                 }
 
                 rs.close();

@@ -29,12 +29,11 @@ import com.google.gson.JsonObject;
 
 public class RouteBuilder_OSRM {
 
-    private static String Route_URL_SUBSTRING = "http://127.0.0.1:5000/route/v1/driving/5.0651060782846375,52.10576529347831;";
-
+    private static String Route_URL_SUBSTRING_Startpunt_Utrecht = "http://127.0.0.1:5000/route/v1/driving/5.0651060782846375,52.10576529347831;";
 
     public static void setRoutes(String Route_URL, String regio_letter, int batch_count) {
 
-        if (Route_URL.contains(Route_URL_SUBSTRING)) {
+        if (Route_URL.contains(Route_URL_SUBSTRING_Startpunt_Utrecht)) {
             System.out.println(ConsoleColorCodes.ANSI_GREEN + "\n URL heeft de check gepasseerd!" + ConsoleColorCodes.ANSI_RESET);
 
             CompletableFuture<Void> future = null;
@@ -59,8 +58,12 @@ public class RouteBuilder_OSRM {
             }
 
             if (future != null) {
-                System.out.println(ConsoleColorCodes.ANSI_RED + "\n ROUTE BUILDER GESTART" + ConsoleColorCodes.ANSI_RESET);
+                System.out.println(ConsoleColorCodes.ANSI_RED + "\n Route builder gestart" + ConsoleColorCodes.ANSI_RESET);
                 future.join();
+            } else {
+                System.out.println(ConsoleColorCodes.ANSI_RED + "\n Route builder niet gestart. Er waren geen orders binnengekomen." + ConsoleColorCodes.ANSI_RESET);
+                System.out.println("Breaking...");
+                System.exit(1);
             }
         }
     }
@@ -74,13 +77,12 @@ public class RouteBuilder_OSRM {
         try {
             HttpClient client = HttpClient.newHttpClient();
 
-            String jsonBody = "";
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(Route_URL_REGIO))
                     .timeout(Duration.ofMinutes(1))
                     .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                    .POST(HttpRequest.BodyPublishers.ofString(""))
                     .build();
 
             CompletableFuture<HttpResponse<String>> responseFuture = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
@@ -173,14 +175,12 @@ public class RouteBuilder_OSRM {
             URL url = new URL(Route_URL_Regio);
             String path = url.getPath();
 
-            // Define a regular expression to match coordinates
             Pattern pattern = Pattern.compile("[-+]?\\d*\\.\\d+,[ ]?[-+]?\\d*\\.\\d+");
             Matcher matcher = pattern.matcher(path);
 
 
 
 
-            // Extract and print coordinates
             while (matcher.find()) {
                 String coordinatePair = matcher.group();
                 String[] coordinates = coordinatePair.split(",");
