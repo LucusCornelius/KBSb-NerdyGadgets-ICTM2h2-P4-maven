@@ -1,7 +1,10 @@
 package m2h2.Algoritme;
 
+import m2h2.Backoffice.Components.Database.DatabaseConnectie;
+import m2h2.Backoffice.Components.Route;
 import m2h2.Console_Color_Codes.ConsoleColorCodes;
 
+import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -95,8 +98,6 @@ public class KNN_Algoritme {
 
                 try {
 
-
-
                     int batch_count = 0;
                     int sortedOrders_size = sortedOrders.size();
                     double maxOrders = 200;
@@ -115,7 +116,7 @@ public class KNN_Algoritme {
                     int startIndex = 0;
                     int endIndex = 199;
 
-                    String start_url = "http://127.0.0.1:5000/route/v1/driving/5.0651060782846375,52.10576529347831;";
+                    String start_url = "http://0.0.0.0:5000/route/v1/driving/5.0651060782846375,52.10576529347831;";
 
                     StringBuilder route_URL = new StringBuilder(start_url);
 
@@ -156,7 +157,6 @@ public class KNN_Algoritme {
 
                         }
 
-
                     if (restwaarde == 0) {
                         System.out.println(startIndex);
                         System.out.println(endIndex - 1);
@@ -168,13 +168,30 @@ public class KNN_Algoritme {
                         List<Point> sublist = sortedOrders.subList((int) startIndex, (int)(startIndex + restwaarde));
                         int sublistSize = sublist.size();
                         System.out.println("sublist: " + sublistSize);
+
                         int loopCount = 0;
+
+                        Route route = new Route(regio_letter, "nieuw");
+
+                        DatabaseConnectie dbcon = new DatabaseConnectie();
+                        int routeID = dbcon.insertRoute(route);
+
                         for (Point point : sublist) {
                             String coordinates = point.osmr;
                             route_URL.append(coordinates);
-                            loopCount++;
-                        }
+                            
+                            //insert points in db
 
+                            dbcon.insertOrder(point.order, routeID, loopCount);
+
+                            loopCount++;
+
+                        }
+                        try {
+                            dbcon.getCon().close();
+                        }catch (SQLException e){
+                            e.getStackTrace();
+                        }
                         if (loopCount == sublistSize) {
                             batch_count++;
                             final int batchCount = batch_count;
@@ -249,7 +266,7 @@ public class KNN_Algoritme {
         double distance; // Distance from test point
 
         String osmr;
-
+        int routeIndex;
 
     }
 

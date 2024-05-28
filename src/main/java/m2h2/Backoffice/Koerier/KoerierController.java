@@ -29,7 +29,7 @@ public class KoerierController {
 
     public KoerierController(JPanel mainPanel) {
         initComponents();
-        AannemenRoute = Route.getRoutes("Aannemen order");
+        AannemenRoute = Route.getRoutes("klaar voor versturen");
         this.mainPanel = mainPanel;
     }
 

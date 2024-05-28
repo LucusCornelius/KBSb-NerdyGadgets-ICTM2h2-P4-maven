@@ -29,7 +29,7 @@ import com.google.gson.JsonObject;
 
 public class RouteBuilder_OSRM {
 
-    private static String Route_URL_SUBSTRING = "http://127.0.0.1:5000/route/v1/driving/5.0651060782846375,52.10576529347831;";
+    private static String Route_URL_SUBSTRING = "http://0.0.0.0:5000/route/v1/driving/5.0651060782846375,52.10576529347831;";
 
 
     public static void setRoutes(String Route_URL, String regio_letter, int batch_count) {
@@ -84,7 +84,7 @@ public class RouteBuilder_OSRM {
                     .build();
 
             CompletableFuture<HttpResponse<String>> responseFuture = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
-
+            System.out.println("###");
             HttpResponse<String> response = responseFuture.join();
 
             response.body();

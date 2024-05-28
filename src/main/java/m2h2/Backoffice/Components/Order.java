@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class Order {
 
     //Algoritme
-    private int orderID;
 
     private String naam;
 
@@ -25,6 +24,7 @@ public class Order {
 
     private String order;
 
+    private int routeIndex;
 
     //Backoffice
     private static int IDCounter;
@@ -34,22 +34,22 @@ public class Order {
     private boolean opVoorraad;
 
     //Algoritme
-    public Order(String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer, String toevoeging, Boolean bezorgd) {
+    public Order(int ID, String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer, String toevoeging, Boolean bezorgd) {
+        this.ID = ID;
         this.orderLines = new ArrayList<>();
         this.naam = naam;
         this.straatnaam = straatnaam;
         this.plaatsnaam = plaatsnaam;
         setBezorgd(bezorgd);
 
-        if(postcode.length() == 6) {
+        if((postcode != null) && postcode.length() == 6) {
             this.postcode = postcode;
         } else {
             System.out.println("ongeldige postcode..., Breaking...");
             System.exit(1);
-
         }
 
-        if(!toevoeging.isEmpty()) {
+        if(toevoeging != null && !toevoeging.isEmpty()) {
             boolean isInteger = false;
             isInteger = isInteger(toevoeging);
 
@@ -65,7 +65,10 @@ public class Order {
 
         this.huisnummer = huisnummer;
     }
-
+    public Order(int ID, String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer, String toevoeging, Boolean bezorgd, int routeIndex) {
+        this(ID, naam, straatnaam, postcode, plaatsnaam, huisnummer, toevoeging, bezorgd);
+        this.routeIndex = routeIndex;
+    }
 
     private boolean isInteger(String toevoeging) {
         try {
@@ -110,7 +113,7 @@ public class Order {
     }
 
     public int getOrderID() {
-        return orderID;
+        return ID;
     }
 
     public String getPlaatsnaam() {
@@ -211,8 +214,8 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
-                ", orderID=" + orderID +
+        String s = "Order{" +
+                ", orderID=" + ID +
                 "naam='" + naam + '\'' +
                 ", straatnaam='" + straatnaam + '\'' +
                 ", postcode='" + postcode + '\'' +
@@ -222,5 +225,9 @@ public class Order {
                 ", order='" + order + '\'' +
                 ", plaatsnaam='" + plaatsnaam + '\'' +
                 '}';
+        for (OrderLine orderLine: orderLines){
+            s = s + orderLine.toString();
+        }
+        return s;
     }
 }

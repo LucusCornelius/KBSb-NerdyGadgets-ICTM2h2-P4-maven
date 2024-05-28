@@ -1,6 +1,15 @@
 package m2h2.Algoritme;
 
-public class Orders_Met_Coordinaten {
+import m2h2.Backoffice.Components.*;
+
+public class Orders_Met_Coordinaten extends Order {
+
+    public Orders_Met_Coordinaten(int ID, String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer, String toevoeging, int routeIndex) {
+        super(ID, naam, straatnaam, postcode, plaatsnaam, huisnummer, toevoeging, false, routeIndex);
+    }
+    public Orders_Met_Coordinaten(int ID, String naam, String straatnaam, String postcode, String plaatsnaam, int huisnummer, String toevoeging) {
+        this(ID, naam, straatnaam, postcode, plaatsnaam, huisnummer, toevoeging, -1);
+    }
 
     private int orderID;
 
@@ -24,17 +33,6 @@ public class Orders_Met_Coordinaten {
     private double Coordinaten_RijksDriehoek_X, Coordinaten_RijksDriehoek_Y;
     private double Coordinaten_DecimalDegrees_X, Coordinaten_DecimalDegrees_Y;
 
-
-    public Orders_Met_Coordinaten (int orderID, String naam, String straatnaam, String postcode, int huisnummer, String toevoeging, String huisletter, String order) {
-        this.orderID = orderID;
-        this.naam = naam;
-        this.straatnaam = straatnaam;
-        this.postcode = postcode;
-        this.huisnummer = huisnummer;
-        this.order = order;
-        this.toevoeging = toevoeging;
-    }
-
     public void setCoordinaten_DMS(
             String LatitudeGraden,
             String LatitudeMinuten,
@@ -56,23 +54,6 @@ public class Orders_Met_Coordinaten {
     public void setCoordinaten_DecimalDegrees(double x, double y) {
         Coordinaten_DecimalDegrees_X = x;
         Coordinaten_DecimalDegrees_Y = y;
-    }
-
-
-    public String getStraatnaam() {
-        return straatnaam;
-    }
-
-    public String getPostcode() {
-        return postcode;
-    }
-
-    public int getHuisnummer() {
-        return huisnummer;
-    }
-
-    public String getOrder() {
-        return order;
     }
 
     public String getCoordinaten_DMS() {
@@ -108,15 +89,16 @@ public class Orders_Met_Coordinaten {
     @Override
     public String toString() {
         return "GefilterdeAdressen: {" +
-                "orderID=" + orderID +
-                " naam=' " + naam + '\'' +
-                ", straatnaam='" + straatnaam + '\'' +
-                ", postcode='" + postcode + '\'' +
-                ", huisnummer=" + huisnummer +
-                ", order='" + order + '\'' +
+                "orderID=" + super.getID() +
+                " naam=' " + super.getNaam() + '\'' +
+                ", straatnaam='" + super.getStraatnaam() + '\'' +
+                ", postcode='" + super.getPostcode() + '\'' +
+                ", huisnummer=" + super.getHuisnummer() +
+                ", order='" + super.getBeschrijving() + '\'' +
                 ", Coordinaten_DMS='" + getCoordinaten_DMS() + '\'' +
                 ", Coordinaten_DECIMAL_RIJKSDRIEHOEK='" + "X= " + Coordinaten_RijksDriehoek_X + " ||| " + "Y= " + Coordinaten_RijksDriehoek_Y + '\'' +
                 ", Coordinaten_DECIMAL='" + "X= " + Coordinaten_DecimalDegrees_X + " ||| " + "Y= " + Coordinaten_DecimalDegrees_Y + '\'' +
+                super.toString() +
                 '}';
     }
 }
