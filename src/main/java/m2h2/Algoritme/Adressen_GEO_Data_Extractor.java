@@ -20,7 +20,7 @@ public class Adressen_GEO_Data_Extractor {
 
     private int query_timout = 30; //30 seconds
 
-    private ArrayList<Order> order;
+    private ArrayList<Order> orders;
 
     private ArrayList<Orders_Met_Coordinaten> orders_met_coordinaten = new ArrayList<>();
 
