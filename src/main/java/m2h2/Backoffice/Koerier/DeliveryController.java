@@ -1,9 +1,12 @@
 package m2h2.Backoffice.Koerier;
 
+import m2h2.Backoffice.Components.Database.DatabaseConnectie;
 import m2h2.Backoffice.Components.Order;
 import m2h2.Backoffice.Components.Route;
 import m2h2.Backoffice.Components.Tables.JTableButtonMouseListener;
 import m2h2.Backoffice.Components.Tables.JTableButtonRenderer;
+import m2h2.Backoffice.Magazijn.MagazijnRouteTableModel;
+import m2h2.Algoritme.Orders_Met_Coordinaten;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -16,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DeliveryController implements ActionListener {
@@ -24,7 +28,7 @@ public class DeliveryController implements ActionListener {
     private JPanel mainPanel, buttonPanel;
     private Route route;
     private javax.swing.JLabel jLabel1;
-    private ArrayList<Order> orders;
+    private ArrayList<Orders_Met_Coordinaten> orders;
     private Integer id;
     private int deliveredCount = 0;
     private int returnedCount = 0;
@@ -193,7 +197,14 @@ public class DeliveryController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == terugButton) {
-            route.setStatus("Aannemen order");
+            route.setStatus("klaar voor versturen");
+            DatabaseConnectie dbcon = new DatabaseConnectie();
+            dbcon.updateStatus(route.getID(), "klaar voor versturen");
+            try {
+                dbcon.getCon().close();
+            } catch (SQLException ex){
+                System.out.println(ex.getMessage());
+            }
             mainPanel.removeAll();
             KoerierController kController = new KoerierController(mainPanel);
             kController.setKoerierPanel();
@@ -252,7 +263,23 @@ public class DeliveryController implements ActionListener {
         doorsturenButton.setBorderPainted(false);
         doorsturenButton.addActionListener(event -> {
             //gooi de actie hier in dat ie terug naar t magazijn gaat
+            
+            route.setStatus("afgerond");
+            DatabaseConnectie dbcon = new DatabaseConnectie();
+            dbcon.updateStatus(route.getID(), "afgerond");
+            try {
+                dbcon.getCon().close();
+            } catch (SQLException ex){
+                System.out.println(ex.getMessage());
+            }
             dialog.dispose();
+
+            mainPanel.removeAll();
+            KoerierController kController = new KoerierController(mainPanel);
+            kController.setKoerierPanel();
+
+            mainPanel.revalidate();
+            mainPanel.repaint();
         });
 
         gbc.gridx = 0;
