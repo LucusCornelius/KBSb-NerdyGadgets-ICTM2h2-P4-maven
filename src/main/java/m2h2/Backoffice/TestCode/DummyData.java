@@ -10,7 +10,13 @@ public class DummyData {
 
     public void setDummyData(){
 
-        
+        Koerier koerier;
+        koerier = new Koerier("Henk", 5678);
+        koerier = new Koerier("Willem", 2313);
+        koerier = new Koerier("Sanne", 5642);
+        koerier = new Koerier("Gerben", 7478);
+        koerier = new Koerier("Justin", 9878);
+        koerier = new Koerier("Billy", 5843);
 
         /*
         ArrayList<Order> orders = new ArrayList<Order>();

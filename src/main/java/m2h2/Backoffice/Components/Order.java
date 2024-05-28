@@ -175,8 +175,6 @@ public class Order {
         return Boolean.FALSE;
     }
 
-
-
     public int getPostcodeNummers(){
         String nummerString = postcode.substring(0, 4);
         try {
