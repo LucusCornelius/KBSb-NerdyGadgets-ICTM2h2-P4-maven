@@ -7,12 +7,13 @@ import java.awt.*;
 public class MagazijnRouteTableModel extends AbstractTableModel {
     private String[] columnNames = {"ID-Order" , "Niet op Voorraad" , "Product-ID" , "Aantal" , "Sectie" , "Product beschrijving"};
     private Object[][] data;
+    private MagazijnRouteController mRouteController;
 
     public MagazijnRouteTableModel(MagazijnRouteController mRouteController){
         super();
+        this.mRouteController = mRouteController;
         data = mRouteController.getTableData();
     }
-
 
     public int getColumnCount() {
         return columnNames.length;
@@ -48,8 +49,11 @@ public class MagazijnRouteTableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object aValue, int row, int col) {
         if (col == 1 && aValue instanceof Boolean) {
-            data[row][col] = aValue;
+            boolean oldValue = (Boolean) data[row][col];
+            boolean newValue = (Boolean) aValue;
+            data[row][col] = newValue;
             fireTableCellUpdated(row, col);
+            mRouteController.updateCounters(newValue, oldValue);
         }
     }
 }
