@@ -1,10 +1,7 @@
 package m2h2.Algoritme;
 
-import m2h2.Backoffice.Components.Database.DatabaseConnectie;
-import m2h2.Backoffice.Components.Route;
 import m2h2.Console_Color_Codes.ConsoleColorCodes;
 
-import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -97,18 +94,21 @@ public class KNN_Algoritme {
                 System.out.println("\n" + ConsoleColorCodes.ANSI_YELLOW + "Het dichtstbijzijnde punt vanaf het startpunt UTRECHT is "  + "\n" + ConsoleColorCodes.ANSI_RESET);
 
                 try {
-
                     int batch_count = 0;
                     int sortedOrders_size = sortedOrders.size();
                     double maxOrders = 200;
 
-                    int aantal_bussen = (int) Math.ceil( sortedOrders_size / maxOrders);
 
-                    System.out.println("bussen: " + aantal_bussen);
+                    int aantalBussenForFullIndex = 0;
+                    int aantalBussen = (int) Math.ceil( sortedOrders_size / maxOrders);
 
-                    double m = sortedOrders_size / maxOrders;
-                    double a = Math.floor(m);
-                    double restwaarde = (m - a) * maxOrders;
+                        aantalBussenForFullIndex = (int) Math.floor(sortedOrders_size / maxOrders);
+
+                    System.out.println("bussen: " + aantalBussen);
+
+                    double sorterdOrdersDividedByMaxOrdersDOUBLE = sortedOrders_size / maxOrders;
+                    double sorterdOrdersDividedByMaxOrdersDOUBLE_FLOOR = Math.floor(sorterdOrdersDividedByMaxOrdersDOUBLE);
+                    double restwaarde = (sorterdOrdersDividedByMaxOrdersDOUBLE - sorterdOrdersDividedByMaxOrdersDOUBLE_FLOOR) * maxOrders;
 
                     System.out.println("size: " + sortedOrders_size);
 
@@ -116,14 +116,15 @@ public class KNN_Algoritme {
                     int startIndex = 0;
                     int endIndex = 199;
 
-                    String start_url = "http://0.0.0.0:5000/route/v1/driving/5.0651060782846375,52.10576529347831;";
+                    String start_url_STARTPUNT_UTRECHT = "http://127.0.0.1:5000/route/v1/driving/5.0651060782846375,52.10576529347831;";
 
-                    StringBuilder route_URL = new StringBuilder(start_url);
+                    StringBuilder route_URL = new StringBuilder(start_url_STARTPUNT_UTRECHT);
 
-                        for (int j = 0; j < aantal_bussen - 1; j++) {
+                        for (int j = 0; j < aantalBussenForFullIndex; j++) {
+                            System.out.println("heir: " + j);
                             System.out.println("startIndex: " + startIndex + "endIndex: " + endIndex);
 
-                            List<Point> sublist = sortedOrders.subList(startIndex, endIndex - 1);
+                            List<Point> sublist = sortedOrders.subList(startIndex, endIndex);
                             for (Point point : sublist) {
                                 String coordinates = point.osmr;
                                 route_URL.append(coordinates);
@@ -132,28 +133,25 @@ public class KNN_Algoritme {
                             endIndex += 200;
 
 
-                            if (j == aantal_bussen - 2) {
-                                batch_count++;
-                                final int batchCount = batch_count;
-                                System.out.println(batchCount);
+                            batch_count++;
+                            final int batchCount = batch_count;
+                            System.out.println(batchCount);
 
 
-                                route_URL.append("5.0651060782846375,52.10576529347831?alternatives=false&steps=true&annotations=false&geometries=geojson&overview=full");
+                            route_URL.append("5.0651060782846375,52.10576529347831?alternatives=false&steps=true&annotations=false&geometries=geojson&overview=full");
 
 
-                                System.out.println(route_URL);
+                            System.out.println(route_URL);
 
-                                final String route_osmr_complete_URL = route_URL.toString();
-                                route_URL.replace(0, route_URL.length(), start_url);
+                            final String route_osmr_complete_URL = route_URL.toString();
+                            route_URL.replace(0, route_URL.length(), start_url_STARTPUNT_UTRECHT);
 
 
-                                CompletableFuture<Void> future = CompletableFuture.runAsync(() -> RouteBuilder_OSRM.setRoutes(route_osmr_complete_URL, regio_letter, batchCount));
+                            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> RouteBuilder_OSRM.setRoutes(route_osmr_complete_URL, regio_letter, batchCount));
 
-                                future.thenRun(() -> System.out.println("setRoutes is klaar"));
+                            future.thenRun(() -> System.out.println("setRoutes is klaar"));
 
-                                future.join();
-
-                            }
+                            future.join();
 
                         }
 
@@ -168,30 +166,13 @@ public class KNN_Algoritme {
                         List<Point> sublist = sortedOrders.subList((int) startIndex, (int)(startIndex + restwaarde));
                         int sublistSize = sublist.size();
                         System.out.println("sublist: " + sublistSize);
-
                         int loopCount = 0;
-
-                        Route route = new Route(regio_letter, "nieuw");
-
-                        DatabaseConnectie dbcon = new DatabaseConnectie();
-                        int routeID = dbcon.insertRoute(route);
-
                         for (Point point : sublist) {
                             String coordinates = point.osmr;
                             route_URL.append(coordinates);
-                            
-                            //insert points in db
-
-                            dbcon.insertOrder(point.order, routeID, loopCount);
-
                             loopCount++;
+                        }
 
-                        }
-                        try {
-                            dbcon.getCon().close();
-                        }catch (SQLException e){
-                            e.getStackTrace();
-                        }
                         if (loopCount == sublistSize) {
                             batch_count++;
                             final int batchCount = batch_count;
@@ -206,17 +187,23 @@ public class KNN_Algoritme {
                                 try {
                                     RouteBuilder_OSRM.setRoutes(route_URL.toString(), regio_letter, batchCount);
                                 } catch (Exception e) {
-                                    e.printStackTrace(); // Handle the exception appropriately
+                                    System.out.println("Een error heeft plaatsgevonden bij het maken van batches");
+                                    System.out.println("Breaking...");
+                                    e.printStackTrace();
+                                    System.exit(1);
                                 }
                             });
 
                             future.thenRun(() -> {
                                 System.out.println("setRoutes is klaar");
                                 synchronized (route_URL) {
-                                    route_URL.replace(0, route_URL.length(), start_url);
+                                    route_URL.replace(0, route_URL.length(), start_url_STARTPUNT_UTRECHT);
                                 }
                             }).exceptionally(e -> {
-                                e.printStackTrace(); // Handle any exceptions that occurred during the asynchronous operation
+                                System.out.println("Een error heeft plaatsgevonden bij het maken van batches");
+                                System.out.println("Breaking...");
+                                e.printStackTrace();
+                                System.exit(1);
                                 return null;
                             });
 
@@ -226,8 +213,12 @@ public class KNN_Algoritme {
 
                     }
 
+
                 } catch (Exception e) {
+                    System.out.println("Een error heeft plaatsgevonden bij het maken van batches");
+                    System.out.println("Breaking...");
                     e.printStackTrace();
+                    System.exit(1);
                 }
             }
         }
@@ -266,7 +257,7 @@ public class KNN_Algoritme {
         double distance; // Distance from test point
 
         String osmr;
-        int routeIndex;
+
 
     }
 
