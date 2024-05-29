@@ -38,3 +38,4 @@ build/
 .DS_Store
 
 /src/main/java/m2h2/Nederland_Geografische_Data/*
+src/main/java/m2h2/Backoffice/Components/Database/DatabaseConnectie.java
