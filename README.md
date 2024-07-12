@@ -19,7 +19,7 @@
 5. wget http://download.geofabrik.de/europe/netherlands-latest.osm.pbf
     Voor Windows even opzoeken hoe je wget moet downloaden. Ik heb geen verstand van windows.
     
-    Voor mensen met smaak (zoals Jeff) brew install wget. Daarna kun je die stap 1 verder uitvoeren.
+    Voor macOS -> brew install wget. Daarna kun je die stap 1 verder uitvoeren.
 
 6. docker run -t -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backend osrm-extract -p /opt/car.lua /data/netherlands-latest.osm.pbf || echo "osrm-extract failed"
 
