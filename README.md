@@ -4,11 +4,11 @@
 ### 2. Dataset download links.
 * Item 1
    * https://service.pdok.nl/lv/bag/atom/bag.xml (bovenste van 7gb)
-   * 
 
 ### 3. Open Source Routing System
 
 
+### 4. Vervolg stappen
 1. installeer docker.
 2. cd documents
 3. mkdir OSRM-KBSb
